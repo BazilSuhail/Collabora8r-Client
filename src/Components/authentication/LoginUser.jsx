@@ -1,117 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setCart } from '../../redux/cartSlice';
-import { IoLockClosedOutline } from "react-icons/io5";
-import { IoMail } from "react-icons/io5";
 
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+const SignIn = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const { email, password } = formData;
 
-    const fetchUserCart = async (userId) => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/cartState/cart/${userId}`);
-            console.log('Fetch cart response:', response);
-            if (response.status === 200) {
-                dispatch(setCart(response.data.items));
-            }
-        } catch (error) {
-            console.error('Error fetching cart state:', error);
-        }
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const parseJwt = (token) => {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(
-                atob(base64)
-                    .split('')
-                    .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-                    .join('')
-            );
-            return JSON.parse(jsonPayload);
-        } catch (error) {
-            console.error('Error parsing JWT:', error);
-            return null;
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signin`, formData);
+      localStorage.setItem('token', res.data.token);
+      navigate('/profile'); // Redirect to the profile page after sign-in
+    } catch (error) {
+      console.error(error.response.data.error);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, { email, password });
-            console.log('Login response:', response);
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-
-                // Decode token to get user ID
-                const decodedToken = parseJwt(response.data.token);
-                const userId = decodedToken?.id; // Adjust this based on your token structure
-
-                console.log('User ID:', userId);
-
-                // Fetch and set the cart state
-                await fetchUserCart(userId);
-
-                navigate('/profile');
-                window.location.reload(); // Refresh the whole website
-            } else {
-                setError('Login failed: No token received');
-            }
-        } catch (error) {
-            setError(error.response?.data?.message || 'Login failed');
-        }
-    };
-
-    return (
-        <main className='flex mt-[40px] md:mt-[0px] md:h-[calc(100vh-140px)] flex-col  items-center justify-center'>
-            <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
-                <div className='text-red-800 text-[35px] text-center font-bold'>Welcome Back</div>
-                <div className='text-red-800 text-[15px] text-center font-medium'>Please enter Email and Password</div>
-                <div className='h-[3px] bg-red-200 w-[90%] mx-auto mb-[15px]'></div>
-                {error && <div className='text-red-500 p-[5px] border-2 border-red-600 rounded-md'>Error: {error}</div>}
-                <div className="flex-column">
-                    <label>Email </label>
-                </div>
-                <div className="inputForm">
-                    <IoMail className='text-red-800' size={23} />
-                    <input type="email"
-                        className="input" required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your Email" />
-                </div>
-
-                <div className="flex-column">
-                    <label>Password </label>
-                </div>
-                <div className="inputForm">
-                    <IoLockClosedOutline className='text-red-800' size={23} />
-                    <input type="password" className="input" required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your Password" />
-                </div>
-
-                <div>
-                    <input type="checkbox" />
-                    <label className='ml-[5px]'>Remember me </label>
-                </div>
-                <button className="button-submit  text-[22px]" type="submit">Sign In</button>
-                <p className="p mt-[-5px] text-[18px]">
-                    Don't have an account?
-                    <span className="span text-red-700 underline" onClick={() => { navigate("/register") }}>Sign Up</span>
-                </p>
-            </form>
-        </main>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" required />
+      <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" required />
+      <button type="submit">Sign In</button>
+    </form>
+  );
 };
 
-export default Login;
+export default SignIn;

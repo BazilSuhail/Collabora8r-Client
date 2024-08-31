@@ -28,7 +28,7 @@ const Navbar = () => {
         try {
             const token = localStorage.getItem('token');
             if (token) {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/auth/profile`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.status === 200) {
@@ -68,86 +68,27 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gradient-to-r from-red-950 via-custom-red to-red-950 ">
-            {/* Navbar for larger screens */}
-
-            <div className="h-[30px] pb-[5px] z-50 relative bg-gradient-to-r from-red-950 via-custom-red to-red-950  overflow-hidden">
-                <AnimatePresence>
-                    {texts.map((text, i) => (
-                        i === index && (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 50 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -50 }}
-                                transition={{ duration: 0.5 }}
-                                className="text-[15px] text-center mt-[5px] text-white font-normal"
-                            >
-                                {text}
-                            </motion.div>
-                        )
-                    ))}
-                </AnimatePresence>
-            </div>
-
-            <div className=" z-50 relative">
-                {!isMenuOpen ?
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 1 }}
-                        className="h-[2px] my-[4px] bg-red-950 w-full"></motion.div>
-                    : <div className="h-[10px] bg-gradient-to-r from-red-950 via-custom-red to-red-950 w-full"></div>
-                }
-            </div>
-
-
-            <NavLink to="/" className=" h-[55px] pt-[5px] xsx:flex hidden items-center justify-center w-full pb-[5px] overflow-hidden">
-                <img src={texleathlogo} alt="kasm kjanf" className="w-[45px] h-[45px]" />
-                <div className="text-red-700 ml-[4px] text-[30px] font-bold">TEXLEATH</div>
-                <div className="text-red-100 ml-[5px] text-[30px] font-bold">INDUSTRIES</div>
-            </NavLink>
 
             <div className="w-full xsx:flex hidden h-[55px] pt-[8px]  p-4 items-center justify-between z-50">
                 <div>
-                    <NavLink to="/about" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
-                        About
+                    <NavLink to="/register" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        Register
                     </NavLink>
-                    <NavLink to="/productlist/All" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
-                        Catalog
+                    <NavLink to="/login" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        login
                     </NavLink>
-                </div>
-
-                <div className="flex items-center space-x-8 ml-[-25px] font-medium text-white">
-                    <NavLink to="/productlist/Sports%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
-                        Sports
+                    <NavLink to="/profile" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        Profile
                     </NavLink>
-
-                    <NavLink to="/productlist/Active%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
-                        Active Wear
+                    <NavLink to="/createproject" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        Create project
                     </NavLink>
-
-                    <NavLink to="/productlist/Fitness%20Wear" className="text-gray-200  font-semibold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]">
-                        Gym Wear
+                    <NavLink to="/projects" className="text-red-200 ml-[12px] font-bold cursor-pointer relative border-none bg-transparent transition-all duration-800 ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:text-white hover:text-white after:content-[''] after:pointer-events-none after:absolute after:bottom-[-2px] after:left-1/2 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-400 after:ease-[cubic-bezier(0.25,0.8,0.25,1)] focus:after:w-full focus:after:left-0 hover:after:w-full hover:after:left-0 mt-[10px]" >
+                        Admin ProjectList
                     </NavLink>
                 </div>
 
-                {isLoggedIn ? (
-                    <div className="flex">
-                        <NavLink to="/cart"><MdShoppingCart className="text-red-200 hover:scale-110 hover:text-red-500 mt-[8px] text-[32px]" /></NavLink>
-                        <p className=" text-md w-[23px] h-[23px] bg-white text-red-700 rounded-full text-center font-extrabold mr-[5px]">{cartLength}</p>
-                        <NavLink to="/profile"><IoPersonCircleOutline className="text-white hover:text-red-600 text-[45px]" /></NavLink>
-                    </div>
-                ) : (
-                    <NavLink to="/login" className="text-[17px] w-[140px] xl:ml-[-65px] py-[3px] text-center z-30  bg-rose-950 border border-white rounded-md text-white relative font-semibold font-sans after:-z-20 after:absolute after:h-1 after:w-1 after:bg-rose-500 after:left-5 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700 ">
-                        Start Shpping
-                    </NavLink>
 
-                )}
-                {/*
-                    <NavLink to="/login" className="text-white mt-[15px] text-[17px] w-[140px] xl:ml-[-65px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
-                        Start Shopping
-                    </NavLink> */}
             </div>
 
 
@@ -271,9 +212,14 @@ const Navbar = () => {
                                         <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center mt-[7px]"><IoPersonCircleOutline className="text-red-100 hover:text-red-600 text-[45px]" /><span className="font-medium underline ml-[2px] text-xl text-white">My Profile</span></NavLink>
                                     </div>
                                 ) : (
-                                    <NavLink to="/login" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
-                                        Start Shopping
-                                    </NavLink>
+                                    <>
+                                        <NavLink to="/register" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
+                                            Start Shopping
+                                        </NavLink>
+                                        <NavLink to="/register" onClick={handleMenuToggle} className="text-white mt-[15px] text-md w-[130px] text-center py-[3px] hover:bg-red-950 bg-red-900 border border-white px-[8px] rounded-lg mr-[15px]">
+                                            Start Shopping
+                                        </NavLink>
+                                    </>
                                 )}
 
                                 {/*                           

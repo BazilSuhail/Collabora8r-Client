@@ -1,97 +1,50 @@
+// SignUp.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-import { IoLockClosedOutline } from "react-icons/io5";
-import { IoMail } from "react-icons/io5";
 
 const Register = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    phone: '',
+    email: '',
+    dob: '',
+    password: ''
+  });
 
-    const navigate = useNavigate();
+  const { name, gender, phone, email, dob, password } = formData;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signup`, formData);
+      localStorage.setItem('token', res.data.token);
+      // Redirect or update UI based on successful sign up
+    } catch (error) {
+      console.error(error.response?.data?.error || 'Error during sign up');
+    }
+  };
 
-        try {
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, { email, password });
-            setSuccess('Registration successful! Please log in.');
-            setError('');
-            setTimeout(() => navigate('/login'), 1000);
-        } catch (error) {
-            setError(error.response?.data?.message || 'Registration failed');
-            setSuccess('');
-        }
-    };
-
-    return (
-        <main className='flex mt-[40px] md:mt-[0px] md:h-[calc(100vh-140px)] flex-col  items-center justify-center'>
-            <form onSubmit={handleSubmit} className="w-[100vw] sm:w-[520px] form ">
-                <div className='text-red-800 text-[35px] text-center font-bold'>Create an Account</div>
-                <div className='text-red-800 text-[15px] text-center font-medium'>Create an account for faster checkout</div>
-                <div className='h-[3px] bg-red-200 w-[90%] mx-auto mb-[15px]'></div>
- 
-                {error && <div className='text-red-500 p-[5px] border-2 border-red-600 rounded-md'>Error: {error}</div>}
-                {error && <div className='text-green-500 p-[5px] border-2 border-green-600 rounded-md'>{success}</div>}
-                <div className="flex-column">
-                    <label>Email </label>
-                </div>
-                <div className="inputForm">
-                    <IoMail className='text-red-800' size={23} />
-                    <input type="email"
-                        className="input" required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your Email" />
-                </div>
-
-                <div className="flex-column">
-                    <label>Password </label>
-                </div>
-                <div className="inputForm">
-                    <IoLockClosedOutline className='text-red-800' size={23} />
-                    <input
-                        className="input"
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        placeholder="Enter your Password" />
-                </div>
-
-                <div className="flex-column">
-                    <label>Confirm Password </label>
-                </div>
-                <div className="inputForm">
-                    <IoLockClosedOutline className='bg-red-800 rounded-md text-white p-[3px]' size={25} />
-                    <input className="input"
-
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                        placeholder="Confirm your password" />
-                </div>
-
-                <button className="button-submit  text-[22px]" type="submit">Sign Up</button>
-                <p className="p mt-[-5px] text-[18px]">
-                    Already have an account?
-                    <span className="span text-red-700 underline" onClick={() => { navigate("/login") }}>Sign In</span>
-                </p>
-            </form>
-        </main>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="name" value={name} onChange={handleChange} placeholder="Name" required />
+      <select name="gender" value={gender} onChange={handleChange} required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="text" name="phone" value={phone} onChange={handleChange} placeholder="Phone" required />
+      <input type="email" name="email" value={email} onChange={handleChange} placeholder="Email" required />
+      <input type="date" name="dob" value={dob} onChange={handleChange} required />
+      <input type="password" name="password" value={password} onChange={handleChange} placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+  );
 };
 
 export default Register;

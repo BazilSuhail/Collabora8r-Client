@@ -1,45 +1,34 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 
-import Navbar from "./Components/Navbar";
-import HomePage from "./Components/HomePage";
-import ProductDetails from "./Components/ProductDetails";
-import ProductList from "./Components/ProductList";
+import Navbar from "./Components/Navbar"; 
 import Login from "./Components/authentication/LoginUser";
 import Register from "./Components/authentication/RegisterUser";
-import Profile from "./Components/authentication/Profile";
-import Cart from "./Components/Cart";
-import OrderList from "./Components/PlaceOrder";
-import ShowOrders from "./Components/ShowOrder";
-import ReviewProduct from "./Components/ProductReview";
-import Footer from "./Components/Footer";
+import Profile from "./Components/authentication/Profile"; 
+//import Footer from "./Components/Footer";
 import FAQPage from "./Components/Pages/Faq";
 import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
 import TermsOfService from "./Components/Pages/TermOfService";
 import CustomerSupport from "./Components/Pages/CustomerSupport";
 import About from "./Components/Pages/About";
+import CreateProject from "./Components/Projects/CreateProject";
+import AdminProjectList from "./Components/Projects/AdminProjectList";
+import ProjectDetail from "./Components/Projects/ProjectDetails";
 
 const App = () => {
   return (
     <Router>
       <Navbar />
-      <Routes>
-
-        <Route exact path="/" element={<HomePage />} />
-
-        {/*  <Route path="/productlist" element={<ProductList  />} /> */}
-        <Route path="/productlist/:category?/:subcategory?" element={<ProductList />} />
+      <Routes> 
 
 
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<About />} /> 
+        
 
-        <Route path="/products/:id" element={<ProductDetails />} />
-
-        <Route path="/reviews/:productId" element={<ReviewProduct />} />
-
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/place-order" element={<OrderList />} />
-        <Route path="/orders-tracking" element={<ShowOrders />} />
+        <Route path="/createproject" element={<CreateProject/>} />
+        
+        <Route path="/projects" element={<AdminProjectList />} />
+        <Route path="/projects/:projectId" element={<ProjectDetail />} />
 
         <Route path="/faqs" element={<FAQPage />} />
 
@@ -51,7 +40,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      <Footer/>
+      {/*<Footer/>*/}
     </Router>
   );
 };
