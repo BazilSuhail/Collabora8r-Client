@@ -7,6 +7,7 @@ const ProjectDetail = () => {
   const [project, setProject] = useState(null);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     const fetchProjectDetailsAndUsers = async () => {
@@ -22,7 +23,7 @@ const ProjectDetail = () => {
         setProject(projectResponse.data);
 
         // Fetch all users
-        const usersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/fetchusers`, {
+        const usersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,10 +39,44 @@ const ProjectDetail = () => {
     fetchProjectDetailsAndUsers();
   }, [projectId]);
 
+  const handleAddUser = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+
+      // Add user to project
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/manageusers/${projectId}/addUser`,
+        { userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Add project ID to user's JoinProject document
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/manageusers/${userId}/joinProject`,
+        { projectId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setSuccess('User added to project successfully.');
+    } catch (err) {
+      console.error(err);
+      setError('Failed to add user to project.');
+    }
+  };
+
   return (
     <div>
       <h2>Project Details</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
       {project && (
         <div>
           <h3>{project.name}</h3>
@@ -52,7 +87,10 @@ const ProjectDetail = () => {
       <h2>User List</h2>
       <ul>
         {users.map((user) => (
-          <li key={user._id}>{user.email}</li>
+          <li key={user._id}>
+            {user.email}
+            <button onClick={() => handleAddUser(user._id)}>Add User</button>
+          </li>
         ))}
       </ul>
     </div>
