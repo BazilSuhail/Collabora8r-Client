@@ -27,7 +27,7 @@ const ProjectList = () => {
 
   const handleProjectClick = (projectId) => {
     // Navigate to the ProjectDetail component with the selected project ID
-    navigate(`/projects/${projectId}`);
+    navigate(`/tasks/${projectId}`);
   };
 
   return (

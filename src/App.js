@@ -16,6 +16,7 @@ import AdminProjectList from "./Components/Projects/AdminProjectList";
 import ProjectDetail from "./Components/Projects/ProjectDetails";
 import JoinedProjectDetails from "./Components/Projects/JoinedProjectDetails";
 import JoinedProjects from "./Components/Projects/JoinedaProjects";
+import AssignTasks from "./Components/Tasks/AssignTasks";
 
 const App = () => {
   return (
@@ -31,6 +32,8 @@ const App = () => {
         
         <Route path="/projects" element={<AdminProjectList />} />
         <Route path="/projects/:projectId" element={<ProjectDetail />} />
+        
+        <Route path="/tasks/:projectId" element={<AssignTasks />} />
 
         
         
