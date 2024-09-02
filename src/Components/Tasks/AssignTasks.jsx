@@ -16,6 +16,7 @@ const AssignTasks = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [editingTaskId, setEditingTaskId] = useState(null);
 
   useEffect(() => {
     const fetchTasksAndUsers = async () => {
@@ -77,6 +78,72 @@ const AssignTasks = () => {
     }
   };
 
+  const handleEditTask = async (task) => {
+    setEditingTaskId(task._id);
+    setNewTask({
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      priority: task.priority,
+      dueDate: task.dueDate.split('T')[0], // Convert to YYYY-MM-DD format
+      assignedTo: task.assignedTo ? task.assignedTo._id : ''
+    });
+  };
+
+  const handleUpdateTask = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/manageTasks/${editingTaskId}`,
+        newTask,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      setSuccess('Task updated successfully.');
+      setEditingTaskId(null);
+      setNewTask({
+        title: '',
+        description: '',
+        status: 'Not Started',
+        priority: 'Medium',
+        dueDate: '',
+        assignedTo: ''
+      });
+
+      // Refresh the tasks list
+      const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setTasks(tasksResponse.data);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to update task.');
+    }
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/${taskId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setSuccess('Task deleted successfully.');
+
+      // Refresh the tasks list
+      const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setTasks(tasksResponse.data);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to delete task.');
+    }
+  };
+
   return (
     <div>
       <h2>Assign Tasks</h2>
@@ -88,12 +155,14 @@ const AssignTasks = () => {
         {tasks.map((task) => (
           <li key={task._id}>
             <strong>{task.title}</strong>: {task.description} (Assigned to: {task.assignedTo ? task.assignedTo.email : 'Unassigned'})
+            <button onClick={() => handleEditTask(task)}>Edit</button>
+            <button onClick={() => handleDeleteTask(task._id)}>Delete</button>
           </li>
         ))}
       </ul>
 
-      <h3>Create New Task</h3>
-      <form onSubmit={handleCreateTask}>
+      <h3>{editingTaskId ? 'Edit Task' : 'Create New Task'}</h3>
+      <form onSubmit={editingTaskId ? handleUpdateTask : handleCreateTask}>
         <div>
           <label>Title</label>
           <input
@@ -161,7 +230,7 @@ const AssignTasks = () => {
             ))}
           </select>
         </div>
-        <button type="submit">Create Task</button>
+        <button type="submit">{editingTaskId ? 'Update Task' : 'Create Task'}</button>
       </form>
     </div>
   );
