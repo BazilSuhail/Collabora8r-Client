@@ -2,38 +2,32 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 function decodeJWT(token) {
   try {
-    // Split the token into parts (header, payload, signature)
     const parts = token.split('.');
     if (parts.length !== 3) {
       throw new Error('Invalid token format');
     }
 
-    // Decode the payload (the second part)
     const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-
-    // Return the user ID
-    return payload.id;  // Assuming 'id' is the field containing the user ID
+    return payload.id;
   } catch (err) {
     console.error('Failed to decode JWT:', err);
-    throw err; // Re-throw the error for further handling
+    throw err;
   }
 }
-
-
 
 const JoinedProjectDetails = () => {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [teamDetails, setTeamDetails] = useState([]);
   const [projectTasks, setProjectTasks] = useState([]);
-  const [userTasks, setUserTasks] = useState([]);
+  const [taskComments, setTaskComments] = useState({});
+  const [commentContent, setCommentContent] = useState('');
+  const [editCommentContent, setEditCommentContent] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [commentContent, setCommentContent] = useState('');
-  const [taskComments, setTaskComments] = useState({});
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -62,8 +56,18 @@ const JoinedProjectDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setProjectTasks(response.data.projectTasks);
-        setUserTasks(response.data.userTaskDetails);
+        const tasks = response.data.projectTasks;
+        setProjectTasks(tasks);
+
+        const taskCommentsMap = {};
+        for (const task of tasks) {
+          const commentsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/comments/tasks/${task._id}/comments`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          taskCommentsMap[task._id] = commentsResponse.data.comments;
+        }
+
+        setTaskComments(taskCommentsMap);
       } catch (err) {
         console.error(err);
         setError('Failed to fetch project tasks.');
@@ -96,6 +100,48 @@ const JoinedProjectDetails = () => {
     } catch (err) {
       console.error(err);
       setError('Failed to add comment.');
+    }
+  };
+
+  const handleEditComment = async (taskId, commentId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/comments/${commentId}`,
+        { content: editCommentContent },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setTaskComments((prev) => ({
+        ...prev,
+        [taskId]: prev[taskId].map((comment) =>
+          comment._id === commentId ? response.data.comment : comment
+        ),
+      }));
+      setEditingCommentId(null);
+      setEditCommentContent('');
+    } catch (err) {
+      console.error(err);
+      setError('Failed to edit comment.');
+    }
+  };
+
+  const handleDeleteComment = async (taskId, commentId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/comments/${commentId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setTaskComments((prev) => ({
+        ...prev,
+        [taskId]: prev[taskId].filter((comment) => comment._id !== commentId),
+      }));
+    } catch (err) {
+      console.error(err);
+      setError('Failed to delete comment.');
     }
   };
 
@@ -132,7 +178,7 @@ const JoinedProjectDetails = () => {
           {projectTasks.length > 0 ? (
             <ul style={{ listStyleType: 'none', padding: 0 }}>
               {projectTasks.map((task) => (
-                <li key={task._id.toString()} style={{ marginBottom: '10px' }}>
+                <li key={task._id.toString()} style={{ marginBottom: '20px' }}>
                   <strong>{task.title}</strong> - {task.description}
                   <div>
                     <input
@@ -146,7 +192,29 @@ const JoinedProjectDetails = () => {
                   <ul style={{ listStyleType: 'none', padding: '10px' }}>
                     {taskComments[task._id] &&
                       taskComments[task._id].map((comment) => (
-                        <li key={comment._id.toString()}>{comment.content} - {new Date(comment.createdAt).toLocaleString()}</li>
+                        <li key={comment._id.toString()}>
+                          {editingCommentId === comment._id ? (
+                            <div>
+                              <input
+                                type="text"
+                                value={editCommentContent}
+                                onChange={(e) => setEditCommentContent(e.target.value)}
+                              />
+                              <button onClick={() => handleEditComment(task._id, comment._id)}>Save</button>
+                              <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                            </div>
+                          ) : (
+                            <div>
+                              <p>{comment.content} - {new Date(comment.createdAt).toLocaleString()} by {comment.userId.name}</p>
+                              {comment.userId._id === decodeJWT(localStorage.getItem('token')) && (
+                                <div>
+                                  <button onClick={() => { setEditingCommentId(comment._id); setEditCommentContent(comment.content); }}>Edit</button>
+                                  <button onClick={() => handleDeleteComment(task._id, comment._id)}>Delete</button>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </li>
                       ))}
                   </ul>
                 </li>
@@ -154,19 +222,6 @@ const JoinedProjectDetails = () => {
             </ul>
           ) : (
             <p>No tasks found for this project.</p>
-          )}
-
-          <h3>Your Tasks in this Project</h3>
-          {userTasks.length > 0 ? (
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-              {userTasks.map((task) => (
-                <li key={task._id.toString()} style={{ marginBottom: '10px' }}>
-                  <strong>Title: {task.title}</strong> -  {task.description}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>You have no tasks assigned in this project.</p>
           )}
         </>
       ) : (
