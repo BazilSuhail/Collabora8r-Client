@@ -29,7 +29,7 @@ const JoinedProjects = () => {
   };
 
   return (
-    <div>
+    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
       <h2>Joined Projects</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>

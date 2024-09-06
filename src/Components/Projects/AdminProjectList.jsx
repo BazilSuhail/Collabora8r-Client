@@ -27,11 +27,14 @@ const ProjectList = () => {
 
   const handleProjectClick = (projectId) => {
     // Navigate to the ProjectDetail component with the selected project ID
-    navigate(`/tasks/${projectId}`);
+    //navigate(`/tasks/${projectId}`);
+    
+    navigate(`/projects/${projectId}`);
   };
 
   return (
-    <div>
+    
+    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
       <h2>Your Projects</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>

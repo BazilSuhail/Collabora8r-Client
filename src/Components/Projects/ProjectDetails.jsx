@@ -73,7 +73,7 @@ const ProjectDetail = () => {
   };
 
   return (
-    <div>
+    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
       <h2>Project Details</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}

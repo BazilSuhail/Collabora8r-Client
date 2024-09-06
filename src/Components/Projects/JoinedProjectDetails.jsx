@@ -154,7 +154,7 @@ const JoinedProjectDetails = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
       {project ? (
         <>
           <h2>Project Details</h2>

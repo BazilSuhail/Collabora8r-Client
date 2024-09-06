@@ -18,7 +18,7 @@ import { IoMdSearch } from "react-icons/io";
 import texleathlogo from "../texleathlogo.svg";
 import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
-import { GoProjectRoadmap } from "react-icons/go";
+import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 
 const Navbar = () => {
 
@@ -31,7 +31,6 @@ const Navbar = () => {
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
 
     const [isArrowOpen, setisArrowOpen] = useState(true);
     const toggleOpen = () => setisArrowOpen(!isArrowOpen);
@@ -50,8 +49,8 @@ const Navbar = () => {
                 });
                 setProjects(response.data); // This should now be an array of project objects
             } catch (err) {
-                console.error(err);
-                setError('Failed to fetch projects.');
+                console.error(err); 
+                setError('Failed to fetch projects.',error);
             }
         };
 
@@ -80,10 +79,10 @@ const Navbar = () => {
                     </div>
 
                     <p className="text-[#6a6a6a] mt-[15px] font-bold ml-[5px]">Account</p>
-                    <div className="flex items-center pl-[20px] py-[12px] mt-[8px] shadow-profile-navbar rounded-lg">
+                    <NavLink to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] shadow-profile-navbar rounded-lg">
                         <div className="w-[25px] h-[25px] rounded-full bg-[#363636]"></div>
                         <div className="text-[17px] ml-[10px] font-medium text-[#7f7f7f]">Bazil Suhail</div>
-                    </div>
+                    </NavLink>
 
 
                     <div className="border-t-2 mt-[20px] pl-[4px] pt-[15px] border-gray-300 ">
@@ -101,7 +100,7 @@ const Navbar = () => {
                             <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Snacks</p>
                         </NavLink>
                         <NavLink to="/createproject/" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Create Projects</p>
+                            <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Associated Projects</p>
                         </NavLink>
 
                         <div className="my-[5px]">
@@ -124,9 +123,10 @@ const Navbar = () => {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                             >
-                                {projects.map((project) => (
-                                    <div className='text-black' key={project._id}>
-                                        <button onClick={() => handleProjectClick(project._id)}>
+                                {projects.map((project) => (                  
+                                  <div key={project._id}
+                                  className={({ isActive }) => `flex font-[500] text-[#363636] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                                  <button onClick={() => handleProjectClick(project._id)}>
                                             {project.name}
                                         </button>
                                     </div>
