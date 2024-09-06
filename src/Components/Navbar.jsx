@@ -1,3 +1,318 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import { IoMenu, IoClose } from "react-icons/io5";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdOutlineFolderShared, } from 'react-icons/md';
+import { motion, AnimatePresence } from "framer-motion";
+
+import { MdList, MdOutlineDashboard, MdProductionQuantityLimits } from "react-icons/md";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { MdOutlineCategory } from "react-icons/md";
+import { TbCategory } from "react-icons/tb";
+
+import { FaBell, FaCubes } from "react-icons/fa";
+import { IoMdSearch } from "react-icons/io";
+
+
+import texleathlogo from "../texleathlogo.svg";
+import { RxDashboard } from "react-icons/rx";
+import { BsGraphUp } from "react-icons/bs";
+import { GoProjectRoadmap } from "react-icons/go";
+
+const Navbar = () => {
+
+
+    const [projects, setProjects] = useState([]);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const handleMenuToggle = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+
+    const [isArrowOpen, setisArrowOpen] = useState(true);
+    const toggleOpen = () => setisArrowOpen(!isArrowOpen);
+
+
+    const [isOrderArrowOpen, setisOrderArrowOpen] = useState(true);
+    const toogleOrderOpen = () => setisOrderArrowOpen(!isOrderArrowOpen);
+
+
+    useEffect(() => {
+        const fetchJoinedProjects = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setProjects(response.data); // This should now be an array of project objects
+            } catch (err) {
+                console.error(err);
+                setError('Failed to fetch projects.');
+            }
+        };
+
+        fetchJoinedProjects();
+    }, []);
+
+    const handleProjectClick = (projectId) => {
+        navigate(`/joinedprojects/${projectId}`);
+    };
+
+    return (
+        <nav className="xsx">
+            {/* Navbar for larger screens */}
+
+            <div className=" hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
+                <div className="flex text-red-50 flex-col w-[95%]">
+
+                    <div className="flex justify-between">
+                        <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
+                        <FaBell className="mt-[10px] text-[#363636] text-[20px]" />
+                    </div>
+
+                    <div className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
+                        <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
+                        <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
+                    </div>
+
+                    <p className="text-[#6a6a6a] mt-[15px] font-bold ml-[5px]">Account</p>
+                    <div className="flex items-center pl-[20px] py-[12px] mt-[8px] shadow-profile-navbar rounded-lg">
+                        <div className="w-[25px] h-[25px] rounded-full bg-[#363636]"></div>
+                        <div className="text-[17px] ml-[10px] font-medium text-[#7f7f7f]">Bazil Suhail</div>
+                    </div>
+
+
+                    <div className="border-t-2 mt-[20px] pl-[4px] pt-[15px] border-gray-300 ">
+
+                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                            <RxDashboard className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Dashboard</p>
+                        </NavLink>
+                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                            <MdOutlineFolderShared className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Overview</p>
+                        </NavLink>
+                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                            <BsGraphUp className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Usage</p>
+                        </NavLink>
+                        <NavLink to="/joinedprojects/" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                            <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Snacks</p>
+                        </NavLink>
+                        <NavLink to="/createproject/" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                            <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Create Projects</p>
+                        </NavLink>
+
+                        <div className="my-[5px]">
+                            <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
+                                <div className="flex items-center">
+                                    <GoProjectRoadmap className="text-[22px] mt-[4px] mr-[12px]" />
+                                    <p className="font-[500] text-[16px]">Projects</p>
+                                </div>
+                                {isArrowOpen ? (
+                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
+                                ) : (
+                                    <MdKeyboardArrowDown className="ml-2" />
+                                )}
+                            </div>
+
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                {projects.map((project) => (
+                                    <div className='text-black' key={project._id}>
+                                        <button onClick={() => handleProjectClick(project._id)}>
+                                            {project.name}
+                                        </button>
+                                    </div>
+                                ))}
+                            </motion.div>
+                        </div>
+
+
+                        <div className="my-[5px]">
+                            <div className="ml-[6px] text-lg flex items-center justify-between cursor-pointer" onClick={toogleOrderOpen}>
+                                <span className="font-semibold">Orders</span>
+                                {isOrderArrowOpen ? (
+                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
+                                ) : (
+                                    <MdKeyboardArrowDown className="ml-2" />
+                                )}
+                            </div>
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: isOrderArrowOpen ? 1 : 0, height: isOrderArrowOpen ? 'auto' : 0 }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                <NavLink to="/order-tracking" className={({ isActive }) => `ml-[15px] py-[6px] mt-[8px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                    <MdList className="text-[26px] mr-[4px]" /><p className="text-[16px] mb-[1px] font-medium">Order Tracking</p>
+                                </NavLink>
+                                <NavLink to="/admin-orders-list" className={({ isActive }) => `ml-[15px] py-[6px] my-[12px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                    <MdProductionQuantityLimits className="text-[26px] mr-[6px]" /><p className="text-[16px] mb-[1px] font-medium">Orders List</p>
+                                </NavLink>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    <NavLink to="/categoryList" className={({ isActive }) => `flex mt-[10px] mb-[7px] font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
+                        <TbCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Categories</p>
+                    </NavLink>
+                    <NavLink to="/subCategoryList" className={({ isActive }) => `flex font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
+                        <MdOutlineCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Sub-Categories</p>
+                    </NavLink>
+
+                </div>
+            </div>
+
+            <div className="relative text-white xsx:hidden">
+                <div className="flex items-center h-[70px] justify-between bg-gradient-to-r from-red-950 to-red-900 px-4 py-3 z-50 relative">
+                    <div className="flex items-center">
+                        <motion.div
+                            initial={{ opacity: 1 }}
+                            animate={{ opacity: isMenuOpen ? 0 : 1 }}
+                            transition={{ duration: 0.2 }} // Adjust duration as needed
+                        >
+                            <img src={texleathlogo} alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
+                        </motion.div>
+                        <motion.div
+                            className="text-[28px] font-bold"
+                            initial={{ x: 40 }}
+                            animate={{ x: isMenuOpen ? -40 : 0 }}
+                            transition={{ duration: 0.5 }} // Adjust duration as needed
+                        >
+                            <div className="flex">
+                                <div className="text-red-700 ml-[4px] md:text-[25px] text-[19px] font-bold">TEXLEATH</div>
+                                <div className="text-red-100 ml-[5px] md:text-[25px] text-[18px] font-bold">INDUSTRIES</div>
+                            </div>
+                        </motion.div>
+                    </div>
+                    <motion.div
+                        key={isMenuOpen ? 'close' : 'menu'} // Unique key to trigger animation on change
+                        initial={{ opacity: 0, rotate: isMenuOpen ? 180 : -180 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: isMenuOpen ? -180 : 180 }} // Animate out with reverse rotation
+                        transition={{ duration: 0.3 }} // Duration for the animation
+                        className="cursor-pointer text-gray-300"
+                        onClick={handleMenuToggle}
+                    >
+
+                        {isMenuOpen ? (
+                            <IoClose size={35} />
+                        ) : (
+                            <IoMenu size={35} />
+                        )}
+                    </motion.div>
+                </div>
+
+                {/* Full navbar for smaller screens */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "70vw", transition: { duration: 0.5 } }}
+                            exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
+                            className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-red-900 flex w-[70vw] flex-col h-screen px-[5px] py-3 z-30"
+
+                        >
+                            <div className='my-[25px]'></div>
+                            {/* Menu items */}
+                            <motion.div
+                                initial={{ x: -100, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.3 } }}
+                                exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
+                                className="flex flex-col mt-[25px]"
+                            >
+                                <NavLink to="/student-profile" className={({ isActive }) => `flex mt-[5px] mb-[7px] font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
+                                    <MdOutlineDashboard onClick={handleMenuToggle} className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Dashboard</p>
+                                </NavLink>
+
+                                <div className="w-[95%] rounded-lg mb-[15px] h-[2px] bg-red-50 mx-auto my-[5px]"></div>
+
+                                <div className="my-[5px]">
+                                    <div className="ml-[6px] text-lg flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
+                                        <span className="font-semibold">Ecommerce</span>
+                                        {isArrowOpen ? (
+                                            <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
+                                        ) : (
+                                            <MdKeyboardArrowDown className="ml-2" />
+                                        )}
+                                    </div>
+                                    {isArrowOpen &&
+                                        <div className="w-[95%] rounded-lg h-[1px] bg-red-50 mx-auto my-[5px]"></div>
+                                    }
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <NavLink onClick={handleMenuToggle} to="/productList" className={({ isActive }) => `ml-[15px] py-[6px] mt-[8px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                            <MdList className="text-[26px] mr-[4px]" /><p className="text-[16px] mb-[1px] font-medium">Products</p>
+                                        </NavLink>
+                                        <NavLink onClick={handleMenuToggle} to="/addProduct" className={({ isActive }) => `ml-[15px] py-[6px] my-[12px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                            <MdProductionQuantityLimits className="text-[26px] mr-[6px]" /><p className="text-[16px] mb-[1px] font-medium">Add Products</p>
+                                        </NavLink>
+                                    </motion.div>
+                                </div>
+
+
+                                <div className="my-[5px]">
+                                    <div className="ml-[6px] text-lg flex items-center justify-between cursor-pointer" onClick={toogleOrderOpen}>
+                                        <span className="font-semibold">Orders</span>
+                                        {isOrderArrowOpen ? (
+                                            <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
+                                        ) : (
+                                            <MdKeyboardArrowDown className="ml-2" />
+                                        )}
+                                    </div>
+                                    {isOrderArrowOpen &&
+                                        <div className="w-[95%] rounded-lg h-[1px] bg-red-50 mx-auto my-[5px]"></div>
+                                    }
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: isOrderArrowOpen ? 1 : 0, height: isOrderArrowOpen ? 'auto' : 0 }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <NavLink onClick={handleMenuToggle} to="/order-tracking" className={({ isActive }) => `ml-[15px] py-[6px] mt-[8px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                            <MdList className="text-[26px] mr-[4px]" /><p className="text-[16px] mb-[1px] font-medium">Order Tracking</p>
+                                        </NavLink>
+                                        <NavLink onClick={handleMenuToggle} to="/admin-orders-list" className={({ isActive }) => `ml-[15px] py-[6px] my-[12px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
+                                            <MdProductionQuantityLimits className="text-[26px] mr-[6px]" /><p className="text-[16px] mb-[1px] font-medium">Orders List</p>
+                                        </NavLink>
+                                    </motion.div>
+                                </div>
+
+                                <div className="w-[95%] rounded-lg mt-[15px] h-[1.5px] bg-red-50 mx-auto my-[5px]"></div>
+                                <NavLink onClick={handleMenuToggle} to="/categoryList" className={({ isActive }) => `flex mt-[10px] mb-[7px] font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
+                                    <TbCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Categories</p>
+                                </NavLink>
+                                <NavLink onClick={handleMenuToggle} to="/subCategoryList" className={({ isActive }) => `flex font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
+                                    <MdOutlineCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Sub-Categories</p>
+                                </NavLink>
+                            </motion.div>
+
+
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+        </nav>
+    );
+};
+
+export default Navbar;
+/*
 import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -51,11 +366,7 @@ const Navbar = () => {
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
-
-    // Text Fade animation  
-    const texts = ["HURRY UP SHOW NOW !!", "FREE DELIVERY ON USD 200 AND ABOVE IN USA", "Buy Any 3 Products and Get "];
-    const [index, setIndex] = useState(0);
+ 
 
     // Change text index every 2 seconds
     useEffect(() => {
@@ -141,9 +452,7 @@ const Navbar = () => {
                             )}
                         </motion.div>
                     </div>
-                </div>
-
-                {/* Full navbar for smaller screens */}
+                </div> 
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
@@ -152,8 +461,7 @@ const Navbar = () => {
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
                             className="fixed inset-0 bg-navbar-color bg-gradient-to-r from-red-950 to-custom-red flex w-[70vw] flex-col h-screen px-4 py-3 z-30"
                         >
-                            <div className='my-[25px]'></div>
-                            {/* Menu items */}
+                            <div className='my-[25px]'></div> 
                             <motion.div
                                 initial={{ x: -100, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.3 } }}
@@ -225,12 +533,7 @@ const Navbar = () => {
                                         </NavLink>
                                     </>
                                 )}
-
-                                {/*                           
-                                <NavLink to="/login" className="text-white text-md text- mr-[15px]">Login</NavLink>
-                                <NavLink to="/register" className="text-white text-md text-lg mr-[15px]">Register</NavLink>
-                                <NavLink to="/profile" className="text-white text-md text-lg mr-[15px]">Profile</NavLink> 
-                                */}
+ 
 
                             </motion.div>
 
@@ -245,3 +548,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+*/

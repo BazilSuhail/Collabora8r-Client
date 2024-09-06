@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./Components/Navbar"; 
 import Login from "./Components/authentication/LoginUser";
@@ -18,39 +18,38 @@ import JoinedProjectDetails from "./Components/Projects/JoinedProjectDetails";
 import JoinedProjects from "./Components/Projects/JoinedaProjects";
 import AssignTasks from "./Components/Tasks/AssignTasks";
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
+  const hideNavbar = ["/login", "/register"].includes(location.pathname);
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!hideNavbar && <Navbar />}
       <Routes> 
-
-
         <Route path="/about" element={<About />} /> 
-        
-
-        <Route path="/createproject" element={<CreateProject/>} />
-        
+        <Route path="/createproject" element={<CreateProject />} />
         <Route path="/projects" element={<AdminProjectList />} />
         <Route path="/projects/:projectId" element={<ProjectDetail />} />
-        
         <Route path="/tasks/:projectId" element={<AssignTasks />} />
-
-        
-        
         <Route path="/joinedprojects" element={<JoinedProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
-
         <Route path="/faqs" element={<FAQPage />} />
-
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/termsOfService" element={<TermsOfService />} />
         <Route path="/customerSupport" element={<CustomerSupport />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-      {/*<Footer/>*/}
+      {/* <Footer/> */}
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 };
