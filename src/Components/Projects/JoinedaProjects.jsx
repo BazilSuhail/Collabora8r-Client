@@ -14,7 +14,7 @@ const JoinedProjects = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setProjects(response.data); // This should now be an array of project objects
+        setProjects(response.data);
       } catch (err) {
         console.error(err);
         setError('Failed to fetch projects.');

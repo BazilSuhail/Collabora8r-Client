@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
-const CreateProject = () => {
+const CreateProject = ({ setShowModal }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [projectManager, setProjectManager] = useState('');
@@ -32,7 +33,7 @@ const CreateProject = () => {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/projects/create`,
         { name, description, projectManager },
         {
@@ -45,44 +46,54 @@ const CreateProject = () => {
       setName('');
       setDescription('');
       setProjectManager('');
+    setShowModal(false); 
     } catch (err) {
       setError('Failed to create project.');
     }
   };
 
   return (
-    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
-
-      <div className='mt-[18px] flex flex-col w-[95%] mx-auto p-[15px] justify-center rounded-xl overflow-x-auto'>
-        <h2 className='text-2xl text-custom-blue mb-[8px] font-bold '>Create A New Project</h2>
-
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
+      <motion.div
+       initial={{ x: -200, opacity: 0 }}
+       animate={{ x: 0, opacity: 1 }}
+       transition={{
+         type: 'spring',
+         stiffness: 120,
+         damping: 12,
+       }}
+       
+        className='bg-white p-6 rounded-lg w-96'>
+        <h2 className='text-2xl font-bold mb-4'>Create A New Project</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}
+
         <form onSubmit={handleCreateProject}>
-
-
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label className="mt-[15px] text-[16px] font-medium text-gray-700" htmlFor="studentEmail">Enter Project Name:</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Project Name:</label>
             <input
-              className="my-[5px] border border-gray-500 block w-full px-3 py-2 border-3 font-bold border-custom-blue placeholder-gray-400 focus:outline-none focus:ring focus:border-custom-blue sm:text-sm rounded-md"
+              className="border border-gray-300 p-2 w-full rounded"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
-            <label className="mt-[15px] text-[16px] font-medium text-gray-700" htmlFor="studentEmail">Enter Project Description:</label>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Description:</label>
             <input
-              className="my-[5px] border border-gray-500 block w-full px-3 py-2 border-3 font-bold border-custom-blue placeholder-gray-400 focus:outline-none focus:ring focus:border-custom-blue sm:text-sm rounded-md"
+              className="border border-gray-300 p-2 w-full rounded"
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <label className="mt-[15px] text-[16px] font-medium text-gray-700" htmlFor="studentEmail">Choose Project Manager:</label>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Project Manager:</label>
             <select
               value={projectManager}
               onChange={(e) => setProjectManager(e.target.value)}
-              className="w-full mt-[4px] py-[6px] px-3 border border-gray-500 text-[$363636] rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
-           
+              className="border border-gray-300 p-2 w-full rounded"
               required
             >
               <option value="">Select a project manager</option>
@@ -92,14 +103,24 @@ const CreateProject = () => {
                 </option>
               ))}
             </select>
-            
-          <button className='mt-[25px] py-[5px] ml-auto px-[15px] rounded-md bg-[#072f63] text-[17px] font-semibold hover:text-[#072f63] hover:bg-white text-white' type="submit" >
+          </div>
+          <div className="flex justify-end space-x-2">
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className='bg-gray-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-600'
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className='bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
+            >
               Create Project
-          </button>
+            </button>
           </div>
         </form>
-      </div>
-
+      </motion.div>
     </div>
   );
 };
