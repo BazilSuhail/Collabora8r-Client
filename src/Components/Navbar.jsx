@@ -19,12 +19,26 @@ import texleathlogo from "../texleathlogo.svg";
 import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+
+
+const colors = [
+    'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
+];
+
+const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+
 
 const Navbar = () => {
 
 
+    const [profile, setProfile] = useState(null);
+    const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
-    const [error, setError] = useState('');
+
+
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,27 +53,60 @@ const Navbar = () => {
     const [isOrderArrowOpen, setisOrderArrowOpen] = useState(true);
     const toogleOrderOpen = () => setisOrderArrowOpen(!isOrderArrowOpen);
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
 
     useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                };
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, config);
+                setProfile(response.data); 
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         const fetchJoinedProjects = async () => {
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setProjects(response.data); // This should now be an array of project objects
+                const fetchedProjects = response.data; // Assuming this is an array of project objects
+
+                // Assign a random color to each project and store it in the projectColors state
+                const colorMapping = {};
+                fetchedProjects.forEach(project => {
+                    colorMapping[project._id] = getRandomColor();
+                });
+
+                setProjects(fetchedProjects);
+                setProjectColors(colorMapping);
             } catch (err) {
-                console.error(err); 
-                setError('Failed to fetch projects.',error);
+                console.error(err);
             }
         };
 
+        fetchProfile();
         fetchJoinedProjects();
     }, []);
+
 
     const handleProjectClick = (projectId) => {
         navigate(`/joinedprojects/${projectId}`);
     };
+
 
     return (
         <nav className="xsx">
@@ -78,41 +125,45 @@ const Navbar = () => {
                         <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                     </div>
 
-                    <p className="text-[#6a6a6a] mt-[15px] font-bold ml-[5px]">Account</p>
+                    <div className='  mt-[15px] flex items-center justify-between'>
+                        <p className="text-[#6a6a6a] font-bold ml-[5px]">Account</p>
+                        <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
+                    </div>
+
                     <NavLink to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] shadow-profile-navbar rounded-lg">
-                        <div className="w-[25px] h-[25px] rounded-full bg-[#363636]"></div>
-                        <div className="text-[17px] ml-[10px] font-medium text-[#7f7f7f]">Bazil Suhail</div>
+                        {loading ? <></> : <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[25px] h-[25px] rounded-full" />}
+                        {loading ? <></> : <div className="text-[17px] ml-[10px] font-medium text-[#7f7f7f]">{profile.name}</div>}
                     </NavLink>
 
 
                     <div className="border-t-2 mt-[20px] pl-[4px] pt-[15px] border-gray-300 ">
 
-                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                        <NavLink to="/student-profile" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <RxDashboard className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Dashboard</p>
                         </NavLink>
-                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                        <NavLink to="/student-profile" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <MdOutlineFolderShared className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Overview</p>
                         </NavLink>
-                        <NavLink to="/student-profile" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                        <NavLink to="/student-profile" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <BsGraphUp className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Usage</p>
                         </NavLink>
-                        <NavLink to="/joinedprojects/" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                        <NavLink to="/joinedprojects/" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Snacks</p>
                         </NavLink>
-                        <NavLink to="/createproject/" className={({ isActive }) => `flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                        <NavLink to="/createproject/" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Associated Projects</p>
                         </NavLink>
 
-                        <div className="my-[5px]">
+                        <div className="pl-[8px]  my-[5px]">
                             <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
                                 <div className="flex items-center">
                                     <GoProjectRoadmap className="text-[22px] mt-[4px] mr-[12px]" />
                                     <p className="font-[500] text-[16px]">Projects</p>
                                 </div>
                                 {isArrowOpen ? (
-                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
-                                ) : (
                                     <MdKeyboardArrowDown className="ml-2" />
+                                ) : (
+                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
                                 )}
                             </div>
 
@@ -123,50 +174,23 @@ const Navbar = () => {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                             >
-                                {projects.map((project) => (                  
-                                  <div key={project._id}
-                                  className={({ isActive }) => `flex font-[500] text-[#363636] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                  <button onClick={() => handleProjectClick(project._id)}>
-                                            {project.name}
-                                        </button>
-                                    </div>
-                                ))}
+                                <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
+                                    {projects.map((project) => (
+                                        <div key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
+                                            <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
+                                                {project.name.charAt(0)}
+                                            </div>
+                                            <button className='ml-[8px] font-[600]' onClick={() => handleProjectClick(project._id)}>
+                                                {project.name}
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
                             </motion.div>
                         </div>
 
 
-                        <div className="my-[5px]">
-                            <div className="ml-[6px] text-lg flex items-center justify-between cursor-pointer" onClick={toogleOrderOpen}>
-                                <span className="font-semibold">Orders</span>
-                                {isOrderArrowOpen ? (
-                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
-                                ) : (
-                                    <MdKeyboardArrowDown className="ml-2" />
-                                )}
-                            </div>
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: isOrderArrowOpen ? 1 : 0, height: isOrderArrowOpen ? 'auto' : 0 }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                            >
-                                <NavLink to="/order-tracking" className={({ isActive }) => `ml-[15px] py-[6px] mt-[8px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
-                                    <MdList className="text-[26px] mr-[4px]" /><p className="text-[16px] mb-[1px] font-medium">Order Tracking</p>
-                                </NavLink>
-                                <NavLink to="/admin-orders-list" className={({ isActive }) => `ml-[15px] py-[6px] my-[12px] flex items-center ${isActive ? 'bg-red-50 text-red-800 font-bold' : 'hover:bg-red-50 hover:rounded-xl font-medium hover:text-red-900 text-red-50'} text-sm rounded-md px-[8px] w-[90%] flex flex-row`}>
-                                    <MdProductionQuantityLimits className="text-[26px] mr-[6px]" /><p className="text-[16px] mb-[1px] font-medium">Orders List</p>
-                                </NavLink>
-                            </motion.div>
-                        </div>
                     </div>
-
-                    <NavLink to="/categoryList" className={({ isActive }) => `flex mt-[10px] mb-[7px] font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
-                        <TbCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Categories</p>
-                    </NavLink>
-                    <NavLink to="/subCategoryList" className={({ isActive }) => `flex font-medium items-center py-[3px] px-2 rounded-md ${isActive ? 'bg-red-50 text-red-800' : 'hover:bg-red-50 hover:rounded-2xl hover:text-red-900 text-red-50'}`} >
-                        <MdOutlineCategory className="text-[22px] mb-[3px] mr-[4px]" /><p className="mb-[2px] text-[18px]">Sub-Categories</p>
-                    </NavLink>
 
                 </div>
             </div>

@@ -6,7 +6,7 @@ import { FaUsers } from 'react-icons/fa';
 import { IoMdPeople } from 'react-icons/io';
 import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
 
-import AboutPage from "../../Assets/HomePage1.jpg"
+import AboutPage from "../../Assets/1.jpg"
 
 const About = () => {
   // Animation variants
