@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreateProject from './CreateProject';
-import { FiMoreVertical } from 'react-icons/fi'; // For three-dot icon
-import { AiOutlinePlus } from 'react-icons/ai';  // For plus icon
+import { FiMoreVertical } from 'react-icons/fi';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -49,9 +49,9 @@ const ProjectList = () => {
         <h2 className='text-2xl font-bold'>Created Projects</h2>
         <button
           onClick={() => setShowModal(true)}
-          className='flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600'
+          className='flex items-center bg-blue-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
         >
-          <AiOutlinePlus className="mr-2" />
+          <AiOutlinePlus className="mr-2 text-[20px] bg-blue-300 text-blue-900 rounded-full" />
           Create New Project
         </button>
       </div>
