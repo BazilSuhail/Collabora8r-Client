@@ -18,6 +18,7 @@ import JoinedProjectDetails from "./Components/Projects/JoinedProjectDetails";
 import JoinedProjects from "./Components/Projects/JoinedaProjects";
 import AssignTasks from "./Components/Tasks/AssignTasks";
 import AssociatedProjects from "./Components/Projects/AssociatedProjects";
+import Dashboard from "./Components/HomePage";
 
 const AppContent = () => {
   const location = useLocation();
@@ -27,6 +28,8 @@ const AppContent = () => {
     <>
       {!hideNavbar && <Navbar />}
       <Routes> 
+        
+      <Route path="/" element={<Dashboard />} /> 
         <Route path="/about" element={<About />} /> 
 
         <Route path="/associated-projects" element={<AssociatedProjects />} />

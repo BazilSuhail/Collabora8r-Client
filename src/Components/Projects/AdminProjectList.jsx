@@ -56,20 +56,20 @@ const ProjectList = () => {
 
   return (
     <div className='xsx:ml-[265px] h-full pb-[250px] bg-gray-50 flex flex-col p-5'>
-      <div className="flex justify-between items-center">
+      <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
         <div className="flex items-center space-x-2">
           <FiFolder className="text-2xl text-gray-600" />
           <h2 className="text-2xl font-bold">Created Projects</h2>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className='flex items-center bg-gradient-to-r from-cyan-200 to-blue-100 text-blue-700 font-[600] px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
+          className='flex sm:mt-0 mt-[10px] ml-auto items-center w-[220px] bg-gradient-to-r from-cyan-200 to-blue-100 text-blue-700 font-[600] px-4 py-2 rounded-md shadow-md hover:bg-blue-600'
         >
           <AiOutlinePlus className="mr-2 text-[20px] text-blue-900 rounded-full" />
           Create New Project
         </button>
       </div>
-<p className='mt-[8px] mb-[15px] font-[500] text-gray-500' >List of All projects Adminstrated By you</p>
+      <p className='mt-[8px] mb-[15px] font-[500] text-gray-500' >List of All projects Adminstrated By you</p>
 
       {error && !projects.length && (
         <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
