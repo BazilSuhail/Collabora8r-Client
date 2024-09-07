@@ -131,13 +131,7 @@ const Dashboard = () => {
                 : 'text-yellow-600'
               }`}
           >
-            <span
-              className="text-[60px] font-extrabold leading-none tracking-tight"
-              style={{
-                color: 'inherit', // Use the dynamic colors based on status
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)', // Slight shadow for prominence
-              }}
-            >
+            <span className="text-[60px] font-[700]">
               {statusCounts[status]}
             </span>
             <span className="text-xl ml-2">tasks</span>
@@ -146,12 +140,11 @@ const Dashboard = () => {
       ))}
     </div>
 
-
     {/* Filters */}
-    <div className="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0">
-      <div className="flex space-x-4">
+    <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center mb-6 space-y-3 xl:space-y-4">
+      <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
         <button
-          className={`flex items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
             }`}
           onClick={() => setStatusFilter('All')}
         >
@@ -161,7 +154,7 @@ const Dashboard = () => {
         {['Not Started', 'In Progress', 'Completed'].map((status) => (
           <button
             key={status}
-            className={`flex items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
               }`}
             onClick={() => setStatusFilter(status)}
           >
@@ -173,9 +166,9 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="flex space-x-4">
+      <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
         <button
-          className={`flex items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
             }`}
           onClick={() => setDateFilter('All')}
         >
@@ -183,7 +176,7 @@ const Dashboard = () => {
           All Dates
         </button>
         <button
-          className={`flex items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Upcoming' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Upcoming' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
             }`}
           onClick={() => setDateFilter('Upcoming')}
         >
@@ -191,7 +184,7 @@ const Dashboard = () => {
           Upcoming
         </button>
         <button
-          className={`flex items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
+          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
             }`}
           onClick={() => setDateFilter('Missed')}
         >

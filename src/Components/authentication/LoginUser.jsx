@@ -20,7 +20,7 @@ const SignIn = () => {
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signin`, formData);
       localStorage.setItem('token', res.data.token);
-      navigate('/profile'); // Redirect to the profile page after sign-in
+      navigate('/');
     } catch (error) {
       console.error(error.response.data.error);
     }
