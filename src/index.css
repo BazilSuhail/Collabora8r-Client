@@ -6,27 +6,27 @@
 
 /* Customize the scrollbar for Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar { 
-  width: 7px; 
+  width: 8px; 
   height: 12px; 
 }
 #root{
   overflow-x: hidden;
 }
 ::-webkit-scrollbar-track {
-  background: #ffe6e6; 
+  background: #ffffff; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #a41717, #ff4f4f, #a41717); /* Gradient colors */
+  background: #686868; /* Gradient colors */
   border-radius: 10px; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d59292; 
+  background: #939393; 
 }
 
 /* Customize the scrollbar for Firefox */
 body {
   scrollbar-width: thin; 
-  scrollbar-color: #5a0000 #f1f1f1; 
+  scrollbar-color: #717171 #ffffff; 
 }

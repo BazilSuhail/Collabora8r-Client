@@ -151,7 +151,8 @@ const AssignTasks = () => {
     {success && <p className="text-green-500 mb-4">{success}</p>}
   
     <h3 className="text-lg font-semibold text-gray-700 mb-2">Existing Tasks</h3>
-    <table className="min-w-full bg-white border border-gray-300">
+    <div className='overflow-y-auto w-full'>
+    <table className="bg-white w-full border border-gray-300">
       <thead>
         <tr>
           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-600">Title</th>
@@ -163,12 +164,12 @@ const AssignTasks = () => {
       <tbody>
         {tasks.map((task) => (
           <tr key={task._id} className="hover:bg-gray-100">
-            <td className="py-2 px-4 border-b border-gray-300">{task.title}</td>
+            <td className="py-2 whitespace-nowrap font-[700] px-4 border-b border-gray-300">{task.title}</td>
             <td className="py-2 px-4 border-b border-gray-300">{task.description}</td>
-            <td className="py-2 px-4 border-b border-gray-300">
+            <td className="py-2 px-4 font-[600] text-gray-500 underline border-b border-gray-300">
               {task.assignedTo ? task.assignedTo.email : 'Unassigned'}
             </td>
-            <td className="py-2 px-4 border-b border-gray-300">
+            <td className="py-2 whitespace-nowrap px-4 border-b border-gray-300">
               <button 
                 onClick={() => handleEditTask(task)} 
                 className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
@@ -184,6 +185,7 @@ const AssignTasks = () => {
         ))}
       </tbody>
     </table>
+    </div>
   
     <h3 className="text-lg font-semibold text-gray-700 mt-6">{editingTaskId ? 'Edit Task' : 'Create New Task'}</h3>
     <form onSubmit={editingTaskId ? handleUpdateTask : handleCreateTask} className="space-y-4">
