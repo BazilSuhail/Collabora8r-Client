@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaPeopleRoof } from 'react-icons/fa6';
+import { FaEye } from 'react-icons/fa';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -67,7 +68,7 @@ const JoinedProjects = () => {
           <thead className='bg-gray-200'>
             <tr>
               <th className='p-3 text-left text-gray-600'>Project Name</th>
-              <th className='p-3 text-left text-gray-600'>Actions</th>
+              <th className='p-3 text-center text-gray-600'>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -89,11 +90,11 @@ const JoinedProjects = () => {
                     {project.name}
                   </span>
                 </td>
-                <td className='p-3 text-right'>
-                  <button className='text-blue-500 hover:text-blue-700'>
-                    View Details
+                <td className="p-2 text-center">
+                  <button onClick={() => handleProjectClick(project._id)} className='text-gray-600 hover:text-blue-600'>
+                    <FaEye className='text-2xl' />
                   </button>
-                </td>
+                  </td>
               </tr>
             ))}
           </tbody>
