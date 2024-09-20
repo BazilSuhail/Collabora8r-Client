@@ -1,56 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 // Constants for task statuses
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
+// Helper function to decode JWT
+function decodeJWT(token) {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) throw new Error('Invalid token format');
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return payload.id;
+  } catch (err) {
+    console.error('Failed to decode JWT:', err);
+    throw err;
+  }
+}
+
 // TaskCard Component - Draggable
-const TaskCard = ({ task, index }) => (
-  <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-    {(provided, snapshot) => (
-      <div
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        className={`p-4 bg-white shadow-md rounded-lg mb-4 transition-transform duration-300 ${
-          snapshot.isDragging ? 'opacity-50 scale-105' : 'opacity-100'
-        }`}
-      >
-        <h3 className="text-xl font-semibold text-gray-800">{task.title}</h3>
-        <p className="text-gray-600">Project: {task.projectName}</p>
-        <p className="text-sm text-gray-500">Due: {new Date(task.dueDate).toLocaleDateString()}</p>
-      </div>
-    )}
-  </Draggable>
-);
+const TaskCard = ({ task, moveTask }) => {
+  const [, drag] = useDrag({
+    type: 'TASK',
+    item: { id: task._id, status: task.status },
+  });
+
+  return (
+    <div ref={drag} className="p-4 bg-white shadow-md rounded-lg mb-4">
+      <h3 className="text-xl font-semibold text-gray-800">{task.title || 'Untitled Task'}</h3>
+      <p className="text-gray-600">Project: {task.projectId || 'N/A'}</p>
+      <p className="text-sm text-gray-500">Due: {task.dueDate ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString() : 'N/A'}</p>
+    </div>
+  );
+};
 
 // Column Component - Drop Area for tasks
-const Column = ({ status, tasks }) => (
-  <Droppable droppableId={status}>
-    {(provided) => (
-      <div
-        ref={provided.innerRef}
-        {...provided.droppableProps}
-        className="w-full p-4 bg-gray-100 rounded-lg shadow-md"
-      >
-        <h2 className="text-xl font-semibold mb-4">{status}</h2>
-        {tasks.map((task, index) => (
-          <TaskCard key={task.id} task={task} index={index} />
-        ))}
-        {provided.placeholder}
+const Column = ({ status, tasks, moveTask }) => {
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: 'TASK',
+    drop: (item) => moveTask(item.id, status),
+    canDrop: (item) => item.status !== status,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
+  return (
+    <div ref={drop} className={`w-full p-4 bg-gray-100 rounded-lg shadow-md ${isOver && canDrop ? 'bg-green-200' : ''}`}>
+      <h2 className="text-xl font-semibold mb-4">{status}</h2>
+      {tasks.map((task) => (
+        <TaskCard key={task._id} task={task} moveTask={moveTask} />
+      ))}
+    </div>
+  );
+};
+
+// Confirmation Modal Component
+const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-4 rounded shadow-lg">
+        <h2 className="text-xl font-bold mb-4">Are you sure you want to update the tasks' status?</h2>
+        <div className="flex justify-between">
+          <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={onConfirm}>
+            Confirm
+          </button>
+        </div>
       </div>
-    )}
-  </Droppable>
-);
+    </div>
+  );
+};
 
 // Main Workflow Component
 const Workflow = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [updateButtonEnabled, setUpdateButtonEnabled] = useState(false);
-  const [movedTasks, setMovedTasks] = useState([]);
+  const [updatedTasks, setUpdatedTasks] = useState({});
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -63,7 +98,13 @@ const Workflow = () => {
           `${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setTasks(response.data.tasks);
+
+        const initialTasks = STATUS_TYPES.reduce((acc, status) => {
+          acc[status] = response.data.tasks.filter(task => task.status === status);
+          return acc;
+        }, {});
+
+        setTasks(initialTasks);
       } catch (err) {
         setError(err.message || 'Error fetching tasks');
       } finally {
@@ -75,76 +116,72 @@ const Workflow = () => {
   }, []);
 
   const moveTask = (taskId, newStatus) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, status: newStatus } : task
-    );
-    setTasks(updatedTasks);
-    setMovedTasks([...movedTasks, { id: taskId, status: newStatus }]);
-    setUpdateButtonEnabled(true);
-  };
+    setTasks((prevTasks) => {
+      const task = Object.values(prevTasks).flat().find(t => t._id === taskId);
+      const updatedTask = { ...task, status: newStatus };
 
-  const updateTasks = () => {
-    alert('Tasks updated!');
-    movedTasks.forEach((task) => {
-      console.log(`Task ID: ${task.id}, New Status: ${task.status}`);
+      setUpdatedTasks((prev) => ({ ...prev, [taskId]: newStatus }));
+
+      const updatedTasks = { ...prevTasks };
+      updatedTasks[task.status] = updatedTasks[task.status].filter(t => t._id !== taskId);
+      updatedTasks[newStatus] = [...(updatedTasks[newStatus] || []), updatedTask];
+
+      return updatedTasks;
     });
-    setUpdateButtonEnabled(false);
   };
 
-  const handleDragEnd = (result) => {
-    const { source, destination, draggableId } = result;
+  const handleUpdate = async () => {
+    setModalOpen(true);
+  };
 
-    if (!destination) return;
+  const confirmUpdate = async () => {
+    const updates = Object.entries(updatedTasks).map(([taskId, newStatus]) => ({ id: taskId, status: newStatus }));
 
-    if (source.droppableId !== destination.droppableId) {
-      moveTask(parseInt(draggableId), destination.droppableId);
+    updates.forEach(({ id, status }) => {
+      console.log(`Task ID: ${id}, New Status: ${status}`);
+    });
+
+    try {
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/projecttasks/tasks/update`, { updates });
+      console.log('All tasks updated successfully');
+    } catch (error) {
+      console.error('Error updating tasks:', error);
+    } finally {
+      setUpdatedTasks({});
+      setModalOpen(false);
     }
   };
 
   if (loading) return <p className="text-center">Loading tasks...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  // Filter tasks by status
-  const filteredTasks = (status) => tasks.filter((task) => task.status === status);
+  const backend = window.matchMedia('(pointer: coarse)').matches ? TouchBackend : HTML5Backend;
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
+    <DndProvider backend={backend}>
+      <div className="min-h-screen lg:pl-[280px] xl:pl-[287px] py-6 bg-gray-100">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
 
-      <div className="text-center mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {STATUS_TYPES.map((status) => (
+            <Column key={status} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
+          ))}
+        </div>
+
         <button
-          className={`px-4 py-2 rounded-lg shadow-md text-white font-semibold transition-colors duration-200 ${
-            updateButtonEnabled ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
-          }`}
-          onClick={updateTasks}
-          disabled={!updateButtonEnabled}
+          onClick={handleUpdate}
+          className="mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+          disabled={Object.keys(updatedTasks).length === 0}
         >
           Update Tasks
         </button>
-      </div>
 
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {STATUS_TYPES.map((status) => (
-            <Column key={status} status={status} tasks={filteredTasks(status)} />
-          ))}
-        </div>
-      </DragDropContext>
-    </div>
+        <ConfirmationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} onConfirm={confirmUpdate} />
+      </div>
+    </DndProvider>
   );
 };
 
-// Helper function to decode JWT (replace this with your own implementation)
-function decodeJWT(token) {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) throw new Error('Invalid token format');
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.id;
-  } catch (err) {
-    console.error('Failed to decode JWT:', err);
-    throw err;
-  }
-}
+
 
 export default Workflow;

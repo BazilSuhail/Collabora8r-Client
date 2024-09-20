@@ -101,127 +101,136 @@ const Dashboard = () => {
   }
 
   return (
-  <div className={`ml-auto xsx:ml-[265px] ${tasks.length < 4 ? 'h-screen' : 'min-h-screen' } bg-gray-100 p-6`}>
+    <div className={`ml-auto xsx:ml-[265px] ${tasks.length < 4 ? 'h-screen' : 'min-h-screen'} bg-gray-100 p-6`}>
 
-    <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-      Task Manager for {userName}
-    </h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        Task Manager for {userName}
+      </h1>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-      {['Not Started', 'In Progress', 'Completed'].map((status) => (
-        <div
-          key={status}
-          className="flex justify-between items-end p-6 bg-white text-white shadow-md rounded-lg transform transition duration-300 hover:scale-105"
-        >
-          <div>
-
-            {status === 'Not Started'
-              ? <FaTasks className="text-4xl text-gray-500 mb-4" />
-              : status === 'Completed'
-                ? <FaTimesCircle className="text-4xl text-gray-500 mb-4" />
-                : <FaHourglassHalf className="text-4xl text-gray-500 mb-4" />
-            }
-            <h2 className="text-xl text-cyan-950 font-semibold mb-2">{status}</h2>
-          </div>
-          <p
-            className={`text-lg font-bold ${status === 'Not Started'
-              ? 'text-blue-600'
-              : status === 'Completed'
-                ? 'text-green-600'
-                : 'text-yellow-600'
-              }`}
-          >
-            <span className="text-[60px] font-[700]">
-              {statusCounts[status]}
-            </span>
-            <span className="text-xl ml-2">tasks</span>
-          </p>
-        </div>
-      ))}
-    </div>
-
-    {/* Filters */}
-    <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center mb-6 space-y-3 xl:space-y-4">
-      <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
-        <button
-          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
-            }`}
-          onClick={() => setStatusFilter('All')}
-        >
-          <FaRedo className="mr-2" />
-          All Tasks
-        </button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {['Not Started', 'In Progress', 'Completed'].map((status) => (
-          <button
+          <div
             key={status}
-            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
-              }`}
-            onClick={() => setStatusFilter(status)}
+            className="flex justify-between items-end p-6 bg-white text-white shadow-md rounded-lg transform transition duration-300 hover:scale-105"
           >
-            {status === 'Not Started' && <FaHourglassHalf className="mr-2" />}
-            {status === 'In Progress' && <FaCheckCircle className="mr-2" />}
-            {status === 'Completed' && <FaTimesCircle className="mr-2" />}
-            {status}
-          </button>
+            <div>
+
+              {status === 'Not Started'
+                ? <FaTasks className="text-4xl text-gray-500 mb-4" />
+                : status === 'Completed'
+                  ? <FaTimesCircle className="text-4xl text-gray-500 mb-4" />
+                  : <FaHourglassHalf className="text-4xl text-gray-500 mb-4" />
+              }
+              <h2 className="text-xl text-cyan-950 font-semibold mb-2">{status}</h2>
+            </div>
+            <p
+              className={`text-lg font-bold ${status === 'Not Started'
+                ? 'text-blue-600'
+                : status === 'Completed'
+                  ? 'text-green-600'
+                  : 'text-yellow-600'
+                }`}
+            >
+              <span className="text-[60px] font-[700]">
+                {statusCounts[status]}
+              </span>
+              <span className="text-xl ml-2">tasks</span>
+            </p>
+          </div>
         ))}
       </div>
 
-      <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
-        <button
-          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
-            }`}
-          onClick={() => setDateFilter('All')}
-        >
-          <FaFilter className="mr-2" />
-          All Dates
-        </button>
-        <button
-          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Upcoming' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
-            }`}
-          onClick={() => setDateFilter('Upcoming')}
-        >
-          <FaCalendar className="mr-2" />
-          Upcoming
-        </button>
-        <button
-          className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
-            }`}
-          onClick={() => setDateFilter('Missed')}
-        >
-          <FaTimesCircle className="mr-2" />
-          Missed
-        </button>
-      </div>
-    </div>
-
-    {/* Task List */}
-    <div className="grid gap-4">
-      {filteredTasks.length > 0 ? (
-        filteredTasks.map((task) => (
-          <div
-            key={task.id}
-            className="p-4 bg-white shadow-md rounded-lg transform transition duration-300 hover:scale-[1.01]"
+      {/* Filters */}
+      <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center mb-6 space-y-3 xl:space-y-4">
+        <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
+          <button
+            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+              }`}
+            onClick={() => setStatusFilter('All')}
           >
-            <div className="flex justify-between">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">{task.title}</h3>
-                <p className="text-gray-600">Project: {task.projectName}</p>
-                <p className="text-sm text-gray-500">
-                  Due: {new Date(task.dueDate).toLocaleDateString()}
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaCalendar className="text-gray-600" />
-                <span className="text-gray-700">{task.status}</span>
+            <FaRedo className="mr-2" />
+            All Tasks
+          </button>
+          {['Not Started', 'In Progress', 'Completed'].map((status) => (
+            <button
+              key={status}
+              className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+                }`}
+              onClick={() => setStatusFilter(status)}
+            >
+              {status === 'Not Started' && <FaHourglassHalf className="mr-2" />}
+              {status === 'In Progress' && <FaCheckCircle className="mr-2" />}
+              {status === 'Completed' && <FaTimesCircle className="mr-2" />}
+              {status}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
+          <button
+            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+              }`}
+            onClick={() => setDateFilter('All')}
+          >
+            <FaFilter className="mr-2" />
+            All Dates
+          </button>
+          <button
+            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Upcoming' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+              }`}
+            onClick={() => setDateFilter('Upcoming')}
+          >
+            <FaCalendar className="mr-2" />
+            Upcoming
+          </button>
+          <button
+            className={`flex whitespace-nowrap items-center px-4 py-2 rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
+              }`}
+            onClick={() => setDateFilter('Missed')}
+          >
+            <FaTimesCircle className="mr-2" />
+            Missed
+          </button>
+        </div>
+      </div>
+
+      {/* Task List */}
+      <div className="grid gap-4">
+        {filteredTasks.length > 0 ? (
+          filteredTasks.map((task) => (
+            <div
+              key={task.id}
+              className="p-4 bg-white shadow-md rounded-lg transform transition duration-300 hover:scale-[1.01]"
+            >
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-800">{task.title}</h3>
+                  <p className="text-gray-600">Project: {task.projectName}</p>
+                  <p className="text-sm text-gray-500">
+                    Due: {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span
+                    className={`text-[15px] font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
+                        ? 'text-blue-600 bg-blue-100'
+                        : task.status === 'Completed'
+                          ? 'text-green-600 bg-green-100'
+                          : 'text-yellow-600 bg-yellow-100'
+                      }`}
+                  >
+                    {task.status}
+                  </span>
+
+                </div>
               </div>
             </div>
-          </div>
-        ))
-      ) : (
-        <p className="text-center text-gray-600">No tasks found for the selected filters.</p>
-      )}
+          ))
+        ) : (
+          <p className="text-center text-gray-600">No tasks found for the selected filters.</p>
+        )}
+      </div>
     </div>
-  </div>
 
   );
 };

@@ -5,8 +5,7 @@ import { FaRegStar, FaRegHandshake, FaUserTie } from 'react-icons/fa';
 import { FaUsers } from 'react-icons/fa';
 import { IoMdPeople } from 'react-icons/io';
 import { GiCheckMark, GiFactory, GiPencilBrush } from 'react-icons/gi';
-
-import AboutPage from "../../Assets/1.jpg"
+ 
 
 const About = () => {
   // Animation variants
@@ -42,11 +41,14 @@ const About = () => {
           <div className="container mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               <div className="md:w-1/2">
-                <img
+                {/*<img
                   src={AboutPage}
                   alt="Texleath Industries"
                   className="w-full h-auto object-cover rounded-lg shadow-lg"
-                />
+                />*/}
+                <div  className="w-full h-auto object-cover rounded-lg shadow-lg">
+
+                </div>
               </div>
               <div className="md:w-1/2 md:p-8 ">
                 <h2 className="text-4xl font-bold mb-6 text-red-600">

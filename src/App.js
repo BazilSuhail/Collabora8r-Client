@@ -11,11 +11,13 @@ import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
 import TermsOfService from "./Components/Pages/TermOfService";
 import CustomerSupport from "./Components/Pages/CustomerSupport";
 import About from "./Components/Pages/About";
+
+
 import CreateProject from "./Components/Projects/CreateProject";
 import AdminProjectList from "./Components/Projects/AdminProjectList";
 import ProjectDetail from "./Components/Projects/ProjectDetails";
-import JoinedProjectDetails from "./Components/Projects/JoinedProjectDetails";
-import JoinedProjects from "./Components/Projects/JoinedaProjects";
+import JoinedProjectDetails from "./Components/JoinedProjects/JoinedProjectDetails";
+import JoinedProjects from "./Components/JoinedProjects/JoinedaProjects";
 import AssignTasks from "./Components/Tasks/AssignTasks";
 import AssociatedProjects from "./Components/Projects/AssociatedProjects";
 import Dashboard from "./Components/Dashboard";

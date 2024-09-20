@@ -1,6 +1,7 @@
 import React from 'react'
 import ProjectList from './AdminProjectList' 
-import JoinedProjects from './JoinedaProjects'
+import JoinedProjects from '../JoinedProjects/JoinedaProjects'
+
 const AssociatedProjects = () => {
   return (
     <div className='bg-gray-50'>
