@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // For retrieving projectId from URL
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
+import { FaComments } from 'react-icons/fa';
 
 // Badge component for priority or other labels
 const Badge = ({ label, type }) => {
@@ -9,29 +10,69 @@ const Badge = ({ label, type }) => {
 };
 
 // Task Component
-const Task = ({ task, user }) => (
-  <div className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg">
-    <div className="flex justify-between items-center">
-      <h3 className="text-lg font-semibold">{task.title}</h3>
-      <Badge label={task.priority} type={task.priority.toLowerCase()} />
-    </div>
-    <p className="text-gray-600 mt-2">{task.description || 'No description provided'}</p>
-    <p className="text-sm text-gray-500 mt-1">Due: {new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
-    <div className="flex items-center mt-4">
-      <img src={`/Assets/${user.avatar}.jpg`} alt={user.name} className="w-8 h-8 rounded-full border-2 border-gray-300 mr-2" />
-      <div>
-        <p className="text-sm font-medium">{user.name}</p>
-        <p className="text-xs text-gray-500">{user.email}</p>
+const Task = ({ task, user }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Function to handle navigation on task click
+  const handleTaskClick = () => {
+    navigate(`/task/${task._id}`); // Navigate to the task detail page with taskId
+  };
+
+  return (
+    <div
+      onClick={handleTaskClick} // Add onClick event to navigate
+      className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg cursor-pointer"
+    >
+      {/* Task Title and Priority */}
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="text-lg font-semibold">{task.title}</h3>
+        <Badge label={task.priority} type={task.priority.toLowerCase()} />
+      </div>
+
+      {/* Unique Assigned To Section */}
+      <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded-lg flex items-center mb-4">
+        <div className="flex-shrink-0 text-blue-500 font-bold mr-2">Assigned to:</div>
+        <div className="flex items-center">
+          <img
+            src={`/Assets/${user.avatar}.jpg`}
+            alt={user.name}
+            className="w-10 h-10 rounded-full border-2 border-blue-300 mr-3"
+          />
+          <div>
+            <p className="text-sm font-medium text-blue-900">{user.name}</p>
+            <p className="text-xs text-blue-700">{user.email}</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      {/* Due Date and Created Date */}
+      <div className="flex justify-between text-gray-500 text-sm mb-4">
+        <div>
+          <p className="font-semibold">Due Date</p>
+          <p>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
+        </div>
+        <div>
+          <p className="font-semibold">Created On</p>
+          <p>{new Date(task.createdAt.$date || task.createdAt).toLocaleDateString()}</p>
+        </div>
+      </div>
+
+      {/* Comments Section */}
+      <div className="flex items-center mt-4 text-gray-600">
+        <FaComments className="mr-2" />
+        <span className="font-medium">
+          {task.comments.length} {task.comments.length === 1 ? 'Comment' : 'Comments'}
+        </span>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// Main Component to display tasks for a project
 const ProjectTasks = () => {
-  const { projectId } = useParams(); // Get project ID from the URL
+  const { projectId } = useParams();
   const [tasks, setTasks] = useState([]);
-  const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,7 +80,6 @@ const ProjectTasks = () => {
     const fetchProjectTasks = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`);
-        setProject(response.data.project);
         setTasks(response.data.tasks);
       } catch (err) {
         setError('Error fetching project tasks');
@@ -51,20 +91,34 @@ const ProjectTasks = () => {
     fetchProjectTasks();
   }, [projectId]);
 
-  if (loading) return <p>Loading tasks...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loader border-t-transparent border-solid rounded-full border-4 border-gray-300 h-12 w-12"></div>
+        <p className="ml-4">Loading tasks...</p>
+      </div>
+    );
+  }
+
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
-      <div className="bg-white p-5 rounded-lg mb-6 shadow">
-        <h1 className="text-2xl font-bold mb-2">{project?.name || 'Project Tasks'}</h1>
-        <p className="text-gray-500">{project?.description || 'No description available'}</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tasks.map(({ task, user }) => (
-          <Task key={task._id} task={task} user={user} />
-        ))}
-      </div>
+      {tasks.length === 0 ? (
+        <p className="text-gray-500 text-center">No tasks found for this project.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {tasks.length} tasks
+        </div>
+      )}
+
+      {tasks.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {tasks.map(({ task, user }) => (
+            <Task key={task._id} task={task} user={user} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -3,11 +3,9 @@ import axios from 'axios';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
-
-// Constants for task statuses
+ 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
-// Helper function to decode JWT
 function decodeJWT(token) {
   try {
     const parts = token.split('.');
@@ -20,7 +18,6 @@ function decodeJWT(token) {
   }
 }
 
-// TaskCard Component - Draggable
 const TaskCard = ({ task, moveTask }) => {
   const [, drag] = useDrag({
     type: 'TASK',
@@ -36,7 +33,6 @@ const TaskCard = ({ task, moveTask }) => {
   );
 };
 
-// Column Component - Drop Area for tasks
 const Column = ({ status, tasks, moveTask }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: 'TASK',
@@ -49,8 +45,16 @@ const Column = ({ status, tasks, moveTask }) => {
   });
 
   return (
-    <div ref={drop} className={`w-full p-4 bg-gray-100 rounded-lg shadow-md ${isOver && canDrop ? 'bg-green-200' : ''}`}>
-      <h2 className="text-xl font-semibold mb-4">{status}</h2>
+    <div ref={drop} className={`w-full py-4 pr-[15px] border-r-[3px] ${isOver && canDrop ? 'bg-green-200' : ''}`}>
+      <h2 className={`text-[17px]  rounded-[25px] py-[5px] font-semibold mb-4
+       ${status === 'Not Started'
+        ? 'bg-blue-100 text-blue-600 w-[140px] text-center'
+        : status === 'Completed'
+          ? 'text-green-600 bg-green-100  w-[120px] text-center'
+          : 'text-yellow-600 bg-yellow-100  w-[140px] text-center'
+        }`}>
+      {status}
+      </h2>
       {tasks.map((task) => (
         <TaskCard key={task._id} task={task} moveTask={moveTask} />
       ))}
@@ -58,7 +62,6 @@ const Column = ({ status, tasks, moveTask }) => {
   );
 };
 
-// Confirmation Modal Component
 const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
@@ -79,7 +82,6 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   );
 };
 
-// Main Workflow Component
 const Workflow = () => {
   const [tasks, setTasks] = useState({});
   const [loading, setLoading] = useState(true);

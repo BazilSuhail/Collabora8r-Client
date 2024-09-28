@@ -52,19 +52,16 @@ const Overview = () => {
         const token = localStorage.getItem('token');
         const userId = decodeJWT(token);
 
-        // Fetch tasks        
         const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         setTasks(tasksResponse.data.tasks);
 
-        // Fetch projects
         const projectResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Assign random color to each project
         const updatedProjects = projectResponse.data.map((project) => ({
           ...project,
           color: getRandomColor(),
@@ -84,7 +81,6 @@ const Overview = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   const now = new Date();
-  // Calculate task status counts for pie chart
   const taskStatusCounts = {
     'Not Started': tasks.filter((task) => task.status === 'Not Started').length,
     'In Progress': tasks.filter((task) => task.status === 'In Progress').length,
@@ -115,7 +111,6 @@ const Overview = () => {
       <h2 className="text-2xl font-semibold mb-4">Overview</h2>
 
       <h3 className="text-xl font-semibold mb-2">Task Status Breakdown</h3>
-      {/* Pie Chart for Task Status */}
       <div className='bg-white rounded-lg mb-[15px] shadow-md  grid md:grid-cols-2 grid-cols-1'>
         <motion.div
           className="ml-[25px] mt-[15px]"
@@ -131,21 +126,21 @@ const Overview = () => {
             </span>
           </div>
 
-          <div className="mb-[15px] flex items-center text-gray-700 lg:text-[25px]">
+          <div className="mb-[15px] scale-[0.8] mt-[30px] flex items-center text-gray-700 lg:text-[25px]">
             <FaCalendar className="bg-gray-500 mr-[5px] lg:mr-[10px] text-white rounded-full p-2 text-[33px] lg:text-[40px]" />
             <span>Scheduled: </span>
             <span className="font-semibold text-lg lg:text-[25px] ml-[8px]">
               {taskStatusCounts['Not Started']}
             </span>
           </div>
-          <div className="mb-[15px] flex items-center text-gray-700 lg:text-[25px]">
+          <div className="mb-[15px] scale-[0.8] flex items-center text-gray-700 lg:text-[25px]">
             <FaRunning className="bg-gray-500 mr-[5px] lg:mr-[10px] text-white rounded-full p-2 text-[33px] lg:text-[40px]" />
             <span>Ongoing: </span>
             <span className="font-semibold text-lg lg:text-[25px] ml-[8px]">
               {taskStatusCounts['In Progress']}
             </span>
           </div>
-          <div className="mb-[15px] flex items-center text-gray-700 lg:text-[25px]">
+          <div className="mb-[15px] scale-[0.8] flex items-center text-gray-700 lg:text-[25px]">
             <FaExclamationTriangle className="bg-gray-500 mr-[5px] lg:mr-[10px] text-white rounded-full p-2 text-[33px] lg:text-[40px]" />
             <span>Overdue: </span>
             <span className="font-semibold text-lg lg:text-[25px] ml-[8px]">
@@ -153,7 +148,7 @@ const Overview = () => {
             </span>
           </div>
         </motion.div>
-        <div className="mb-8 w-[350px] h-[300px]">
+        <div className="mb-8 md:scale-[1]  scale-[0.78] mx-auto xl:mt-[25px] w-[350px] h-[300px]">
           <Pie data={pieData} />
         </div>
       </div>

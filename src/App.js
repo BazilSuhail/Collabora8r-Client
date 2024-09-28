@@ -23,6 +23,7 @@ import AssociatedProjects from "./Components/Projects/AssociatedProjects";
 import Dashboard from "./Components/Dashboard";
 import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
+import TaskDetails from "./Components/Tasks/TaskDetails";
 
 const AppContent = () => {
   const location = useLocation();
@@ -40,14 +41,14 @@ const AppContent = () => {
         <Route path="/about" element={<About />} /> 
 
         <Route path="/workflow" element={<Workflow />} /> 
-
-        
+ 
 
         <Route path="/associated-projects" element={<AssociatedProjects />} />
 
         <Route path="/createproject" element={<CreateProject />} />
 
 
+        <Route path="/task/:taskId" element={<TaskDetails />} />
 
         <Route path="/projects" element={<AdminProjectList />} />
         <Route path="/projects/:projectId" element={<ProjectDetail />} />
