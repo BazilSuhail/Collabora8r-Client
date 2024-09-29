@@ -48,7 +48,7 @@ const AppContent = () => {
         <Route path="/createproject" element={<CreateProject />} />
 
 
-        <Route path="/task/:taskId" element={<TaskDetails />} />
+        <Route path="/task/:creatorId/:taskId" element={<TaskDetails />} />
 
         <Route path="/projects" element={<AdminProjectList />} />
         <Route path="/projects/:projectId" element={<ProjectDetail />} />

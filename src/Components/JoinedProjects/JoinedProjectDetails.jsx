@@ -173,6 +173,8 @@ const JoinedProjectDetails = () => {
           <div className="bg-white shadow-lg rounded-lg p-5 mb-5">
             <h2 className="text-3xl font-bold mb-2">{project.name}</h2>
             <p className="text-gray-700">{project.description}</p>
+            
+            <p className="text-gray-700">{project.createdBy}</p>
             {error.project && <p className="text-red-500">{error.project}</p>}
           </div>
           <button
@@ -317,7 +319,7 @@ const JoinedProjectDetails = () => {
                 )}
               </>
               :
-              <ProjectTasks />
+              <ProjectTasks creator={project.createdBy}/>
             }
           </div>
         </>

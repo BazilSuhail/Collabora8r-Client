@@ -1,35 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaComments } from 'react-icons/fa';
 
-// Badge component for priority or other labels
 const Badge = ({ label, type }) => {
   const badgeColor = type === 'high' ? 'bg-red-500' : type === 'medium' ? 'bg-yellow-400' : 'bg-green-500';
   return <span className={`text-xs font-bold text-white py-1 px-2 rounded ${badgeColor}`}>{label}</span>;
 };
+ 
+const Task = ({ task, user,creator }) => {
+  const navigate = useNavigate();
 
-// Task Component
-const Task = ({ task, user }) => {
-  const navigate = useNavigate(); // Initialize useNavigate
-
-  // Function to handle navigation on task click
   const handleTaskClick = () => {
-    navigate(`/task/${task._id}`); // Navigate to the task detail page with taskId
+    navigate(`/task/${creator}/${task._id}`);
   };
 
   return (
     <div
-      onClick={handleTaskClick} // Add onClick event to navigate
+      onClick={handleTaskClick}
       className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg cursor-pointer"
-    >
-      {/* Task Title and Priority */}
+    > 
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold">{task.title}</h3>
         <Badge label={task.priority} type={task.priority.toLowerCase()} />
       </div>
-
-      {/* Unique Assigned To Section */}
+ 
       <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded-lg flex items-center mb-4">
         <div className="flex-shrink-0 text-blue-500 font-bold mr-2">Assigned to:</div>
         <div className="flex items-center">
@@ -44,8 +39,6 @@ const Task = ({ task, user }) => {
           </div>
         </div>
       </div>
-
-
 
       {/* Due Date and Created Date */}
       <div className="flex justify-between text-gray-500 text-sm mb-4">
@@ -70,7 +63,7 @@ const Task = ({ task, user }) => {
   );
 };
 
-const ProjectTasks = () => {
+const ProjectTasks = ({creator}) => {
   const { projectId } = useParams();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,7 +108,7 @@ const ProjectTasks = () => {
       {tasks.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tasks.map(({ task, user }) => (
-            <Task key={task._id} task={task} user={user} />
+            <Task key={task._id} creator={creator} task={task} user={user} />
           ))}
         </div>
       )}

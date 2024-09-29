@@ -111,7 +111,7 @@ const Overview = () => {
       <h2 className="text-2xl font-semibold mb-4">Overview</h2>
 
       <h3 className="text-xl font-semibold mb-2">Task Status Breakdown</h3>
-      <div className='bg-white rounded-lg mb-[15px] shadow-md  grid md:grid-cols-2 grid-cols-1'>
+      <div className='bg-white overflow-x-hidden rounded-lg mb-[15px] shadow-md  grid md:grid-cols-2 grid-cols-1'>
         <motion.div
           className="ml-[25px] mt-[15px]"
           initial={{ x: -100, opacity: 0 }}

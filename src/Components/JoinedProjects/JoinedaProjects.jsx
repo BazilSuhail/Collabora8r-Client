@@ -23,8 +23,7 @@ const JoinedProjects = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
-        // Add random color to each project
+         
         const updatedProjects = response.data.map((project) => ({
           ...project,
           color: getRandomColor(),
