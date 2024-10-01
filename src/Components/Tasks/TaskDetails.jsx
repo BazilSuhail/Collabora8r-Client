@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BsPeopleFill } from 'react-icons/bs';
-import { FaClipboardList, FaTrashAlt, FaUserEdit } from 'react-icons/fa';
+import { FaClipboardList, FaSnowboarding, FaTrashAlt, FaUserEdit } from 'react-icons/fa';
 import { IoPersonSharp } from 'react-icons/io5';
 import { LuSendHorizonal } from 'react-icons/lu';
 import { IoMdDoneAll } from 'react-icons/io';
@@ -139,7 +139,7 @@ const TaskDetails = () => {
   };
 
   if (error) {
-    return <p className="pl-[287px] bg-gray-100 min-h-screen p-6">{error}</p>;
+    return <p className="pl-[287px] bg-white min-h-screen p-6">{error}</p>;
   }
 
   if (!task) {
@@ -185,7 +185,7 @@ const TaskDetails = () => {
 
         <div className="mt-2 xl:ml-[70px]">
           {comments.length === 0 ? (
-            <p className="text-gray-500">No comments yet.</p>
+            <div className="text-blue-500  w-full bg-100 flex py-[15px] pl-[6px] underline rounded-md"><FaSnowboarding className='mr-[8px] text-[25px]'/>No comments yet.</div>
           ) : (
             comments.map((comment) => (
               <div key={comment._id} className="mb-[25px] pb-[12px] border-b-[1.2px] border-gray-300">

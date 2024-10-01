@@ -204,11 +204,6 @@ const Navbar = () => {
                         </motion.div>
                     </div>
                     <motion.div
-                        key={isMenuOpen ? 'close' : 'menu'}
-                        initial={{ opacity: 0, rotate: isMenuOpen ? 180 : -180 }}
-                        animate={{ opacity: 1, rotate: 0 }}
-                        exit={{ opacity: 0, rotate: isMenuOpen ? -180 : 180 }}
-                        transition={{ duration: 0.3 }}
                         className="cursor-pointer text-gray-500"
                         onClick={handleMenuToggle}
                     >
@@ -225,9 +220,9 @@ const Navbar = () => {
                     {isMenuOpen && (
                         <motion.div
                             initial={{ width: 0 }}
-                            animate={{ width: "70vw", transition: { duration: 0.5 } }}
+                            animate={{ width: "100vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
-                            className="fixed inset-0 bg-navbar-color bg-white shadow-xl shadow-[#363636]  flex w-[70vw] flex-col h-screen px-[5px] py-3 z-30"
+                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-30"
                         >
                             <div className='my-[25px]'></div>
                             <motion.div
@@ -297,7 +292,7 @@ const Navbar = () => {
                                     >
                                         <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
                                             {projects.map((project) => (
-                                                <div key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
+                                                <div key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-full border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
                                                     <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
                                                         {project.name.charAt(0)}
                                                     </div>

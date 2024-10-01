@@ -3,6 +3,8 @@ import axios from 'axios';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { MdTask } from 'react-icons/md';
+import { FaCalendarAlt, FaProjectDiagram } from 'react-icons/fa';
  
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
@@ -25,11 +27,31 @@ const TaskCard = ({ task, moveTask }) => {
   });
 
   return (
-    <div ref={drag} className="p-4 bg-white shadow-md rounded-lg mb-4">
-      <h3 className="text-xl font-semibold text-gray-800">{task.title || 'Untitled Task'}</h3>
-      <p className="text-gray-600">Project: {task.projectId || 'N/A'}</p>
-      <p className="text-sm text-gray-500">Due: {task.dueDate ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString() : 'N/A'}</p>
+    <div
+    ref={drag}
+    className="p-6 bg-white shadow-lg rounded-lg mb-6 transition-transform transform hover:scale-105 hover:shadow-xl"
+  >
+    <div className="flex items-center mb-4">
+      <MdTask className="text-blue-500 text-2xl mr-3" />
+      <h3 className="text-2xl font-semibold text-gray-800">
+        {task.title || 'Untitled Task'}
+      </h3>
     </div>
+
+    <div className="flex items-center mb-2">
+      <FaProjectDiagram className="text-green-500 text-xl mr-2" />
+      <p className="text-gray-600 font-medium">Project: {task.projectName}</p>
+    </div>
+
+    <div className="flex items-center">
+      <FaCalendarAlt className="text-red-500 text-xl mr-2" />
+      <p className="text-sm text-gray-500">
+        Due: {task.dueDate
+          ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()
+          : 'N/A'}
+      </p>
+    </div>
+  </div>
   );
 };
 

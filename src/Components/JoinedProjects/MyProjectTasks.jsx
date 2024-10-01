@@ -1,14 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 import { FaComments } from 'react-icons/fa';
 
 const Badge = ({ label, type }) => {
   const badgeColor = type === 'high' ? 'bg-red-500' : type === 'medium' ? 'bg-yellow-400' : 'bg-green-500';
   return <span className={`text-xs font-bold text-white py-1 px-2 rounded ${badgeColor}`}>{label}</span>;
 };
-
-const Task = ({ task, user, creator }) => {
+ 
+const MyTask = ({ task, user,creator }) => {
   const navigate = useNavigate();
-
   const handleTaskClick = () => {
     navigate(`/task/${creator}/${task._id}`);
   };
@@ -17,12 +16,12 @@ const Task = ({ task, user, creator }) => {
     <div
       onClick={handleTaskClick}
       className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg cursor-pointer"
-    >
+    > 
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold">{task.title}</h3>
         <Badge label={task.priority} type={task.priority.toLowerCase()} />
       </div>
-
+ 
       <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded-lg flex items-center mb-4">
         <div className="flex-shrink-0 text-blue-500 font-bold mr-2">Assigned to:</div>
         <div className="flex items-center">
@@ -61,10 +60,8 @@ const Task = ({ task, user, creator }) => {
   );
 };
 
-const ProjectTasks = ({ creator, tasks }) => {
-  tasks.forEach(task => {
-    console.log(task);
-  });
+const MyProjectTasks = ({creator, tasks}) => { 
+
   return (
     <div className="min-h-screen p-6 bg-gray-100">
       {tasks.length === 0 ? (
@@ -78,7 +75,7 @@ const ProjectTasks = ({ creator, tasks }) => {
       {tasks.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tasks.map(({ task, user }) => (
-            <Task key={task._id} creator={creator} task={task} user={user} />
+            <MyTask key={task._id} creator={creator} task={task} user={user} />
           ))}
         </div>
       )}
@@ -86,4 +83,4 @@ const ProjectTasks = ({ creator, tasks }) => {
   );
 };
 
-export default ProjectTasks;
+export default MyProjectTasks;
