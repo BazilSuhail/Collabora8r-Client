@@ -58,7 +58,7 @@ const TaskDetails = () => {
     const fetchCreatorName = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/comments/${creatorId}/name`);
-        setCreatorName(response.data.name); // Extract the creator's name from the response
+        setCreatorName(response.data.name);
       } catch (err) {
         setError('Failed to fetch creator name');
       }
@@ -79,8 +79,17 @@ const TaskDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      const newComment = {
+        ...response.data.comment,
+        user: {
+          _id: currentUserId,
+          name: 'Reload Page',
+          email: '',
+          avatar: '1',
+        },
+      };
 
-      setComments((prev) => [...prev, response.data.comment]);
+      setComments((prev) => [...prev, newComment]);
       setCommentContent('');
     } catch (err) {
       console.error(err);
@@ -176,20 +185,21 @@ const TaskDetails = () => {
         <p className="mt-2 text-gray-700">{task.description}</p>
         <div className='h-[2px] mt-[35px] w-full bg-gray-300'></div>
 
-        <div className="flex items-center mb-[20px] mt-4 text-gray-600">
-          <BsPeopleFill className="mr-2 text-[20px]" />
-          <span className="font-medium">
-            {comments.length} {comments.length === 1 ? 'task comment' : 'task comments'}
-          </span>
-        </div>
+        {comments.length === 0 ?
+          <div className="text-blue-500  w-full bg-100 flex py-[15px] pl-[6px] underline rounded-md"><FaSnowboarding className='mr-[8px] text-[25px]' />No comments yet.</div>
+          :
+          <div className="flex items-center mb-[20px] mt-4 text-gray-600">
+            <BsPeopleFill className="mr-2 text-[20px]" />
+            <span className="font-medium">
+              {comments.length} {comments.length === 1 ? 'task comment' : 'task comments'}
+            </span>
+          </div>
+        }
 
         <div className="mt-2 xl:ml-[70px]">
-          {comments.length === 0 ? (
-            <div className="text-blue-500  w-full bg-100 flex py-[15px] pl-[6px] underline rounded-md"><FaSnowboarding className='mr-[8px] text-[25px]'/>No comments yet.</div>
-          ) : (
+          {comments.length !== 0 && (
             comments.map((comment) => (
               <div key={comment._id} className="mb-[25px] pb-[12px] border-b-[1.2px] border-gray-300">
-
                 <div className='flex items-center justify-between'>
                   <div className="flex items-center">
                     {comment.user && (
@@ -241,7 +251,6 @@ const TaskDetails = () => {
                 ) : (
                   <div>
                     <p className='text-[14px] mt-[8px]'>{comment.content}</p>
-
                   </div>
                 )}
               </div>
@@ -258,17 +267,15 @@ const TaskDetails = () => {
               Task Status
             </span>
           </div>
-          <div className='border border-gray-400 mx-auto rounded-lg py-2 mb-[15px] px-3'>
-            <p
-              className={`rounded-xl text-center py-[8px] font-semibold ${task.priority === 'High'
-                ? 'text-red-100 bg-red-800'
-                : task.priority === 'Medium'
-                  ? 'text-yellow-100 border bg-yellow-800'
-                  : 'text-green-100 bg-green-800'
-                }`}
-            >
-              {task.priority}
-            </p>
+          <div
+            className={`rounded-xl text-center py-[8px] font-semibold ${task.priority === 'High'
+              ? 'text-red-100 bg-red-800'
+              : task.priority === 'Medium'
+                ? 'text-yellow-100 border bg-yellow-800'
+                : 'text-green-100 bg-green-800'
+              }`}
+          >
+            {task.priority}
           </div>
           <button className="mt-2 text-[15px] text-white bg-blue-600 w-full rounded-md text-center py-[8px] font-semibold">
             Update Status

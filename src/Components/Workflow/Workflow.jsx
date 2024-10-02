@@ -4,8 +4,9 @@ import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { MdTask } from 'react-icons/md';
-import { FaCalendarAlt, FaProjectDiagram } from 'react-icons/fa';
- 
+import { FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
 function decodeJWT(token) {
@@ -20,7 +21,8 @@ function decodeJWT(token) {
   }
 }
 
-const TaskCard = ({ task, moveTask }) => {
+const TaskCard = ({ task,usersId }) => {
+  const navigate = useNavigate();
   const [, drag] = useDrag({
     type: 'TASK',
     item: { id: task._id, status: task.status },
@@ -28,34 +30,42 @@ const TaskCard = ({ task, moveTask }) => {
 
   return (
     <div
-    ref={drag}
-    className="p-6 bg-white shadow-lg rounded-lg mb-6 transition-transform transform hover:scale-105 hover:shadow-xl"
-  >
-    <div className="flex items-center mb-4">
-      <MdTask className="text-blue-500 text-2xl mr-3" />
-      <h3 className="text-2xl font-semibold text-gray-800">
-        {task.title || 'Untitled Task'}
-      </h3>
-    </div>
+      ref={drag}
+      onClick={() => {
+        navigate(`/task/${usersId}/${task._id}`);
+      }}
+      className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6 shadow-lg"
+    >
+      <div className="flex xsx:flex-row flex-col xsx:items-center xsx:justify-between">
+        <h3 className="text-[17px] xsx:text-[19px] flex items-center font-[600]">
+          <span className="bg-gray-400 p-[5px] xsx:p-[8px] rounded-full">
+            <MdTask className="text-white text-[17px] xsx:text-[20px]" />
+          </span>
+          <span className="ml-[8px] mt-[-3px]">{task.title || 'Untitled Task'}</span>
+        </h3>
+      </div>
 
-    <div className="flex items-center mb-2">
-      <FaProjectDiagram className="text-green-500 text-xl mr-2" />
-      <p className="text-gray-600 font-medium">Project: {task.projectName}</p>
-    </div>
-
-    <div className="flex items-center">
-      <FaCalendarAlt className="text-red-500 text-xl mr-2" />
-      <p className="text-sm text-gray-500">
-        Due: {task.dueDate
-          ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()
-          : 'N/A'}
+      <p className="text-[15px] ml-[35px] xsx:ml-[45px]">
+        <span className="text-red-500 mr-[5px]">Due:</span>
+        <span className="text-red-700 underline font-[600] rounded-xl">
+          {task.dueDate ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString() : 'N/A'}
+        </span>
       </p>
+
+      <div className="h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]"></div>
+
+      <div className='py-[12px] flex justify-between items-center'>
+        <p className='text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600]  bg-blue-800'>
+          {task.projectName}
+        </p>
+        <FaArrowRight className="text-[22px] text-gray-400 xsx:text-[25px]" />
+      </div>
     </div>
-  </div>
+
   );
 };
 
-const Column = ({ status, tasks, moveTask }) => {
+const Column = ({ status, tasks,usersId, moveTask }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: 'TASK',
     drop: (item) => moveTask(item.id, status),
@@ -70,15 +80,15 @@ const Column = ({ status, tasks, moveTask }) => {
     <div ref={drop} className={`w-full py-4 pr-[15px] border-r-[3px] ${isOver && canDrop ? 'bg-green-200' : ''}`}>
       <h2 className={`text-[17px]  rounded-[25px] py-[5px] font-semibold mb-4
        ${status === 'Not Started'
-        ? 'bg-blue-100 text-blue-600 w-[140px] text-center'
-        : status === 'Completed'
-          ? 'text-green-600 bg-green-100  w-[120px] text-center'
-          : 'text-yellow-600 bg-yellow-100  w-[140px] text-center'
+          ? 'bg-blue-100 text-blue-600 w-[140px] text-center'
+          : status === 'Completed'
+            ? 'text-green-600 bg-green-100  w-[120px] text-center'
+            : 'text-yellow-600 bg-yellow-100  w-[140px] text-center'
         }`}>
-      {status}
+        {status}
       </h2>
       {tasks.map((task) => (
-        <TaskCard key={task._id} task={task} moveTask={moveTask} />
+        <TaskCard key={task._id} usersId={usersId} task={task} moveTask={moveTask} />
       ))}
     </div>
   );
@@ -89,13 +99,13 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Are you sure you want to update the tasks' status?</h2>
-        <div className="flex justify-between">
-          <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={onClose}>
+      <div className="bg-white py-8 px-4 rounded-[18px] shadow-lg">
+        <h2 className="text-[18px] font-[500] mb-8">Are you sure you want to update the tasks' status?</h2>
+        <div className="flex justify-end">
+          <button className="bg-red-500 mr-[8px] text-white px-4 py-2 rounded-xl" onClick={onClose}>
             Cancel
           </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={onConfirm}>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-xl" onClick={onConfirm}>
             Confirm
           </button>
         </div>
@@ -111,6 +121,9 @@ const Workflow = () => {
   const [updatedTasks, setUpdatedTasks] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
 
+  
+  const [usersId, setUsersId] = useState('');
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -118,6 +131,7 @@ const Workflow = () => {
         if (!token) throw new Error('No token found, please sign in again.');
 
         const userId = decodeJWT(token);
+        setUsersId(userId);
         const response = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
@@ -183,12 +197,12 @@ const Workflow = () => {
 
   return (
     <DndProvider backend={backend}>
-      <div className="min-h-screen lg:pl-[280px] xl:pl-[287px] py-6 bg-gray-100">
+      <div className="min-h-screen xsx:pl-[280px] xl:pl-[287px] py-6 bg-gray-100">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {STATUS_TYPES.map((status) => (
-            <Column key={status} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
+            <Column key={status} usersId={usersId} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
           ))}
         </div>
 

@@ -1,26 +1,18 @@
 import { FaTimes } from 'react-icons/fa';
 
 const TeamMembers = ({ teamDetails, isOpen, onClose }) => {
-  if (!isOpen) return null; // Do not render if modal is not open
-
+  if (!isOpen) return null;  
   const gridCols = teamDetails.length > 12 ? 'grid-cols-1'
     : teamDetails.length > 6 ? 'grid-cols-2 lg:grid-cols-3'
       : 'grid-cols-1';
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white shadow-lg rounded-lg p-5 w-full max-w-4xl relative overflow-auto max-h-screen">
-        {/* Close button */}
-        <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-          onClick={onClose}
-        >
+    <div className="fixed inset-0 px-[25px] flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white shadow-lg rounded-lg p-5 w-full max-w-4xl relative overflow-auto max-h-screen"> 
+        <button className="absolute top-3 right-3 text-gray-500 hover:text-gray-700" onClick={onClose} >
           <FaTimes size={24} />
         </button>
-
         <h3 className="text-2xl font-semibold mb-5">Team Members</h3>
-
-        {/* Grid layout for team members */}
         <div className={`grid gap-4 ${gridCols}`}>
           {teamDetails.length > 0 ? (
             teamDetails.map((member) => (

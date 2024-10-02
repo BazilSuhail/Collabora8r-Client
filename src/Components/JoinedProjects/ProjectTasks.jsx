@@ -1,14 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { FaClipboardList, FaComments } from 'react-icons/fa';
 
-const Badge = ({ label, type }) => {
-  const badgeColor = type === 'high' ? 'bg-red-500' : type === 'medium' ? 'bg-yellow-400' : 'bg-green-500';
-  return <span className={`text-xs font-bold text-white py-1 px-2 rounded ${badgeColor}`}>{label}</span>;
-};
-
-const Task = ({ task, user, creator }) => {
+const MyTask = ({ task, user, creator }) => {
   const navigate = useNavigate();
-
   const handleTaskClick = () => {
     navigate(`/task/${creator}/${task._id}`);
   };
@@ -16,45 +10,40 @@ const Task = ({ task, user, creator }) => {
   return (
     <div
       onClick={handleTaskClick}
-      className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg cursor-pointer"
+      className="px-4 pt-4 mb-[15px] pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"
     >
-      <div className="flex justify-between items-center mb-3">
-        <div className='flex items-center space-x-2'>
-      <FaClipboardList className='text-gray-50 bg-[#9f9f9f] rounded-full  text-[35px] p-[8px]' />
-        <h3 className="text-lg font-semibold">{task.title}</h3>
-        </div>
-        <Badge label={task.priority} type={task.priority.toLowerCase()} />
-      </div>
+      <div className='flex xsx:flex-row flex-col xsx:items-center xsx:justify-between'>
+        <h1 className="text-[17px] xsx:text-[19px] flex items-center font-[600]"><span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'><FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' /></span><span className='ml-[8px] mt-[-3px]'>{task.title}</span></h1>
+        <p
+          className={`text-[15px] w-[120px] text-center xsx:block hidden font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
+            ? 'text-blue-600 bg-blue-100'
+            : task.status === 'Completed'
+              ? 'text-green-600 bg-green-100'
+              : 'text-yellow-600 bg-yellow-100'
+            }`}
+        >
+          {task.priority}
+        </p>
+      </div> 
 
-      <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded-lg flex items-center mb-4">
+      <div className="flex xsx:ml-[45px] xsx:pr-[10px] justify-between text-gray-500 text-[15px] mb-4">
+      <div>
+          <p className="font-semibold text-green-600">Created On</p>
+          <p className='text-center'>{new Date(task.createdAt.$date || task.createdAt).toLocaleDateString()}</p>
+        </div>
+        <div>         
+          <p className="font-semibold text-red-600">Due Date</p>
+          <p className='text-center'>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
+        </div>
+      </div>
+      
+      <div className="xsx:ml-[45px flex items-center my-[5px]">
         <div className="flex-shrink-0 text-blue-500 font-bold mr-2">Assigned to:</div>
-        <div className="flex items-center">
-          <img
-            src={`/Assets/${user.avatar}.jpg`}
-            alt={user.name}
-            className="w-10 h-10 rounded-full border-2 border-blue-300 mr-3"
-          />
-          <div>
-            <p className="text-sm font-medium text-blue-900">{user.name}</p>
-            <p className="text-xs text-blue-700">{user.email}</p>
-          </div>
-        </div>
+        <p className="text-[17px] underline font-medium text-blue-900">{user.name}</p>
       </div>
 
-      {/* Due Date and Created Date */}
-      <div className="flex justify-between text-gray-500 text-sm mb-4">
-        <div>
-          <p className="font-semibold">Due Date</p>
-          <p>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
-        </div>
-        <div>
-          <p className="font-semibold">Created On</p>
-          <p>{new Date(task.createdAt.$date || task.createdAt).toLocaleDateString()}</p>
-        </div>
-      </div>
-
-      {/* Comments Section */}
-      <div className="flex items-center mt-4 text-gray-600">
+      <div className='h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]'></div>
+      <div className="flex items-center my-[15px] text-gray-600">
         <FaComments className="mr-2" />
         <span className="font-medium">
           {task.comments.length} {task.comments.length === 1 ? 'Comment' : 'Comments'}
@@ -63,25 +52,24 @@ const Task = ({ task, user, creator }) => {
     </div>
   );
 };
-
+ 
 const ProjectTasks = ({ creator, tasks }) => {
-  tasks.forEach(task => {
-    console.log(task);
-  });
+
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
+    <div className="min-h-screen pb-6 xsx:px-6 bg-gray-100">
       {tasks.length === 0 ? (
         <p className="text-gray-500 text-center">No tasks found for this project.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {tasks.length} tasks
+        <div className="bg-white xsx:text-[22px] border-l-4 border-b-4 border-gray-300 p-3 rounded-lg flex items-center mb-4">
+          <div className="flex-shrink-0 text-gray-500 font-[600] mr-2"> Total Tasks:</div>
+          <p className="font-medium text-gray-900"> {tasks.length}</p>
         </div>
       )}
 
       {tasks.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
           {tasks.map(({ task, user }) => (
-            <Task key={task._id} creator={creator} task={task} user={user} />
+            <MyTask key={task._id} creator={creator} task={task} user={user} />
           ))}
         </div>
       )}

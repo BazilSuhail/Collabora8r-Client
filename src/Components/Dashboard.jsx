@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FaFilter, FaCalendar, FaCheckCircle, FaTimesCircle, FaHourglassHalf, FaRedo, FaClipboardList, FaRunning } from 'react-icons/fa';
+import { FaFilter, FaCalendar, FaCheckCircle, FaTimesCircle, FaHourglassHalf, FaRedo, FaClipboardList, FaRunning, FaArrowRight } from 'react-icons/fa';
 import axios from 'axios';
 import { ImCross } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
@@ -36,44 +36,41 @@ const Dashboard = () => {
   const [userName, setUserName] = useState('');
 
   const [usersId, setUsersId] = useState('');
-
-  // project badge colors
   const [projectColors, setProjectColors] = useState({});
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('token');
-  
+
         if (!token) {
           throw new Error('No token found, please sign in again.');
         }
-  
+
         const userId = decodeJWT(token);
         setUsersId(userId);
-  
+
         // Fetch user profile
         const profileResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+
         const { name } = profileResponse.data;
         setUserName(name);
-  
-        // Fetch tasks for the user using the decoded userId
+
         const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+
         const fetchedTasks = tasksResponse.data.tasks;
         setTasks(fetchedTasks);
         setFilteredTasks(fetchedTasks);
-  
+
         const colorMapping = {};
         fetchedTasks.forEach(project => {
           colorMapping[project._id] = getRandomColor();
         });
-  
+
         setProjectColors(colorMapping);
       } catch (err) {
         setError(err.message || 'Error fetching tasks');
@@ -81,10 +78,9 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-  
+
     fetchUserData();
-  }, []); // No need to add 'tasks' here
-  
+  }, []);
 
   const filterTasks = useCallback(() => {
     let filtered = tasks;
@@ -131,12 +127,11 @@ const Dashboard = () => {
           Hello,
           <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
         </div>
-      </section>
+      </section> 
 
       <section className='grid grid-cols-1 xsx:grid-cols-7 xsx:grid-rows-1'>
 
         <div className='col-span-2 mb-[15px] xsx:mx-[8px]'>
-
           <div className='flex mb-[15px] xsx:pl-[8px]'>
             <button
               className={`flex whitespace-nowrap mr-[12px] items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
@@ -146,16 +141,6 @@ const Dashboard = () => {
               <FaFilter className="mr-2" />
               All Dates
             </button>
-            {/*
-            <button
-              className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Upcoming' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
-                }`}
-              onClick={() => setDateFilter('Upcoming')}
-            >
-              <FaCalendar className="mr-2" />
-              In Progress
-            </button>
-            */}
             <button
               className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
                 }`}
@@ -224,13 +209,13 @@ const Dashboard = () => {
                     navigate(`/task/${usersId}/${task._id}`);
                   }}
                   key={task._id}
-                  className="p-4 bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"
+                  className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"
                 >
 
                   <div className='flex xsx:flex-row flex-col xsx:items-center xsx:justify-between'>
-                    <h1 className="text-[15px] xsx:text-[19px] flex items-center font-[600]"><span className='bg-gray-400 p-[8px] rounded-full'><FaClipboardList className='text-white   text-[20px]' /></span><span className='ml-[8px] mt-[-3px]'>{task.title}</span></h1>
+                    <h1 className="text-[17px] xsx:text-[19px] flex items-center font-[600]"><span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'><FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' /></span><span className='ml-[8px] mt-[-3px]'>{task.title}</span></h1>
                     <p
-                      className={`text-[11px] xsx:w-[120px] w-[100px] text-center xsx:ml-[40px] xl:text-[14px] font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
+                      className={`text-[15px] w-[120px] text-center xsx:block hidden font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
                         ? 'text-blue-600 bg-blue-100'
                         : task.status === 'Completed'
                           ? 'text-green-600 bg-green-100'
@@ -240,15 +225,30 @@ const Dashboard = () => {
                       {task.status}
                     </p>
                   </div>
-
-                  <p className="text-gray-600">Project: {task.projectName}</p>
-                  <span className={`text-[12px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task._id]}`}>
-                    {task.projectName}
-                  </span>
-                  <p className="text-[15px]">
+                  <p className='text-[14px] xsx:text-[15px] xsx:mt-0 mt-[8px] ml-[35px] xsx:ml-[45px] text-gray-800 font-[450]'>{task.description}</p>
+                  <p className="text-[15px] mt-[8px]  ml-[35px] xsx:ml-[45px] ">
                     <span className='text-red-500 mr-[5px]'>Due:</span> <span className='text-red-700 underline font-[600] rounded-xl '>{new Date(task.dueDate).toLocaleDateString()}</span>
                   </p>
 
+                  <div className='h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]'></div>
+                  <div className='py-[12px] hover:bg-gray-100 flex justify-between items-center'>
+                    <div className='flex items-center'>
+                      <p className={`text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task._id]}`}>
+                        {task.projectName}
+                      </p>
+                      <p
+                        className={`text-[11px] ml-[6px] xsx:hidden block w-[100px] text-center  xl:text-[14px] font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
+                          ? 'text-blue-600 bg-blue-100'
+                          : task.status === 'Completed'
+                            ? 'text-green-600 bg-green-100'
+                            : 'text-yellow-600 bg-yellow-100'
+                          }`}
+                      >
+                        {task.status}
+                      </p>
+                    </div>
+                    <FaArrowRight className='text-[22px] text-gray-400 xsx:text-[25px]' />
+                  </div>
 
                 </div>
               ))
@@ -259,7 +259,6 @@ const Dashboard = () => {
         </div>
       </section>
     </main>
-
   );
 };
 
