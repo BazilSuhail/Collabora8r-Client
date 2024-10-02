@@ -59,8 +59,7 @@ const JoinedProjectDetails = () => {
     };
 
     const fetchProjectTasks = async () => {
-      try {
-        //const token = localStorage.getItem('token');
+      try { 
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`);
 
         const tasks = response.data.tasks;

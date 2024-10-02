@@ -2,33 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./Styles.css";
-
-/* Customize the scrollbar for Webkit browsers (Chrome, Safari) */
-::-webkit-scrollbar { 
-  width: 8px; 
-  height: 12px; 
+ 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
 }
-#root{
+
+#root {
   overflow-x: hidden;
 }
+
 ::-webkit-scrollbar-track {
-  background: #ffffff; 
+  background: #ffffff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #686868; /* Gradient colors */
-  border-radius: 10px; 
+  background: #686868;
+  /* Gradient colors */
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #939393; 
+  background: #939393;
 }
 
 /* Customize the scrollbar for Firefox */
 body {
-  scrollbar-width: thin; 
-  scrollbar-color: #717171 #ffffff; 
+  scrollbar-width: thin;
+  scrollbar-color: #717171 #ffffff;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -37,6 +38,8 @@ body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

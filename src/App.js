@@ -4,13 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./Components/Navbar"; 
 import Login from "./Components/authentication/LoginUser";
 import Register from "./Components/authentication/RegisterUser";
-import Profile from "./Components/authentication/Profile"; 
-//import Footer from "./Components/Footer";
-import FAQPage from "./Components/Pages/Faq";
-import PrivacyPolicy from "./Components/Pages/PrivacyPolicy";
-import TermsOfService from "./Components/Pages/TermOfService";
-import CustomerSupport from "./Components/Pages/CustomerSupport";
-import About from "./Components/Pages/About";
+import Profile from "./Components/authentication/Profile";  
 
 
 import CreateProject from "./Components/Projects/CreateProject";
@@ -24,6 +18,7 @@ import Dashboard from "./Components/Dashboard";
 import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
 import TaskDetails from "./Components/Tasks/TaskDetails";
+import TasksTimeline from "./Components/TasksTimeline";
 
 const AppContent = () => {
   const location = useLocation();
@@ -37,11 +32,10 @@ const AppContent = () => {
         
       <Route path="/" element={<Dashboard />} />
       
-      <Route path="/overview" element={<Overview />} /> 
-        <Route path="/about" element={<About />} /> 
+      <Route path="/overview" element={<Overview />} />   
+        <Route path="/workflow" element={<Workflow />} />  
 
-        <Route path="/workflow" element={<Workflow />} /> 
- 
+        <Route path="/projects/tasks-timeline/:projectId" element={<TasksTimeline />} />
 
         <Route path="/associated-projects" element={<AssociatedProjects />} />
 
@@ -56,12 +50,7 @@ const AppContent = () => {
 
         <Route path="/joinedprojects" element={<JoinedProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
-
-
-        <Route path="/faqs" element={<FAQPage />} />
-        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
-        <Route path="/termsOfService" element={<TermsOfService />} />
-        <Route path="/customerSupport" element={<CustomerSupport />} />
+ 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

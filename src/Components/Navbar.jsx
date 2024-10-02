@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaBell, FaCubes } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 
-import texleathlogo from "../texleathlogo.svg";
+import collaboratorLogo from "../logo.png";
 import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
@@ -94,8 +94,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-
+        <nav> 
             <div className=" hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
@@ -190,7 +189,7 @@ const Navbar = () => {
                             animate={{ opacity: isMenuOpen ? 0 : 1 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <img src={texleathlogo} alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
+                            <img src={collaboratorLogo} alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
                         </motion.div>
                         <motion.div
                             className="text-[28px] font-bold"
