@@ -70,9 +70,8 @@ const Navbar = () => {
                 const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                const fetchedProjects = response.data; // Assuming this is an array of project objects
+                const fetchedProjects = response.data; 
 
-                // Assign a random color to each project and store it in the projectColors state
                 const colorMapping = {};
                 fetchedProjects.forEach(project => {
                     colorMapping[project._id] = getRandomColor();
@@ -93,7 +92,6 @@ const Navbar = () => {
     const handleProjectClick = (projectId) => {
         navigate(`/joinedprojects/${projectId}`);
     };
-
 
     return (
         <nav>

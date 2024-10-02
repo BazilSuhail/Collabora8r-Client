@@ -147,8 +147,8 @@ const TaskDetails = () => {
   }
 
   return (
-    <main className="xsx:pl-[287px] grid xsx:grid-cols-7 xsx:grid-rows-1  bg-gray-50 min-h-screen p-6">
-      <section className='col-span-5 xl:px-[25px]'>
+    <main className="xsx:pl-[287px] grid lg:grid-cols-7 xsx:grid-rows-1  bg-gray-50 min-h-screen p-6">
+      <section className='lg:col-span-5 lg:px-[25px]'>
 
         <h2 className="text-3xl flex items-center font-bold"><FaClipboardList className='text-blue-700 mr-[8px]' />{task.title}</h2>
 
@@ -248,12 +248,10 @@ const TaskDetails = () => {
             ))
           )}
         </div>
-
-
       </section>
-      <section className='col-span-2 px-[8px]'>
 
-        <div className="xl:px-[20px] py-[15px] mb-[25px] bg-white rounded-lg shadow-md border">
+      <section className='lg:col-span-2 lg:px-[8px]'>
+        <div className="  px-[20px] py-[15px] mb-[25px] bg-white rounded-lg shadow-md border">
           <div className="flex items-center pb-[3px] border-b-[2px] mb-[15px] mt-4 text-gray-600">
             <IoMdDoneAll className="mr-2 text-[28px]" />
             <span className="font-medium text-[22px]">
@@ -278,7 +276,7 @@ const TaskDetails = () => {
           <p className='text-gray-600 mt-[10px] italic fotn-[600] text-[13px] text-center'>Task Status Cannot be Updated After the Due Date</p>
         </div>
 
-        <div className="xl:p-[20px] bg-white rounded-lg shadow-md border">
+        <div className="p-[20px] bg-white rounded-lg shadow-md border">
           <div className="flex items-center mb-[20px] mt-4 text-gray-600">
             <IoPersonSharp className="mr-2 text-[20px]" />
             <span className="font-medium">
