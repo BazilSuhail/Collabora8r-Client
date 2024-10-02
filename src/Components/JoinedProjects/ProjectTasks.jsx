@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FaComments } from 'react-icons/fa';
+import { FaClipboardList, FaComments } from 'react-icons/fa';
 
 const Badge = ({ label, type }) => {
   const badgeColor = type === 'high' ? 'bg-red-500' : type === 'medium' ? 'bg-yellow-400' : 'bg-green-500';
@@ -19,7 +19,10 @@ const Task = ({ task, user, creator }) => {
       className="p-4 mb-4 bg-white border rounded-lg shadow-sm transition-shadow hover:shadow-lg cursor-pointer"
     >
       <div className="flex justify-between items-center mb-3">
+        <div className='flex items-center space-x-2'>
+      <FaClipboardList className='text-gray-50 bg-[#9f9f9f] rounded-full  text-[35px] p-[8px]' />
         <h3 className="text-lg font-semibold">{task.title}</h3>
+        </div>
         <Badge label={task.priority} type={task.priority.toLowerCase()} />
       </div>
 
