@@ -43,7 +43,7 @@ const EmailVerification = ({ onSuccess }) => {
   const handleVerifyOtp = () => {
     if (otp === generatedOtp) {
       setError('');
-      onSuccess(); // Call success callback
+    onSuccess(email); // Pass email to parent component
     } else {
       setError('Invalid OTP. Please try again.');
     }

@@ -4,20 +4,9 @@ import axios from 'axios';
 import { ImCross } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 
-function decodeJWT(token) {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      throw new Error('Invalid token format');
-    }
+import NoTasks from "../Assets/NoTasks.webp";
 
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.id;
-  } catch (err) {
-    console.error('Failed to decode JWT:', err);
-    throw err;
-  }
-}
+import decodeJWT from '../decodeJWT'; 
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -112,7 +101,7 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <p className="text-center">Loading tasks...</p>;
+    return <div className="ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6"></div>;
   }
 
   if (error === "Request failed with status code 401") {
@@ -120,7 +109,7 @@ const Dashboard = () => {
   }
 
   return (
-    <main className={`ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6`}>
+    <main className="ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6">
 
       <section className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
         <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[25px] lg:text-[35px] font-extrabold text-blue-700">
@@ -253,7 +242,10 @@ const Dashboard = () => {
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-600">No tasks found for the selected filters.</p>
+              <div className='flex  flex-col items-center '>
+                <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]'/>
+              <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+              </div>
             )}
           </div>
         </div>

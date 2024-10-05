@@ -12,10 +12,10 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleEmailSuccess = (email) => {
-    console.log("hehe mail ="+ email);
     setEmail(email);
     setStep(2);
   };
+  
 
   const handlePasswordNext = (password) => {
     setPassword(password);
