@@ -129,20 +129,21 @@ const TasksTimeline = ({ projectId }) => {
         },
     };
 
-
     return (
         <main>
             <div className='h-[4px] rounded-lg bg-gray-300 w-full my-[35px]'></div>
             {error.project && <p>{error.project}</p>}
             {project && (
-                <div className='bg-white lg:w-full w-[450px] overflow-auto py-[20px] shadow-lg border-[2px] rounded-xl px-3'>
+                <div className='bg-white lg:w-full w-[950px] overflow-auto py-[20px] shadow-lg border-[2px] rounded-xl px-3'>
                     <h2 className='text-[20px] font-[600]'><span className='text-white text-[17px] bg-blue-800 rounded-xl px-[15px] py-[4px]'>{project.name}</span> Tasks Timeline</h2>
-                    <Chart
-                        options={chartData.options}
-                        series={chartData.series}
-                        type="rangeBar"
-                        height={400}
-                    />
+                    <div className='overflow-x-auto'>
+                        <Chart
+                            options={chartData.options}
+                            series={chartData.series}
+                            type="rangeBar"
+                            height={400}
+                        />
+                    </div>
                 </div>
             )}
         </main>
