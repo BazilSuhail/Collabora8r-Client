@@ -6,6 +6,51 @@ import PasswordInput from '../Registration/PasswordInput';
 import UserDetails from '../Registration/UserDetails';
 
 import EmailVerificationLogo from "../../Assets/EmailVerification.svg";
+import { BiCheckCircle, BiCircle } from 'react-icons/bi';
+
+import collaboratorLogo from "../../logo.png";
+
+const StepProgress = ({ step }) => {
+  return (
+    <div className="flex items-center mx-auto mt-[35px]">
+      {/* First Step */}
+      <div className={`flex flex-col items-center`}>
+        <div className={`rounded-full h-10 w-10 flex items-center justify-center 
+          ${step >= 1 ? 'bg-green-500' : 'bg-gray-400'}`}>
+          {step >= 1 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+        </div>
+        <span className="text-[11px] font-[600] mt-2 text-gray-500">Email Authentication</span>
+      </div>
+
+      {/* Line between steps */}
+      <div className={`h-1 w-[105px] mx-2 ${step > 1 ? 'bg-green-500' : 'bg-gray-400'}`} />
+
+      {/* Second Step */}
+      <div className={`flex flex-col items-center`}>
+        <div className={`rounded-full h-10 w-10 flex items-center justify-center 
+          ${step >= 2 ? 'bg-green-500' : 'bg-gray-400'}`}>
+          {step >= 2 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+        </div>
+        <span className="text-[11px] mt-2 text-gray-500">Password Setup</span>
+      </div>
+
+      {/* Line between steps */}
+      <div className={`h-1 w-[105px] mx-2 ${step > 2 ? 'bg-green-500' : 'bg-gray-400'}`} />
+
+      {/* Third Step */}
+      <div className={`flex flex-col items-center`}>
+        <div className={`rounded-full h-10 w-10 flex items-center justify-center 
+          ${step >= 3 ? 'bg-green-500' : 'bg-gray-400'}`}>
+          {step >= 3 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+        </div>
+        <span className="text-[11px] mt-2 text-gray-500">Account Creation</span>
+      </div>
+    </div>
+  );
+};
+
+
+
 const Register = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
@@ -30,11 +75,11 @@ const Register = () => {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signup`, {
         ...data,
         email,
-        name, // Pass name in the data
+        name,
         password
       });
       localStorage.setItem('token', res.data.token);
-      navigate("/login"); // Navigate to login page
+      navigate("/login");
     } catch (error) {
       console.error(error.response?.data?.error || 'Error during sign up');
     }
@@ -42,16 +87,20 @@ const Register = () => {
 
   return (
 
-    <main className='h-screen w-screen grid grid-cols-2 bg-[#fafbfd] p-4'>
+    <main className='h-screen w-screen grid lg:grid-cols-2 bg-[#fafbfd] p-4'>
       <div className='items-center justify-center lg:flex hidden'> <img src={EmailVerificationLogo} alt="Profile" className="text-white" /></div>
-      <div className='flex flex-col justify-center px-[95px]'>
-        
-        <div className="flex justify-between">
-          <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
+      <div className='flex flex-col justify-center px-[18px] lg:px-[95px]'>
+        <div className="flex items-center">
+          <img src={collaboratorLogo} alt="Connection Failed" className="w-[38px] h-[38px]" />
+          <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
         </div>
+        <StepProgress step={step} />
         {step === 1 && <EmailVerification onSuccess={handleEmailSuccess} />}
         {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
         {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
+
+        <div className='w-[92%] mx-auto font-[600] my-[15px] bg-gray-400 rounded-md h-[2px]'></div>
+        <p className='mx-auto text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
       </div>
     </main>
   );

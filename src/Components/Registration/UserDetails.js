@@ -1,4 +1,6 @@
-import {useState } from 'react';
+import React, { useState } from 'react';
+import { AiOutlinePhone, AiOutlineCalendar } from 'react-icons/ai';
+import { BiUserCircle } from 'react-icons/bi'; // Icon for gender
 
 const UserDetails = ({ onSubmit, userEmail }) => {
   const [formData, setFormData] = useState({
@@ -19,40 +21,59 @@ const UserDetails = ({ onSubmit, userEmail }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center">
-       
-      <input
-        type="text"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        placeholder="Phone"
-        className="mb-4 p-3 bg-gray-700 text-white rounded-md w-full"
-        required
-      />
-      <select
-        name="gender"
-        value={formData.gender}
-        onChange={handleChange}
-        className="mb-4 p-3 bg-gray-700 text-white rounded-md w-full"
-        required
-      >
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-      <input
-        type="date"
-        name="dob"
-        value={formData.dob}
-        onChange={handleChange}
-        className="mb-6 p-3 bg-gray-700 text-white rounded-md w-full"
-        required
-      />
+    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
+      <h2 className="text-lg  text-center font-serif text-gray-400 my-[15px]">Enter Your Details</h2>
+
+      <div className="w-full relative mt-4 mb-6 flex items-center">
+        <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'>
+          <AiOutlinePhone className="text-gray-50 text-[22px]" />
+        </div>
+        <input
+          type="text"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="Phone"
+          className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+          required
+        />
+      </div>
+
+      <div className="w-full relative mt-4 mb-6 flex items-center">
+        <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'>
+          <BiUserCircle className="text-gray-50 text-[22px]" />
+        </div>
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+          required
+        >
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div className="w-full relative mt-4 mb-6 flex items-center">
+        <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'>
+          <AiOutlineCalendar className="text-gray-50 text-[22px]" />
+        </div>
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleChange}
+          className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+          required
+        />
+      </div>
+
       <button
         type="submit"
-        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md"
+        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 flex items-center justify-center"
       >
         Create Account
       </button>
