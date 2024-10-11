@@ -22,7 +22,7 @@ const EmailVerification = ({ onSuccess }) => {
     const otpCode = generateOtp();
     setGeneratedOtp(otpCode);
     console.log(otpCode);
-    setTimer(120); 
+    setTimer(120);
     setIsResendDisabled(true);
 
     try {
@@ -82,11 +82,11 @@ const EmailVerification = ({ onSuccess }) => {
   }, [timer]);
 
   return (
-    <div className='w-full'>
+    <div className='w-full xl:pr-[45px]'>
       {!otpSent ? (
         <>
           <h2 className="text-2xl text-center text-white mb-6">Verify Your Email</h2>
-          <div className="relative mb-4 flex items-center">            
+          <div className="relative mb-4 flex items-center">
             <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'><AiOutlineUser className="text-gray-50 text-[22px]" /></div>
             <div className="flex-1">
               <label
@@ -129,7 +129,7 @@ const EmailVerification = ({ onSuccess }) => {
           <div className='flex items-center underline justify-end'>
             <button
               onClick={handleSendOtp}
-              className="hover:text-blue-600 underline text-gray-700 font-[500] py-3 rounded-md transition duration-300 flex items-center justify-center"
+              className="hover:text-blue-100 bg-blue-700 rounded-lg text-white font-[500] px-[15px] py-[5px] transition duration-300 flex items-center justify-center"
             >
               Send OTP
               <IoSendSharp className="ml-[6px] text-[15px]" />
@@ -167,20 +167,21 @@ const EmailVerification = ({ onSuccess }) => {
               <p>You can resend the OTP now!</p>
             )}
           </div>
-          <button
-            onClick={handleVerifyOtp}
-            className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 mb-2 flex items-center justify-center"
-          >
-            <AiOutlineCheck className="mr-2" /> {/* Verify OTP icon */}
-            Verify OTP
-          </button>
-          <button
-            onClick={handleResendOtp}
-            className={`w-full ${isResendDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'} text-white py-3 rounded-md transition-colors duration-300`}
-            disabled={isResendDisabled}
-          >
-            Resend OTP
-          </button>
+          <div className='w-full px-[8px] flex justify-between gap-x-[6px]'>
+            <button
+              onClick={handleVerifyOtp}
+              className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 mb-2 flex items-center justify-center"
+            >
+              Verify OTP
+            </button>
+            <button
+              onClick={handleResendOtp}
+              className={`w-full ${isResendDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'} text-white py-3 rounded-md transition-colors duration-300`}
+              disabled={isResendDisabled}
+            >
+              Resend OTP
+            </button>
+          </div>
           {error && <p className="text-red-500 mt-4">{error}</p>}
         </>
       )}
