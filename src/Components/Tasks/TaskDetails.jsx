@@ -156,7 +156,7 @@ const TaskDetails = () => {
   }
 
   return (
-    <main className="xsx:pl-[287px] grid lg:grid-cols-7 xsx:grid-rows-1  bg-gray-50 min-h-screen p-6">
+    <main className="xsx:pl-[287px] grid lg:grid-cols-7 xsx:grid-rows-1  bg-white min-h-screen p-6">
       <section className='lg:col-span-5 lg:px-[25px]'>
 
         <h2 className="text-3xl flex items-center font-bold"><FaClipboardList className='text-blue-700 mr-[8px]' />{task.title}</h2>

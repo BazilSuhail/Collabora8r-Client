@@ -136,7 +136,7 @@ const TasksTimeline = ({ projectId }) => {
             {project && (
                 <div className='bg-white lg:w-full w-[950px] overflow-auto py-[20px] shadow-lg border-[2px] rounded-xl px-3'>
                     <h2 className='text-[20px] font-[600]'><span className='text-white text-[17px] bg-blue-800 rounded-xl px-[15px] py-[4px]'>{project.name}</span> Tasks Timeline</h2>
-                    <div className='overflow-x-auto'>
+                    <div className='overflow-x-auto pointer-events-none'>
                         <Chart
                             options={chartData.options}
                             series={chartData.series}

@@ -197,7 +197,7 @@ const Workflow = () => {
 
   return (
     <DndProvider backend={backend}>
-      <div className="min-h-screen xsx:pl-[280px] xl:pl-[287px] py-6 bg-gray-100">
+      <div className="min-h-screen xsx:pl-[280px] xl:pl-[287px] py-6 bg-white">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

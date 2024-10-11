@@ -82,7 +82,7 @@ const JoinedProjectDetails = () => {
   }, [projectId, loggedUser]);
 
   return (
-    <main className="xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-5">
+    <main className="xsx:ml-[265px] min-h-screen bg-white p-5">
       {project ? (
         <section>
 

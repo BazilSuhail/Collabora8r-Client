@@ -43,7 +43,7 @@ const JoinedProjects = () => {
 
   // Render conditional components
   return (
-    <div className='xsx:ml-[265px] bg-gray-50 flex flex-col p-5'>
+    <div className='xsx:ml-[265px] bg-white flex flex-col p-5'>
       <div className="flex items-center space-x-4">
         <FaPeopleRoof className="text-[32px] text-gray-600" />
         <h2 className="text-2xl font-bold">Joined Projects</h2>

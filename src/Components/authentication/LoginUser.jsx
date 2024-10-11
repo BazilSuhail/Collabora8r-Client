@@ -42,7 +42,7 @@ const SignIn = () => {
       <div className='items-center justify-center lg:flex hidden'>
         <img src={EmailVerificationLogo} alt="Profile" className="text-white" />
       </div>
-      <div className='flex flex-col justify-center px-[18px] lg:px-[95px]'>
+      <div className='flex flex-col justify-center px-[18px] md:px-[160px] lg:px-[95px]'>
         <div className="flex items-center">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[38px] h-[38px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>

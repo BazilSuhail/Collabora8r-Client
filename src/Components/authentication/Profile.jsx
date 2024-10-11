@@ -68,7 +68,7 @@ const Profile = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className='xsx:ml-[265px] bg-[#fefefe] flex flex-col'>
+    <div className='xsx:ml-[265px] bg-white flex flex-col'>
       <div className='bg-white border border-gray-300 shadow-lg rounded-lg p-6'>
         {/* Greeting Section */}
         <div className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">

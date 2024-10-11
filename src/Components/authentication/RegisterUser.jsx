@@ -19,11 +19,11 @@ const StepProgress = ({ step }) => {
           ${step >= 1 ? 'bg-green-500' : 'bg-gray-400'}`}>
           {step >= 1 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
         </div>
-        <span className="text-[11px] font-[600] mt-2 text-gray-500">Email Authentication</span>
+        <span className="text-[11px] text-center font-[600] mt-2 text-gray-500">Email Authentication</span>
       </div>
 
       {/* Line between steps */}
-      <div className={`h-1 w-[105px] mx-2 ${step > 1 ? 'bg-green-500' : 'bg-gray-400'}`} />
+      <div className={`h-1 w-[88px] md:w-[105px] mx-2 ${step > 1 ? 'bg-green-500' : 'bg-gray-400'}`} />
 
       {/* Second Step */}
       <div className={`flex flex-col items-center`}>
@@ -31,11 +31,11 @@ const StepProgress = ({ step }) => {
           ${step >= 2 ? 'bg-green-500' : 'bg-gray-400'}`}>
           {step >= 2 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
         </div>
-        <span className="text-[11px] mt-2 text-gray-500">Password Setup</span>
+        <span className="text-[11px] mt-2 text-center text-gray-500">Password Setup</span>
       </div>
 
       {/* Line between steps */}
-      <div className={`h-1 w-[105px] mx-2 ${step > 2 ? 'bg-green-500' : 'bg-gray-400'}`} />
+      <div className={`h-1 w-[88px] md:w-[105px] mx-2 ${step > 2 ? 'bg-green-500' : 'bg-gray-400'}`} />
 
       {/* Third Step */}
       <div className={`flex flex-col items-center`}>
@@ -43,7 +43,7 @@ const StepProgress = ({ step }) => {
           ${step >= 3 ? 'bg-green-500' : 'bg-gray-400'}`}>
           {step >= 3 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
         </div>
-        <span className="text-[11px] mt-2 text-gray-500">Account Creation</span>
+        <span className="text-[11px] text-center mt-2 text-gray-500">Account Creation</span>
       </div>
     </div>
   );
@@ -89,7 +89,7 @@ const Register = () => {
 
     <main className='h-screen w-screen grid lg:grid-cols-2 bg-[#fafbfd] p-4'>
       <div className='items-center justify-center lg:flex hidden'> <img src={EmailVerificationLogo} alt="Profile" className="text-white" /></div>
-      <div className='flex flex-col justify-center px-[18px] lg:px-[95px]'>
+      <div className='flex flex-col justify-center px-[1px] md:px-[160px] lg:px-[95px]'>
         <div className="flex items-center">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[38px] h-[38px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>

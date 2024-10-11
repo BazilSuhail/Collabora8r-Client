@@ -104,12 +104,12 @@ const Dashboard = () => {
     return <div className="ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6"></div>;
   }
 
-  if (error === "Request failed with status code 401") {
+  if (error === "No token found, please sign in again.") {
     navigate('/login');
   }
 
   return (
-    <main className="ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6">
+    <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
 
       <section className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
         <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[25px] lg:text-[35px] font-extrabold text-blue-700">
