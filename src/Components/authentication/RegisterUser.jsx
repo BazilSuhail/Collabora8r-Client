@@ -5,6 +5,7 @@ import EmailVerification from '../Registration/EmailVerification';
 import PasswordInput from '../Registration/PasswordInput';
 import UserDetails from '../Registration/UserDetails';
 
+import EmailVerificationLogo from "../../Assets/EmailVerification.svg";
 const Register = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
@@ -40,11 +41,19 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
-      {step === 1 && <EmailVerification onSuccess={handleEmailSuccess} />}
-      {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
-      {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
-    </div>
+
+    <main className='h-screen w-screen grid grid-cols-2 bg-[#fafbfd] p-4'>
+      <div className='items-center justify-center lg:flex hidden'> <img src={EmailVerificationLogo} alt="Profile" className="text-white" /></div>
+      <div className='flex flex-col justify-center px-[95px]'>
+        
+        <div className="flex justify-between">
+          <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
+        </div>
+        {step === 1 && <EmailVerification onSuccess={handleEmailSuccess} />}
+        {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
+        {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
+      </div>
+    </main>
   );
 };
 

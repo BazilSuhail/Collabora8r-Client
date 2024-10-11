@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import {useState } from 'react';
 
 const UserDetails = ({ onSubmit, userEmail }) => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // Pass all data back to parent component
+    onSubmit(formData);
   };
 
   return (
