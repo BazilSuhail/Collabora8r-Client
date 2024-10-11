@@ -20,15 +20,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-        className="mb-4 p-3 bg-gray-700 text-white rounded-md w-full"
-        required
-      />
+       
       <input
         type="text"
         name="phone"

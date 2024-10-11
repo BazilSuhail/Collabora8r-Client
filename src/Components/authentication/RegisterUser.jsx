@@ -8,14 +8,15 @@ import UserDetails from '../Registration/UserDetails';
 const Register = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState(''); // Store name separately
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailSuccess = (email) => {
+  const handleEmailSuccess = ({ name, email }) => { // Destructure both values
     setEmail(email);
+    setName(name); // Set name state
     setStep(2);
   };
-  
 
   const handlePasswordNext = (password) => {
     setPassword(password);
@@ -28,6 +29,7 @@ const Register = () => {
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signup`, {
         ...data,
         email,
+        name, // Pass name in the data
         password
       });
       localStorage.setItem('token', res.data.token);

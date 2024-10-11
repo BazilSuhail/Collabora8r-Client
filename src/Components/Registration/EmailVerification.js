@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 
 const EmailVerification = ({ onSuccess }) => {
+  const [name, setName] = useState(''); // Add a state for name
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
@@ -19,6 +20,7 @@ const EmailVerification = ({ onSuccess }) => {
 
     try {
       const templateParams = {
+        user_name: name,
         to_name: email,
         otp_code: otpCode,
       };
@@ -43,7 +45,7 @@ const EmailVerification = ({ onSuccess }) => {
   const handleVerifyOtp = () => {
     if (otp === generatedOtp) {
       setError('');
-    onSuccess(email); // Pass email to parent component
+      onSuccess({ name, email }); // Pass both name and email to parent component
     } else {
       setError('Invalid OTP. Please try again.');
     }
@@ -55,6 +57,15 @@ const EmailVerification = ({ onSuccess }) => {
         {!otpSent ? (
           <>
             <h2 className="text-2xl text-center text-white mb-6">Verify Your Email</h2>
+            <div className="mb-4">
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+              />
+            </div>
             <div className="mb-4">
               <input
                 type="email"
