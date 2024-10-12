@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
 import { AiOutlineCheck, AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
 import { IoSendSharp } from 'react-icons/io5';
+import axios from 'axios';
 
 const EmailVerification = ({ onSuccess }) => {
   const [name, setName] = useState('');
@@ -19,34 +20,43 @@ const EmailVerification = ({ onSuccess }) => {
   };
 
   const handleSendOtp = async () => {
-    const otpCode = generateOtp();
-    setGeneratedOtp(otpCode);
-    console.log(otpCode);
-    setTimer(120);
-    setIsResendDisabled(true);
-
     try {
+      // Check if email exists
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/check-email`, { email });
+      if (response.data.exists) {
+        console.log('Email already exists. Please use another email.')
+        setError('Email already exists. Please use another email.');
+        return;
+      }
+  
+      // If email doesn't exist, generate OTP and send
+      const otpCode = generateOtp();
+      setGeneratedOtp(otpCode);
+      console.log(otpCode);
+      setTimer(120);
+      setIsResendDisabled(true);
+  
       const templateParams = {
         user_name: name,
         to_name: email,
         otp_code: otpCode,
       };
-
+  
       await emailjs.send(
         process.env.REACT_APP_EMAILJS_SERVICE_ID,
         process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         templateParams,
         process.env.REACT_APP_EMAILJS_USER_ID
       );
-
+  
       setOtpSent(true);
       setError('');
     } catch (error) {
       setError('Failed to send OTP. Please try again.');
-      setOtpSent(true);
-      console.error('EmailJS error:', error);
+      console.error('Error sending OTP or checking email:', error);
     }
   };
+  
 
   const handleResendOtp = async () => {
     handleSendOtp();
@@ -80,9 +90,9 @@ const EmailVerification = ({ onSuccess }) => {
     }
     return () => clearInterval(timerId);
   }, [timer]);
-
+ 
   return (
-    <div className='w-full xl:pr-[45px]'>
+    <div className='w-full'>
       {!otpSent ? (
         <>
           <h2 className="text-2xl text-center text-white mb-6">Verify Your Email</h2>
@@ -126,20 +136,18 @@ const EmailVerification = ({ onSuccess }) => {
               />
             </div>
           </div>
-          <div className='flex items-center underline justify-end'>
-            <button
-              onClick={handleSendOtp}
-              className="hover:text-blue-100 bg-blue-700 rounded-lg text-white font-[500] px-[15px] py-[5px] transition duration-300 flex items-center justify-center"
-            >
-              Send OTP
-              <IoSendSharp className="ml-[6px] text-[15px]" />
-            </button>
-          </div>
+          <div>{error && <p className='bg-red-100 text-[15px] px-[10px] mb-[12px] py-[8px] text-red-700 font-[500] rounded-xl'>An account has already been registered with this Email, kindly use another one.</p>}</div>
+          <button
+            onClick={handleSendOtp}
+            className="hover:text-blue-100 ml-auto bg-blue-700 rounded-lg text-white font-[500] px-[15px] py-[5px] transition duration-300 flex items-center justify-center"
+          >
+            Send OTP
+            <IoSendSharp className="ml-[6px] text-[15px]" />
+          </button>
         </>
       ) : (
-        <>
-          <h2 className="text-2xl text-center text-white mb-6">Enter OTP</h2>
-          <div className="relative mb-4 flex items-center">
+        <> 
+          <div className="relative mt-[40px] mb-4 flex items-center">
             <AiOutlineCheck className="text-gray-600 mr-2" />
             <div className="flex-1">
               <label
@@ -162,27 +170,29 @@ const EmailVerification = ({ onSuccess }) => {
           <div className="text-center text-gray-600 mb-4 flex justify-center items-center">
             <AiOutlineClockCircle className="text-gray-600 mr-2" />
             {timer > 0 ? (
-              <p>{`Resend OTP in ${timer} seconds`}</p>
-            ) : (
+              <p>Resend OTP in <span className='text-[17px] font-[600] underline text-blue-600'>{timer} seconds</span></p>
+            ) : ( 
               <p>You can resend the OTP now!</p>
             )}
           </div>
-          <div className='w-full px-[8px] flex justify-between gap-x-[6px]'>
+
+          {error && <div className='bg-red-100 mb-[15px] mt-[8px] py-[6px] pl-[8px] rounded-lg'><p className="text-red-500 font-[500] text-[15px]">{error}</p></div>}
+
+          <div className='w-full  px-[8px] flex justify-between gap-x-[6px]'>
             <button
               onClick={handleVerifyOtp}
-              className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 mb-2 flex items-center justify-center"
+              className="w-full bg-gray-700 hover:bg-gray-600 text-white h-[45px] rounded-md transition-colors duration-300 flex items-center justify-center"
             >
               Verify OTP
             </button>
             <button
               onClick={handleResendOtp}
-              className={`w-full ${isResendDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'} text-white py-3 rounded-md transition-colors duration-300`}
+              className={`w-full ${isResendDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'} text-white h-[45px] rounded-md transition-colors duration-300`}
               disabled={isResendDisabled}
             >
               Resend OTP
             </button>
           </div>
-          {error && <p className="text-red-500 mt-4">{error}</p>}
         </>
       )}
     </div>

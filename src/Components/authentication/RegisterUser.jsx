@@ -5,10 +5,11 @@ import EmailVerification from '../Registration/EmailVerification';
 import PasswordInput from '../Registration/PasswordInput';
 import UserDetails from '../Registration/UserDetails';
 
-import EmailVerificationLogo from "../../Assets/EmailVerification.svg";
+import collaboration from "../../Assets/collaboration.webp";
 import { BiCheckCircle, BiCircle } from 'react-icons/bi';
 
 import collaboratorLogo from "../../logo.png";
+import { FaApple, FaGoogle } from 'react-icons/fa';
 
 const StepProgress = ({ step }) => {
   return (
@@ -60,7 +61,7 @@ const Register = () => {
 
   const handleEmailSuccess = ({ name, email }) => { // Destructure both values
     setEmail(email);
-    setName(name); // Set name state
+    setName(name);
     setStep(2);
   };
 
@@ -87,9 +88,12 @@ const Register = () => {
 
   return (
 
-    <main className='h-screen w-screen grid lg:grid-cols-2 bg-[#fafbfd] p-4'>
-      <div className='items-center justify-center lg:flex hidden'> <img src={EmailVerificationLogo} alt="Profile" className="text-white" /></div>
-      <div className='flex flex-col justify-center px-[1px] md:px-[160px] lg:px-[95px]'>
+    <main className='h-screen w-screen md:scale-[1] scale-[0.9] grid lg:grid-cols-2 bg-[#fafbfd]'>
+      <div className='items-center justify-center lg:flex hidden'>
+        <img src={collaboration} alt="Profile" className="w-full h-full object-cover" />
+      </div>
+
+      <div className='flex flex-col justify-center px-[1px] md:px-[190px] lg:px-[115px]'>
         <div className="flex items-center">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[38px] h-[38px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
@@ -99,8 +103,24 @@ const Register = () => {
         {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
         {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
 
-        <div className='w-[92%] mx-auto font-[600] my-[15px] bg-gray-400 rounded-md h-[2px]'></div>
-        <p className='mx-auto text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
+        <div className='w-[92%] mx-auto font-[600] mt-[28px] mb-[15px] bg-gray-400 rounded-md h-[2px]'></div>
+
+        <div className='grid grid-cols-1 gap-y-[10px] md:grid-cols-2 gap-x-[12px] items-center px-[15px]'>
+          <div className='border-[2px] py-[12px] flex border-gray-400 rounded-[8px]'>
+            <div className='w-[20%] flex justify-center items-center'>
+              <FaGoogle size={24} className='text-blue-500' />
+            </div>
+            <div className='text-gray-500 text-[15px] w-[80%] pl-[5px]'>Register Using PlayStore</div>
+          </div>
+
+          <div className='border-[2px] py-[12px] flex bg-gray-950 rounded-[8px]'>
+            <div className='w-[20%] flex justify-center items-center'>
+              <FaApple size={24} className='text-gray-50' />
+            </div>
+            <div className='text-gray-50 text-[15px] w-[80%] pl-[5px]'>Register Using Apple Store</div>
+          </div>
+        </div>
+        <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
       </div>
     </main>
   );

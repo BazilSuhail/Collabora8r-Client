@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import EmailVerificationLogo from "../../Assets/EmailVerification.svg";
+import collaboration from "../../Assets/collaboration.webp";
 import collaboratorLogo from "../../logo.png";
+import { FaApple, FaGoogle } from 'react-icons/fa';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,18 @@ const SignIn = () => {
   const [focusField, setFocusField] = useState('');
   const navigate = useNavigate();
   const { email, password } = formData;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,11 +52,11 @@ const SignIn = () => {
   };
 
   return (
-    <main className='h-screen w-screen grid lg:grid-cols-2 bg-[#fafbfd] p-4'>
+    <main className='h-screen w-screen grid lg:grid-cols-2 bg-[#fafbfd]'>
       <div className='items-center justify-center lg:flex hidden'>
-        <img src={EmailVerificationLogo} alt="Profile" className="text-white" />
+        <img src={collaboration} alt="Profile" className="w-full h-full object-cover" />
       </div>
-      <div className='flex flex-col justify-center px-[18px] md:px-[160px] lg:px-[95px]'>
+      <div className='flex flex-col justify-center px-[18px] md:px-[160px] lg:px-[95px] xl:px-[110px]'>
         <div className="flex items-center">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[38px] h-[38px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
@@ -109,13 +123,30 @@ const SignIn = () => {
           >
             Sign In
           </button>
+          <p onClick={() => setIsModalOpen(true)} className='text-blue-700 underline text-[15px] font-[600]'>Forgot Password</p>
         </form>
 
-        <div className='w-[92%] mx-auto font-[600] my-[15px] bg-gray-400 rounded-md h-[2px]'></div>
-        <p className='mx-auto text-gray-500 font-medium'>
-          Don’t have an account?
-          <span onClick={() => navigate("/register")} className='text-blue-700 ml-[8px] underline cursor-pointer'>Sign Up</span>
-        </p>
+        <div className='w-[92%] mx-auto font-[600] mt-[28px] mb-[15px] bg-gray-400 rounded-md h-[2px]'></div>
+        
+        <ForgotPasswordModal isOpen={isModalOpen} onClose={closeModal} />
+
+        <div className='grid grid-cols-1 gap-y-[10px] md:grid-cols-2 gap-x-[12px] items-center px-[15px]'>
+          <div className='border-[2px] py-[12px] flex border-gray-400 rounded-[8px]'>
+            <div className='w-[20%] flex justify-center items-center'>
+              <FaGoogle size={24} className='text-blue-500' />
+            </div>
+            <div className='text-gray-500 text-[15px] w-[80%] pl-[5px]'>Register Using PlayStore</div>
+          </div>
+
+          <div className='border-[2px] py-[12px] flex bg-gray-950 rounded-[8px]'>
+            <div className='w-[20%] flex justify-center items-center'>
+              <FaApple size={24} className='text-gray-50' />
+            </div>
+            <div className='text-gray-50 text-[15px] w-[80%] pl-[5px]'>Register Using Apple Store</div>
+          </div>
+        </div>
+        <p className='mx-auto mt-[18px] text-gray-500 font-medium'>  Don’t have an account?<span onClick={() => navigate("/register")} className='text-blue-700 ml-[8px] underline'>Sign Up</span></p>
+
       </div>
     </main>
   );
