@@ -4,9 +4,10 @@ import emailjs from 'emailjs-com';
 import { AiOutlineCheck, AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
 import { IoSendSharp } from 'react-icons/io5';
 import axios from 'axios';
+import { ImCross } from 'react-icons/im';
 
 const ForgotPasswordModal = ({ isOpen, onClose }) => {
-    const [step, setStep] = useState(1); // 1: Enter Email, 2: Verify OTP, 3: Reset Password
+    const [step, setStep] = useState(1);
     const [email, setEmail] = useState('');
     const [generatedOtp, setGeneratedOtp] = useState('');
     const [otp, setOtp] = useState('');
@@ -36,8 +37,6 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
                 setError('Email does not exist. Please check and try again.');
                 return;
             }
-
-            // Generate OTP   
 
             const otpCode = generateOtp();
             setGeneratedOtp(otpCode);
@@ -131,18 +130,19 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <motion.div
+           
+           <div className='lg:w-[450px] w-[320px] sm:w-[300px] '>
+           <motion.div
                 initial={{ y: '-100vh', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '-100vh', opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 100 }}
                 className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
             >
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
                 >
-                    &times;
+                    <ImCross size={18} />
                 </button>
 
                 {step === 1 && (
@@ -314,6 +314,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
                     </>
                 )}
             </motion.div>
+           </div>
         </div>
     );
 };

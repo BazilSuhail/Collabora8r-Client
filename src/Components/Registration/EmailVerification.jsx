@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
-import { AiOutlineCheck, AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
 import { IoSendSharp } from 'react-icons/io5';
 import axios from 'axios';
 
 const EmailVerification = ({ onSuccess }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
+  //const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState('');
@@ -28,27 +28,27 @@ const EmailVerification = ({ onSuccess }) => {
         setError('Email already exists. Please use another email.');
         return;
       }
-  
+
       // If email doesn't exist, generate OTP and send
       const otpCode = generateOtp();
       setGeneratedOtp(otpCode);
       console.log(otpCode);
       setTimer(120);
       setIsResendDisabled(true);
-  
+
       const templateParams = {
         user_name: name,
         to_name: email,
         otp_code: otpCode,
       };
-  
+
       await emailjs.send(
         process.env.REACT_APP_EMAILJS_SERVICE_ID,
         process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         templateParams,
         process.env.REACT_APP_EMAILJS_USER_ID
       );
-  
+
       setOtpSent(true);
       setError('');
     } catch (error) {
@@ -56,20 +56,24 @@ const EmailVerification = ({ onSuccess }) => {
       console.error('Error sending OTP or checking email:', error);
     }
   };
-  
+
 
   const handleResendOtp = async () => {
     handleSendOtp();
   };
 
   const handleVerifyOtp = () => {
-    if (otp === generatedOtp) {
-      setError('');
+    const otpString = otp.join('');
+    
+    if (otpString === generatedOtp) {
+      setError(''); 
       onSuccess({ name, email });
     } else {
+      console.log(otpString);
       setError('Invalid OTP. Please try again.');
     }
   };
+  
 
   const handleFocus = (field) => {
     setFocusField(field);
@@ -90,7 +94,40 @@ const EmailVerification = ({ onSuccess }) => {
     }
     return () => clearInterval(timerId);
   }, [timer]);
+
+  const [otp, setOtp] = useState(new Array(6).fill(''));
+
+  const handleOtpChange = (element, index) => {
+    const value = element.value.toUpperCase(); // Convert to uppercase for uniformity
+    const isValidCharacter = /^[A-Z0-9]$/.test(value); // Check if it's a capital letter or a number
+
+    if (!isValidCharacter) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
  
+    if (value !== '' && element.nextSibling) {
+      element.nextSibling.focus();
+    }
+  };
+ 
+  const handleOtpBackspace = (e, index) => {
+    const newOtp = [...otp];
+
+    if (e.key === 'Backspace') { 
+      if (newOtp[index]) {
+        newOtp[index] = '';
+        setOtp(newOtp);
+      } else if (e.target.previousSibling) { 
+        e.target.previousSibling.focus();
+      }
+    }
+  };
+ 
+  const handleOtpFocus = (e) => e.target.select();
+
+  
   return (
     <div className='w-full'>
       {!otpSent ? (
@@ -146,32 +183,34 @@ const EmailVerification = ({ onSuccess }) => {
           </button>
         </>
       ) : (
-        <> 
-          <div className="relative mt-[40px] mb-4 flex items-center">
-            <AiOutlineCheck className="text-gray-600 mr-2" />
-            <div className="flex-1">
-              <label
-                htmlFor="otp"
-                className={`absolute left-8 text-gray-700 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'
-                  }`}
-              >
+        <>
+          <div className="relative mt-[40px] mb-4 justify-center flex items-center">
+            <div className="flex">
+              <label htmlFor="otp" className={`absolute  text-gray-700 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'}`}>
                 Enter OTP
               </label>
-              <input
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                onFocus={() => handleFocus('otp')}
-                onBlur={handleBlur}
-                className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
-              />
+              <div className="flex mt-[15px] space-x-2">
+                {otp.map((data, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    name="otp"
+                    maxLength="1"
+                    value={data}
+                    onChange={(e) => handleOtpChange(e.target, index)}
+                    onKeyDown={(e) => handleOtpBackspace(e, index)}
+                    onFocus={handleOtpFocus}
+                    className="w-12 h-16 text-center text-lg font-semibold bg-transparent text-gray-700 border-2 rounded-lg border-gray-600 focus:outline-none focus:border-blue-500"
+                  />
+                ))}
+              </div>
             </div>
           </div>
           <div className="text-center text-gray-600 mb-4 flex justify-center items-center">
             <AiOutlineClockCircle className="text-gray-600 mr-2" />
             {timer > 0 ? (
               <p>Resend OTP in <span className='text-[17px] font-[600] underline text-blue-600'>{timer} seconds</span></p>
-            ) : ( 
+            ) : (
               <p>You can resend the OTP now!</p>
             )}
           </div>
@@ -187,7 +226,7 @@ const EmailVerification = ({ onSuccess }) => {
             </button>
             <button
               onClick={handleResendOtp}
-              className={`w-full ${isResendDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'} text-white h-[45px] rounded-md transition-colors duration-300`}
+              className={`w-full ${isResendDisabled ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-600'} text-white h-[45px] rounded-md transition-colors duration-300`}
               disabled={isResendDisabled}
             >
               Resend OTP

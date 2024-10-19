@@ -21,8 +21,6 @@ module.exports = {
         'custom-size': '20px',
       },
       boxShadow: {
-
-
         'profile-navbar': '0px 0px 5px #c2c2c2', 
       },
       keyframes: {
