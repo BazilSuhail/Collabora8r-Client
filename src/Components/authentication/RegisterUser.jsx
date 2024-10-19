@@ -85,9 +85,7 @@ const Register = () => {
   };
 
   return (
-
     <main className='h-screen w-screen flex justify-center items-center bg-gray-100'>
-
       <div className='flex flex-col md:w-[530px] md:scale-[1] scale-[0.9]'>
         <div className="scale-[1.2] flex mx-auto">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[34px] h-[34px]" />

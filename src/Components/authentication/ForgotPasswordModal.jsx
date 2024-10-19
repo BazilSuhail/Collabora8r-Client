@@ -129,14 +129,14 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed w-screen h-screen z-50 flex items-center justify-center bg-black bg-opacity-50">
            
            <div className='lg:w-[450px] w-[320px] sm:w-[300px] '>
            <motion.div
                 initial={{ y: '-100vh', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '-100vh', opacity: 0 }}
-                className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
+                className="bg-white rounded-lg shadow-lg  p-6"
             >
                 <button
                     onClick={onClose}
