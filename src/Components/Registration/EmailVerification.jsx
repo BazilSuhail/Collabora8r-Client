@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
-import { AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
-import { IoSendSharp } from 'react-icons/io5';
+import { AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai'; 
 import axios from 'axios';
 
 const EmailVerification = ({ onSuccess }) => {
@@ -64,16 +63,16 @@ const EmailVerification = ({ onSuccess }) => {
 
   const handleVerifyOtp = () => {
     const otpString = otp.join('');
-    
+
     if (otpString === generatedOtp) {
-      setError(''); 
+      setError('');
       onSuccess({ name, email });
     } else {
       console.log(otpString);
       setError('Invalid OTP. Please try again.');
     }
   };
-  
+
 
   const handleFocus = (field) => {
     setFocusField(field);
@@ -98,41 +97,40 @@ const EmailVerification = ({ onSuccess }) => {
   const [otp, setOtp] = useState(new Array(6).fill(''));
 
   const handleOtpChange = (element, index) => {
-    const value = element.value.toUpperCase(); // Convert to uppercase for uniformity
-    const isValidCharacter = /^[A-Z0-9]$/.test(value); // Check if it's a capital letter or a number
+    const value = element.value.toUpperCase();
+    const isValidCharacter = /^[A-Z0-9]$/.test(value);
 
     if (!isValidCharacter) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
- 
+
     if (value !== '' && element.nextSibling) {
       element.nextSibling.focus();
     }
   };
- 
+
   const handleOtpBackspace = (e, index) => {
     const newOtp = [...otp];
 
-    if (e.key === 'Backspace') { 
+    if (e.key === 'Backspace') {
       if (newOtp[index]) {
         newOtp[index] = '';
         setOtp(newOtp);
-      } else if (e.target.previousSibling) { 
+      } else if (e.target.previousSibling) {
         e.target.previousSibling.focus();
       }
     }
   };
- 
+
   const handleOtpFocus = (e) => e.target.select();
 
-  
+
   return (
-    <div className='w-full'>
+    <div className='w-full mt-[25px]'>
       {!otpSent ? (
-        <>
-          <h2 className="text-2xl text-center text-white mb-6">Verify Your Email</h2>
+        <div className='md:px-[18px]'> 
           <div className="relative mb-4 flex items-center">
             <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'><AiOutlineUser className="text-gray-50 text-[22px]" /></div>
             <div className="flex-1">
@@ -176,15 +174,14 @@ const EmailVerification = ({ onSuccess }) => {
           <div>{error && <p className='bg-red-100 text-[15px] px-[10px] mb-[12px] py-[8px] text-red-700 font-[500] rounded-xl'>An account has already been registered with this Email, kindly use another one.</p>}</div>
           <button
             onClick={handleSendOtp}
-            className="hover:text-blue-100 ml-auto bg-blue-700 rounded-lg text-white font-[500] px-[15px] py-[5px] transition duration-300 flex items-center justify-center"
+            className="hover:text-blue-100 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300"
           >
             Send OTP
-            <IoSendSharp className="ml-[6px] text-[15px]" />
           </button>
-        </>
+        </div>
       ) : (
-        <>
-          <div className="relative mt-[40px] mb-4 justify-center flex items-center">
+        <div className='mb-[25px]'>
+          <div className="relative mt-[40px] justify-center flex items-center">
             <div className="flex">
               <label htmlFor="otp" className={`absolute  text-gray-700 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'}`}>
                 Enter OTP
@@ -206,7 +203,7 @@ const EmailVerification = ({ onSuccess }) => {
               </div>
             </div>
           </div>
-          <div className="text-center text-gray-600 mb-4 flex justify-center items-center">
+          <div className="text-center text-gray-600  mb-[25px] mt-[15px] flex justify-center items-center">
             <AiOutlineClockCircle className="text-gray-600 mr-2" />
             {timer > 0 ? (
               <p>Resend OTP in <span className='text-[17px] font-[600] underline text-blue-600'>{timer} seconds</span></p>
@@ -232,7 +229,7 @@ const EmailVerification = ({ onSuccess }) => {
               Resend OTP
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

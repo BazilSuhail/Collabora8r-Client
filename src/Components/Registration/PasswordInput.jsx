@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlineCheckCircle, AiOutlineLock } from 'react-icons/ai';
+import { AiOutlineLock } from 'react-icons/ai';
 
 const PasswordInput = ({ onNext }) => {
   const [password, setPassword] = useState('');
@@ -26,11 +26,8 @@ const PasswordInput = ({ onNext }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-      <h2 className="text-2xl text-center text-white mb-6">Set Your Password</h2>
-
-      {/* Password Input */}
-      <div className="w-full relative mt-[35px] mb-4 flex items-center">
+    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center"> 
+      <div className="w-full relative mt-[55px] mb-4 flex items-center">
         <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'>
           <AiOutlineLock className="text-gray-50 text-[22px]" />
         </div>
@@ -76,26 +73,13 @@ const PasswordInput = ({ onNext }) => {
           />
         </div>
       </div>
-
-      {/* Submit Button 
-      <button
-        type="submit"
-        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 flex items-center justify-center"
-      >
-        <AiOutlineCheck className="mr-2" />
-        Set Password
-      </button>*/}
-
-
-      <div className='flex items-center ml-auto justify-end'>
+ 
         <button
           type="submit"
-          className="w-full bg-green-600 hover:bg-green-500 text-white px-3 py-[6px] rounded-md transition-colors duration-300 flex items-center justify-center"
-        >
-          <AiOutlineCheckCircle className="mr-2" />
+          className="hover:text-green-400 w-full my-[15px] bg-green-700 rounded-lg text-white font-[500] py-[12px] transition duration-300"
+          > 
           Confirm Password
-        </button>
-      </div>
+        </button> 
     </form>
   );
 };

@@ -21,10 +21,8 @@ const UserDetails = ({ onSubmit, userEmail }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
-      <h2 className="text-lg  text-center font-serif text-gray-400 my-[15px]">Enter Your Details</h2>
-
-      <div className="w-full relative mt-4 mb-6 flex items-center">
+    <form onSubmit={handleSubmit} className="w-full flex mb-[25px] flex-col items-center"> 
+      <div className="w-full relative mt-[55px] mb-6 flex items-center">
         <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'>
           <AiOutlinePhone className="text-gray-50 text-[22px]" />
         </div>
@@ -34,7 +32,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Phone"
-          className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+          className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] placeholder:text-gray-600 border-gray-600 focus:outline-none"
           required
         />
       </div>
@@ -73,7 +71,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
 
       <button
         type="submit"
-        className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-md transition-colors duration-300 flex items-center justify-center"
+        className="w-full bg-cyan-700 hover:bg-cyan-600 text-white py-3 rounded-md transition-colors duration-300 flex items-center justify-center"
       >
         Create Account
       </button>
