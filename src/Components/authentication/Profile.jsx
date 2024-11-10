@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FiEdit, FiSave } from 'react-icons/fi';
+import Loader from '../../Assets/Loader';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -60,11 +61,11 @@ const Profile = () => {
   };
 
   const selectAvatar = (index) => {
-    setSelectedAvatar(index); // Set selected avatar to the index
-    closeAvatarModal(); // Close modal after selecting an avatar
+    setSelectedAvatar(index); 
+    closeAvatarModal(); 
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return  <Loader/>;
   if (error) return <p>{error}</p>;
 
   return (

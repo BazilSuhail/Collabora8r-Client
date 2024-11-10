@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 import { FaTasks, FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
+import Loader from '../Assets/Loader';
 
 
 function decodeJWT(token) {
@@ -68,7 +69,7 @@ const Overview = () => {
         }));
         setProjects(updatedProjects);
       } catch (err) {
-        setError('Failed to fetch data');
+        setError('You Have Not Joinded Any Projects :/');
       } finally {
         setLoading(false);
       }
@@ -77,8 +78,10 @@ const Overview = () => {
     fetchData();
   }, []);
 
-  if (loading) return <p>Loading data...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading) return <Loader />;
+  if (error) return <div className='p-4 m-6 xsx:ml-[280px]  bg-red-100 text-red-600 border border-red-300 rounded-md'>
+    {error}
+  </div>;
 
   const now = new Date();
   const taskStatusCounts = {
@@ -153,9 +156,6 @@ const Overview = () => {
         </div>
       </div>
 
-
-
-      {/* List of Projects */}
       <div>
         <h3 className="text-xl font-semibold mb-4">Your Projects</h3>
         {projects.length === 0 ? (

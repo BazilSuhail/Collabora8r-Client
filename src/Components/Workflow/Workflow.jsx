@@ -6,6 +6,7 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { MdTask } from 'react-icons/md';
 import { FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../Assets/Loader';
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
@@ -190,7 +191,7 @@ const Workflow = () => {
     }
   };
 
-  if (loading) return <p className="text-center">Loading tasks...</p>;
+  if (loading) return  <Loader/>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   const backend = window.matchMedia('(pointer: coarse)').matches ? TouchBackend : HTML5Backend;

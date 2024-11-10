@@ -51,19 +51,12 @@ const JoinedProjects = () => {
 
       <p className='mt-[8px] mb-[15px] font-[400] text-gray-500'>View all of the projects associated with your account.</p>
 
-      {error && !projects.length && (
-        <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
-          {error}
-        </div>
-      )}
-
-      {!error && !projects.length ? (
-        <div className='p-4 bg-gray-100 text-gray-600 border border-gray-300 rounded-md'>
+      {error && !projects.length ? (
+        <div className='p-4 bg-blue-100 text-blue-600 border border-blue-300 rounded-md'>
           No projects found.
         </div>
       ) : (
         <>
-
           <table className='w-full table-auto border-collapse bg-white shadow-md rounded-md'>
             <thead className='bg-gray-200'>
               <tr>

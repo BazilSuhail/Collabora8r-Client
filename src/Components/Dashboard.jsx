@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import NoTasks from "../Assets/NoTasks.webp";
 
-import decodeJWT from '../decodeJWT'; 
+import decodeJWT from '../decodeJWT';
+import Loader from '../Assets/Loader';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -56,8 +57,13 @@ const Dashboard = () => {
         setFilteredTasks(fetchedTasks);
 
         const colorMapping = {};
+
         fetchedTasks.forEach(project => {
-          colorMapping[project._id] = getRandomColor();
+          const projectId = project._id; 
+          // Assign a color only if it hasn't already been assigned to this project
+          if (!colorMapping[projectId]) {
+            colorMapping[projectId] = getRandomColor();
+          }
         });
 
         setProjectColors(colorMapping);
@@ -100,8 +106,8 @@ const Dashboard = () => {
     'Completed': tasks.filter((task) => task.status === 'Completed').length,
   };
 
-  if (loading) {
-    return <div className="ml-auto xsx:ml-[265px] min-h-screen bg-[#f4f4f4] p-6"></div>;
+  if (!loading) {
+    return <Loader/>;
   }
 
   if (error === "No token found, please sign in again.") {
@@ -116,7 +122,7 @@ const Dashboard = () => {
           Hello,
           <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
         </div>
-      </section> 
+      </section>
 
       <section className='grid grid-cols-1 xsx:grid-cols-7 xsx:grid-rows-1'>
 
@@ -214,7 +220,7 @@ const Dashboard = () => {
                       {task.status}
                     </p>
                   </div>
-                  <p className='text-[14px] xsx:text-[15px] xsx:mt-0 mt-[8px] ml-[35px] xsx:ml-[45px] text-gray-800 font-[450]'>{task.description}</p>
+                  {/*   <p className='text-[14px] xsx:text-[15px] xsx:mt-0 mt-[8px] ml-[35px] xsx:ml-[45px] text-gray-800 font-[450]'>{task.description}</p> */}
                   <p className="text-[15px] mt-[8px]  ml-[35px] xsx:ml-[45px] ">
                     <span className='text-red-500 mr-[5px]'>Due:</span> <span className='text-red-700 underline font-[600] rounded-xl '>{new Date(task.dueDate).toLocaleDateString()}</span>
                   </p>
@@ -243,8 +249,8 @@ const Dashboard = () => {
               ))
             ) : (
               <div className='flex  flex-col items-center '>
-                <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]'/>
-              <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+                <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]' />
+                <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
               </div>
             )}
           </div>

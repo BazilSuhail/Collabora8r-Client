@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-import Navbar from "./Components/Navbar"; 
+import Navbar from "./Components/Navbar";
 import Login from "./Components/authentication/LoginUser";
 import Register from "./Components/authentication/RegisterUser";
-import Profile from "./Components/authentication/Profile";  
+import Profile from "./Components/authentication/Profile";
 
 
 import CreateProject from "./Components/Projects/CreateProject";
@@ -27,13 +27,13 @@ const AppContent = () => {
   return (
     <>
       {!hideNavbar && <Navbar />}
-      <Routes> 
-        
-        
-      <Route path="/" element={<Dashboard />} />
-      
-      <Route path="/overview" element={<Overview />} />   
-        <Route path="/workflow" element={<Workflow />} />  
+      <Routes>
+
+
+        <Route path="/" element={<Dashboard />} />
+
+        <Route path="/overview" element={<Overview />} />
+        <Route path="/workflow" element={<Workflow />} />
 
         <Route path="/projects/tasks-timeline/:projectId" element={<TasksTimeline />} />
 
@@ -50,7 +50,7 @@ const AppContent = () => {
 
         <Route path="/joinedprojects" element={<JoinedProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
- 
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

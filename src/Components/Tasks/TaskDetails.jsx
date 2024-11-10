@@ -6,6 +6,7 @@ import { FaClipboardList, FaSnowboarding, FaTrashAlt, FaUserEdit } from 'react-i
 import { IoPersonSharp } from 'react-icons/io5';
 import { LuSendHorizonal } from 'react-icons/lu';
 import { IoMdDoneAll } from 'react-icons/io';
+import Loader from '../../Assets/Loader';
 
 function decodeJWT(token) {
   try {
@@ -152,7 +153,7 @@ const TaskDetails = () => {
   }
 
   if (!task) {
-    return <p className="pl-[287px] bg-gray-100 min-h-screen p-6">Loading task details...</p>;
+    return  <Loader/>;
   }
 
   return (
