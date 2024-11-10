@@ -106,7 +106,7 @@ const Dashboard = () => {
     'Completed': tasks.filter((task) => task.status === 'Completed').length,
   };
 
-  if (!loading) {
+  if (loading) {
     return <Loader/>;
   }
 
