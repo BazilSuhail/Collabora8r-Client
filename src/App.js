@@ -28,10 +28,7 @@ const AppContent = () => {
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
-
-
         <Route path="/" element={<Dashboard />} />
-
         <Route path="/overview" element={<Overview />} />
         <Route path="/workflow" element={<Workflow />} />
 
