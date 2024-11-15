@@ -9,8 +9,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false); 
-  const [selectedAvatar, setSelectedAvatar] = useState(null); 
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -21,7 +21,7 @@ const Profile = () => {
             Authorization: `Bearer ${token}`
           }
         };
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, config);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
         setProfile(response.data);
         setSelectedAvatar(response.data.avatar); // Initialize selectedAvatar with current avatar
       } catch (err) {
@@ -44,7 +44,7 @@ const Profile = () => {
         }
       };
       const updatedProfile = { ...profile, avatar: selectedAvatar }; // Include avatar in profile update
-      const response = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/profile`, updatedProfile, config);
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, updatedProfile, config);
       setProfile(response.data);
       setIsEditing(false);
     } catch (err) {
@@ -61,11 +61,11 @@ const Profile = () => {
   };
 
   const selectAvatar = (index) => {
-    setSelectedAvatar(index); 
-    closeAvatarModal(); 
+    setSelectedAvatar(index);
+    closeAvatarModal();
   };
 
-  if (loading) return  <Loader/>;
+  if (loading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   return (
@@ -92,12 +92,9 @@ const Profile = () => {
 
               <div className="flex-1 space-y-8">
 
-                {/* Profile Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* name Section */}
                   <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-blue-600 text-white rounded-full">
-                      {/* Custom Email SVG */}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-8 h-8">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0-4.28-3.455-5-5-5h-1c-1.545 0-5 .72-5 5v3c0 1.38 1.12 2.5 2.5 2.5H5c1.38 0 2.5 1.12 2.5 2.5v2c0 1.38 1.12 2.5 2.5 2.5h2c1.38 0 2.5-1.12 2.5-2.5v-2c0-1.38 1.12-2.5 2.5-2.5h.5C19.88 16.5 21 15.38 21 14v-3c0-4.28-3.455-5-5-5h-1c-1.545 0-5 .72-5 5z" />
                       </svg>
@@ -108,10 +105,8 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Email Section */}
                   <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-blue-600 text-white rounded-full">
-                      {/* Custom Email SVG */}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12l-4-4m0 0l-4 4m4-4v12" />
                         <path d="M16 5H8a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2z" />
@@ -123,10 +118,8 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Phone Section */}
                   <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-green-600 text-white rounded-full">
-                      {/* Custom Phone SVG */}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h2l1 2m4 0l1-2h5a2 2 0 012 2v6a2 2 0 01-2 2h-6a2 2 0 01-2-2v-2m-2 0H3m0 0V9m0 0a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3V9a3 3 0 00-3-3h-2a3 3 0 00-3 3v1H6" />
                       </svg>
@@ -137,10 +130,8 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Gender Section */}
                   <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-pink-600 text-white rounded-full">
-                      {/* Custom Gender SVG */}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 7a4 4 0 014-4h3m-7 0a4 4 0 00-4 4v4m0 0l4 4m-4-4l4-4" />
                       </svg>
@@ -151,10 +142,8 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Date of Birth Section */}
                   <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-yellow-600 text-white rounded-full">
-                      {/* Custom Date of Birth SVG */}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 0v4m-4 12a4 4 0 100-8 4 4 0 000 8zm-4 1h8a2 2 0 012 2v1H6v-1a2 2 0 012-2z" />
                       </svg>
@@ -172,7 +161,7 @@ const Profile = () => {
               onClick={() => setIsEditing(true)}
               className='bg-blue-500 mt-[25px] text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 flex items-center space-x-2'
             >
-              <FiEdit className='w-5 h-5' /> {/* Professional Edit Icon */}
+              <FiEdit className='w-5 h-5' />
               <span>Edit Profile</span>
             </button>
           </div>
@@ -180,7 +169,7 @@ const Profile = () => {
           <form onSubmit={handleUpdate} className='space-y-4'>
             <div className='flex items-end mb-4'>
               <img
-                src={`/Assets/${selectedAvatar}.jpg`} // Display the currently selected avatar
+                src={`/Assets/${selectedAvatar}.jpg`}
                 alt="Profile Avatar"
                 className="w-24 h-24 rounded-full border border-gray-300 shadow-md"
               />
@@ -239,23 +228,22 @@ const Profile = () => {
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
-            {/* Change Avatar Button */}
-           <div className='flex'>
-           <button
-              type="submit"
-              className='bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 flex items-center space-x-2'
-            >
-              <FiSave className='w-5 h-5' /> {/* Save Icon */}
-              <span>Update Profile</span>
-            </button>
-            <button
-              onClick={() => setIsEditing(false)}
-              type="button"
-              className='bg-red-700 ml-[15px] text-white px-4 py-2 rounded-md shadow-md hover:bg-red-900'
-            >
-              Cancel
-            </button>
-           </div>
+            <div className='flex'>
+              <button
+                type="submit"
+                className='bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 flex items-center space-x-2'
+              >
+                <FiSave className='w-5 h-5' />
+                <span>Update Profile</span>
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                type="button"
+                className='bg-red-700 ml-[15px] text-white px-4 py-2 rounded-md shadow-md hover:bg-red-900'
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         )}
       </div>
@@ -271,13 +259,13 @@ const Profile = () => {
           >
             <h2 className='text-xl font-bold mb-4'>Select an Avatar</h2>
             <div className='grid grid-cols-3 lg:grid-cols-4 gap-4'>
-              {Array.from({ length: 4 }).map((_, index) => (
+              {Array.from({ length: 12 }).map((_, index) => (
                 <img
                   key={index}
-                  src={`/Assets/${index + 1}.jpg`} 
+                  src={`/Assets/${index + 1}.jpg`}
                   alt={`Avatar ${index + 1}`}
                   className='w-24 h-24 rounded-full border border-gray-300 shadow-md cursor-pointer hover:opacity-75'
-                  onClick={() => selectAvatar(index + 1)}  
+                  onClick={() => selectAvatar(index + 1)}
                 />
               ))}
             </div>

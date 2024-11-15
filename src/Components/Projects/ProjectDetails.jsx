@@ -20,7 +20,7 @@ const ProjectDetail = () => {
         const token = localStorage.getItem('token');
 
         // Fetch project details
-        const projectResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/viewProjects/${projectId}`, {
+        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/viewProjects/${projectId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -28,7 +28,7 @@ const ProjectDetail = () => {
         setProject(projectResponse.data);
 
         // Fetch all users
-        const usersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
+        const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -51,7 +51,7 @@ const ProjectDetail = () => {
 
       // Add user to project
       await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/manageusers/${projectId}/addUser`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/addUser`,
         { userId },
         {
           headers: {
@@ -62,7 +62,7 @@ const ProjectDetail = () => {
 
       // Add project ID to user's JoinProject document
       await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/manageusers/${userId}/joinProject`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${userId}/joinProject`,
         { projectId },
         {
           headers: {

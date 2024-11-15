@@ -34,10 +34,10 @@ const SignIn = () => {
     setFocusField('');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signin`, formData);
+      const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/signin`, formData);
       localStorage.setItem('token', res.data.token);
       navigate('/');
     } catch (error) {
@@ -101,7 +101,7 @@ const SignIn = () => {
               </div>
             </div>
 
-            <button type="submit" className="hover:text-blue-100 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300">
+            <button type="submit" className="hover:text-blue-100 hover:bg-blue-950 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300">
               Sign In
             </button>
             <p onClick={() => setIsModalOpen(true)} className='text-blue-600 underline mb-[8px] text-[15px] font-[600]'>Forgot Password</p>

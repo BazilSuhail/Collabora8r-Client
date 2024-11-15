@@ -21,7 +21,7 @@ const EmailVerification = ({ onSuccess }) => {
   const handleSendOtp = async () => {
     try {
       // Check if email exists
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/check-email`, { email });
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/check-email`, { email });
       if (response.data.exists) {
         console.log('Email already exists. Please use another email.')
         setError('Email already exists. Please use another email.');
@@ -42,10 +42,10 @@ const EmailVerification = ({ onSuccess }) => {
       };
 
       await emailjs.send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        import.meta.env.VITE_REACT_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_REACT_APP_EMAILJS_TEMPLATE_ID,
         templateParams,
-        process.env.REACT_APP_EMAILJS_USER_ID
+        import.meta.env.VITE_REACT_APP_EMAILJS_USER_ID
       );
 
       setOtpSent(true);

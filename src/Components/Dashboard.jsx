@@ -41,14 +41,14 @@ const Dashboard = () => {
         setUsersId(userId);
 
         // Fetch user profile
-        const profileResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, {
+        const profileResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const { name } = profileResponse.data;
         setUserName(name);
 
-        const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
+        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -59,17 +59,18 @@ const Dashboard = () => {
         const colorMapping = {};
 
         fetchedTasks.forEach(project => {
-          const projectId = project._id; 
-          // Assign a color only if it hasn't already been assigned to this project
+          const projectId = project._id;  
           if (!colorMapping[projectId]) {
             colorMapping[projectId] = getRandomColor();
           }
         });
 
         setProjectColors(colorMapping);
-      } catch (err) {
+      }
+      catch (err) {
         setError(err.message || 'Error fetching tasks');
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };
@@ -124,9 +125,8 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section className='grid grid-cols-1 xsx:grid-cols-7 xsx:grid-rows-1'>
-
-        <div className='col-span-2 mb-[15px] xsx:mx-[8px]'>
+      <section className='grid grid-cols-1 xsx:grid-cols-4 xl:grid-cols-7  xsx:grid-rows-1'>
+        <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
           <div className='flex mb-[15px] xsx:pl-[8px]'>
             <button
               className={`flex whitespace-nowrap mr-[12px] items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
@@ -171,7 +171,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className='col-span-5 xl:px-[25px]'>
+        <div className='col-span-3 xl:col-span-5 xl:px-[25px]'>
           <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
             <button
               className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'

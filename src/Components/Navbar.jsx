@@ -54,7 +54,7 @@ const Navbar = () => {
                         Authorization: `Bearer ${token}`
                     }
                 };
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile`, config);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
                 setProfile(response.data);
             } catch (err) {
                 console.error(err);
@@ -66,7 +66,7 @@ const Navbar = () => {
         const fetchJoinedProjects = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const fetchedProjects = response.data; 
@@ -94,7 +94,7 @@ const Navbar = () => {
 
     return (
         <nav> 
-            <div className=" hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
+            <div className="hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
                         <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>

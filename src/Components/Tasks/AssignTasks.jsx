@@ -22,12 +22,12 @@ const AssignTasks = () => {
     const fetchTasksAndUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setTasks(tasksResponse.data);
 
-        const usersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
+        const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUsers(usersResponse.data);
@@ -50,7 +50,7 @@ const AssignTasks = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/manageTasks`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks`,
         { ...newTask, projectId },
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -68,7 +68,7 @@ const AssignTasks = () => {
       });
 
       // Refresh the tasks list
-      const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+      const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);
@@ -95,7 +95,7 @@ const AssignTasks = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/manageTasks/${editingTaskId}`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/${editingTaskId}`,
         newTask,
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -113,7 +113,7 @@ const AssignTasks = () => {
         assignedTo: ''
       });
 
-      const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+      const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);
@@ -126,13 +126,13 @@ const AssignTasks = () => {
   const handleDeleteTask = async (taskId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/${taskId}`, {
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       setSuccess('Task deleted successfully.');
 
-      const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
+      const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);

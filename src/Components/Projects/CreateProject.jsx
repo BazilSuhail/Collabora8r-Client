@@ -14,7 +14,7 @@ const CreateProject = ({ setShowModal }) => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/projects/users`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projects/users`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -34,7 +34,7 @@ const CreateProject = ({ setShowModal }) => {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/projects/create`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projects/create`,
         { name, description, projectManager },
         {
           headers: {

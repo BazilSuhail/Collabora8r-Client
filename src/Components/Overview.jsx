@@ -53,13 +53,13 @@ const Overview = () => {
         const token = localStorage.getItem('token');
         const userId = decodeJWT(token);
 
-        const tasksResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
+        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         setTasks(tasksResponse.data.tasks);
 
-        const projectResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
+        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

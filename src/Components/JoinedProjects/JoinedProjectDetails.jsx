@@ -42,7 +42,7 @@ const JoinedProjectDetails = () => {
         const token = localStorage.getItem('token');
         const DecodeUserId = decodeJWT(token);
         setloggedUser(DecodeUserId);
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -60,7 +60,7 @@ const JoinedProjectDetails = () => {
 
     const fetchProjectTasks = async () => {
       try { 
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`);
 
         const tasks = response.data.tasks;
         const assignedToMe = tasks.filter(task => task.task.assignedTo === loggedUser);

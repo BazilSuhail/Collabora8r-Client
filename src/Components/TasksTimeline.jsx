@@ -17,7 +17,7 @@ const TasksTimeline = ({ projectId }) => {
                 const DecodeUserId = decodeJWT(token);
                 setLoggedUser(DecodeUserId);
                 const response = await axios.get(
-                    `${process.env.REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`,
+                    `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -42,7 +42,7 @@ const TasksTimeline = ({ projectId }) => {
             const fetchProjectTasks = async () => {
                 try {
                     const response = await axios.get(
-                        `${process.env.REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`
+                        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/project-tasks/${projectId}/tasks`
                     );
                     const tasks = response.data.tasks;
 

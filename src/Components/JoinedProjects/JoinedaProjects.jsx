@@ -18,7 +18,7 @@ const JoinedProjects = () => {
     const fetchJoinedProjects = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/joinedprojects`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

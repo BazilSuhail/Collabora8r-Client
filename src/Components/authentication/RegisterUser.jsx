@@ -71,7 +71,7 @@ const Register = () => {
   const handleUserDetailsSubmit = async (data) => {
     try {
       console.log(data);
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/profile/signup`, {
+      const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/signup`, {
         ...data,
         email,
         name,

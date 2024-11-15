@@ -7,21 +7,11 @@ import { MdTask } from 'react-icons/md';
 import { FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
+import decodeJWT from '../../decodeJWT';
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
-function decodeJWT(token) {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) throw new Error('Invalid token format');
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.id;
-  } catch (err) {
-    console.error('Failed to decode JWT:', err);
-    throw err;
-  }
-}
-
+ 
 const TaskCard = ({ task,usersId }) => {
   const navigate = useNavigate();
   const [, drag] = useDrag({
@@ -134,7 +124,7 @@ const Workflow = () => {
         const userId = decodeJWT(token);
         setUsersId(userId);
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`,
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -181,7 +171,7 @@ const Workflow = () => {
     });
 
     try {
-      await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/projecttasks/tasks/update`, { updates });
+      await axios.patch(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projecttasks/tasks/update`, { updates });
       console.log('All tasks updated successfully');
     } catch (error) {
       console.error('Error updating tasks:', error);

@@ -41,12 +41,12 @@ const TaskDetails = () => {
         const userId = decodeJWT(token);
         setCurrentUserId(userId);
 
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/project-tasks/${taskId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/project-tasks/${taskId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTask(response.data);
 
-        const commentsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`, {
+        const commentsResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setComments(commentsResponse.data.comments);
@@ -58,7 +58,7 @@ const TaskDetails = () => {
 
     const fetchCreatorName = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/comments/${creatorId}/name`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/${creatorId}/name`);
         setCreatorName(response.data.name);
       } catch (err) {
         setError('Failed to fetch creator name');
@@ -74,7 +74,7 @@ const TaskDetails = () => {
       const token = localStorage.getItem('token');
       const userId = decodeJWT(token);
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`,
         { content: commentContent, userId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -102,7 +102,7 @@ const TaskDetails = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/comments/${commentId}`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/${commentId}`,
         { content: editCommentContent },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -127,7 +127,7 @@ const TaskDetails = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/comments/${commentId}`, {
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

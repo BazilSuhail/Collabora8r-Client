@@ -22,7 +22,7 @@ const ProjectList = () => {
     const fetchProjects = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/viewProjects/admin`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/viewProjects/admin`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
