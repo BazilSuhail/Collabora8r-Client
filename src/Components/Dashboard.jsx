@@ -110,7 +110,7 @@ const Dashboard = () => {
     return <Loader/>;
   }
 
-  if (error === "No token found, please sign in again.") {
+  if (error) {
     navigate('/login');
   }
 

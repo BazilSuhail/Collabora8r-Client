@@ -271,13 +271,13 @@ const Profile = () => {
           >
             <h2 className='text-xl font-bold mb-4'>Select an Avatar</h2>
             <div className='grid grid-cols-3 lg:grid-cols-4 gap-4'>
-              {Array.from({ length: 12 }).map((_, index) => (
+              {Array.from({ length: 4 }).map((_, index) => (
                 <img
                   key={index}
-                  src={`/Assets/${index + 1}.jpg`} // Render avatar images from 1 to 12
+                  src={`/Assets/${index + 1}.jpg`} 
                   alt={`Avatar ${index + 1}`}
                   className='w-24 h-24 rounded-full border border-gray-300 shadow-md cursor-pointer hover:opacity-75'
-                  onClick={() => selectAvatar(index + 1)} // Set avatar to the clicked one
+                  onClick={() => selectAvatar(index + 1)}  
                 />
               ))}
             </div>

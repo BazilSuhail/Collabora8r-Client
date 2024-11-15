@@ -8,11 +8,11 @@ import UserDetails from '../Registration/UserDetails';
 import { BiCheckCircle, BiCircle } from 'react-icons/bi';
 
 import collaboratorLogo from "../../logo.png";
-import { FaApple, FaGoogle } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 
 const StepProgress = ({ step }) => {
   return (
-    <div className="flex items-center mx-auto mt-[15px]"> 
+    <div className="flex items-center mx-auto mt-[15px]">
       <div className={`flex flex-col items-center`}>
         <div className={`rounded-full h-10 w-10 flex items-center justify-center 
           ${step >= 1 ? 'bg-green-500' : 'bg-gray-400'}`}>
@@ -99,26 +99,17 @@ const Register = () => {
           {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
           {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
 
-          <div className='w-full flex items-center space-x-2'>
+          <div className='w-full flex px-[12px] md:px-[19px]  items-center space-x-2'>
             <div className='w-[47%] h-[2px] bg-[#c5c5c5]'></div>
             <p className='text-gray-500 w-[4%] text-[14px]'>OR</p>
             <div className='w-[47%] h-[2px] bg-[#c5c5c5]'></div>
           </div>
 
-          <div className='grid grid-cols-2 gap-y-[10px] mt-[10px] gap-x-[12px] items-center'>
-            <div className='border-[2px] py-[12px] flex  items-center border-gray-400 rounded-[8px]'>
-              <div className='w-[25%] sm:w-[15%] pl-[4px] flex justify-center items-center'>
-                <FaGoogle size={24} className='text-blue-500' />
-              </div>
-              <div className='text-gray-500 text-[13px] sm:text-[15px] w-[80%] pl-[5px]'>Register with Google</div>
+          <div className='border-[2px] mt-[15px] py-[12px]  mx-[12px] md:mx-[19px] flex justify-center items-center border-gray-400 rounded-[8px]'>
+            <div className='pl-[4px] flex justify-center items-center'>
+              <FaGoogle size={24} className='text-blue-500' />
             </div>
-
-            <div className='border-[2px] py-[12px] items-center flex bg-gray-950 rounded-[8px]'>
-              <div className='w-[25%] sm:w-[15%] pl-[4px] flex justify-center items-center'>
-                <FaApple size={24} className='text-gray-50' />
-              </div>
-              <div className='text-gray-50 text-[13px] sm:text-[15px] w-[80%] pl-[5px]'>Register with Apple</div>
-            </div>
+            <div className='text-gray-500 text-[13px] sm:text-[16px] ml-[10px]'>Register with Google</div>
           </div>
           <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
 
