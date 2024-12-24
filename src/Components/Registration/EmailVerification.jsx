@@ -171,7 +171,7 @@ const EmailVerification = ({ onSuccess }) => {
               />
             </div>
           </div>
-          <div>{error && <p className='bg-red-100 text-[15px] px-[10px] mb-[12px] py-[8px] text-red-700 font-[500] rounded-xl'>An account has already been registered with this Email, kindly use another one.</p>}</div>
+          <div>{error && <p className='text-[12.5px] mb-[12px] py-[2px] pl-[45px] text-red-700 font-[500] rounded-xl'>* An account has already been registered with this Email, kindly use another one.</p>}</div>
           <button
             onClick={handleSendOtp}
             className="hover:text-blue-100 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300"

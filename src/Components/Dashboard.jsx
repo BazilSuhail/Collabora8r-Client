@@ -119,7 +119,7 @@ const Dashboard = () => {
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
 
       <section className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
-        <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[25px] lg:text-[35px] font-extrabold text-blue-700">
+        <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[18px] md:text-[25px] lg:text-[35px] font-extrabold text-blue-700">
           Hello,
           <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
         </div>
@@ -129,7 +129,7 @@ const Dashboard = () => {
         <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
           <div className='flex mb-[15px] xsx:pl-[8px]'>
             <button
-              className={`flex whitespace-nowrap mr-[12px] items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+              className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
                 }`}
               onClick={() => setDateFilter('All')}
             >
@@ -137,7 +137,7 @@ const Dashboard = () => {
               All Dates
             </button>
             <button
-              className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
+              className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
                 }`}
               onClick={() => setDateFilter('Missed')}
             >
@@ -172,7 +172,7 @@ const Dashboard = () => {
         </div>
 
         <div className='col-span-3 xl:col-span-5 xl:px-[25px]'>
-          <div className="flex overflow-x-auto space-x-4 hide-scrollbar">
+          <div className="flex overflow-x-auto space-x-2 md:space-x-4 hide-scrollbar">
             <button
               className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
                 }`}
@@ -184,7 +184,7 @@ const Dashboard = () => {
             {['Not Started', 'In Progress', 'Completed'].map((status) => (
               <button
                 key={status}
-                className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+                className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
                   }`}
                 onClick={() => setStatusFilter(status)}
               >

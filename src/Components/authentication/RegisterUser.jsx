@@ -53,11 +53,11 @@ const StepProgress = ({ step }) => {
 const Register = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
-  const [name, setName] = useState(''); // Store name separately
+  const [name, setName] = useState('');  
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailSuccess = ({ name, email }) => { // Destructure both values
+  const handleEmailSuccess = ({ name, email }) => { 
     setEmail(email);
     setName(name);
     setStep(2);
@@ -83,10 +83,9 @@ const Register = () => {
       console.error(error.response?.data?.error || 'Error during sign up');
     }
   };
-
   return (
     <main className='h-screen w-screen flex justify-center items-center bg-gray-100'>
-      <div className='flex flex-col md:w-[530px] md:scale-[1] scale-[0.9]'>
+      <div className='flex flex-col md:w-[530px] xsmall:w-[355px] w-[330px]'>
         <div className="scale-[1.2] flex mx-auto">
           <img src={collaboratorLogo} alt="Connection Failed" className="w-[34px] h-[34px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[25px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
@@ -94,7 +93,10 @@ const Register = () => {
         <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 font-[400]'>Simplify Teamwork, Streamline Success</p>
 
         <div className='py-[18px] px-[25px] flex flex-col bg-white rounded-xl shadow-lg'>
+         
+          <div className='ml-[-8px] md:ml-0 md:scale-[1] scale-[0.6] xsmall:scale-[0.8] '>
           <StepProgress step={step} />
+          </div>
           {step === 1 && <EmailVerification onSuccess={handleEmailSuccess} />}
           {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
           {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
@@ -105,12 +107,13 @@ const Register = () => {
             <div className='w-[47%] h-[2px] bg-[#c5c5c5]'></div>
           </div>
 
-          <div className='border-[2px] mt-[15px] py-[12px]  mx-[12px] md:mx-[19px] flex justify-center items-center border-gray-400 rounded-[8px]'>
+          {/* <div className='border-[2px] mt-[15px] py-[12px]  mx-[12px] md:mx-[19px] flex justify-center items-center border-gray-400 rounded-[8px]'>
             <div className='pl-[4px] flex justify-center items-center'>
               <FaGoogle size={24} className='text-blue-500' />
             </div>
             <div className='text-gray-500 text-[13px] sm:text-[16px] ml-[10px]'>Register with Google</div>
           </div>
+          */}
           <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
 
         </div>

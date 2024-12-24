@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       screens: {
         'xsx': '900px',
+        'xsmall': '345px',
       },
       fontWeight: {
         'extra-black': '900',

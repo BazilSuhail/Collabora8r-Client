@@ -11,7 +11,7 @@ const colors = [
 
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-const ProjectList = () => {
+const AdminProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -139,4 +139,4 @@ const ProjectList = () => {
   );
 };
 
-export default ProjectList;
+export default AdminProjectList;

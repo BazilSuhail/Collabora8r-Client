@@ -1,8 +1,20 @@
 # Collabor8r (Project Management Tool)
-#### Collabor8r is an intuitive and robust project management tool designed to streamline team collaboration, task management, and project tracking. With a focus on enhancing productivity, Collabor8r provides advanced features and interactive elements to ensure efficient project execution.
+Application `Collabor8r` is an intuitive and robust project management tool designed to streamline team collaboration, task management, and project tracking. With a focus on enhancing productivity, Collabor8r provides advanced features and interactive elements to ensure efficient project execution.
 
+## 🤖 Tech Stack 
+ <a href="#"> 
+  <img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>  
+  <img alt="React" src="https://img.shields.io/badge/React-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=white"/> 
+  <img alt="Framer Motion" src="https://img.shields.io/badge/Framer%20Motion-%23ED5A9F.svg?&style=for-the-badge&logo=framer&logoColor=white"/>
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind%20CSS-%2306B6D4.svg?&style=for-the-badge&logo=tailwindcss&logoColor=white"/>
+<img alt="Node js" src="https://img.shields.io/badge/Node.js-%23339933.svg?&style=for-the-badge&logo=node.js&logoColor=white"/> 
+<img alt="Express js" src="https://img.shields.io/badge/Express.js-%23000000.svg?&style=for-the-badge&logo=express&logoColor=white"/>   
+<img alt="MongoDB" src ="https://img.shields.io/badge/MongoDB-%234ea94b.svg?&style=for-the-badge&logo=mongodb&logoColor=white"/> 
+ </a>
+
+#### Check out the latest demo of Project [Collabor8r-Site](https://collabora8r.vercel.app/). 
+#### Find the Server Repository of this Project Here [Collabor8r-Server](https://github.com/BazilSuhail/Collabor8r-Server). 
 ## Run Locally
-
 Clone the project using the following command:
 ```bash
    git clone https://github.com/BazilSuhail/Collabor8r.git

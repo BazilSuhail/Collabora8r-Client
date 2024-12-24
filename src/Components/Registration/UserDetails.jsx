@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { AiOutlinePhone, AiOutlineCalendar } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi'; // Icon for gender
+import Loader from '../../Assets/Loader';
 
 const UserDetails = ({ onSubmit, userEmail }) => {
+    const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: userEmail,
@@ -17,9 +19,13 @@ const UserDetails = ({ onSubmit, userEmail }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     onSubmit(formData);
   };
 
+  if (loading) {
+    return <Loader message={'Signing Up ....'}/>;
+  }
   return (
     <form onSubmit={handleSubmit} className="w-full flex mb-[25px] flex-col items-center"> 
       <div className="w-full relative mt-[55px] mb-6 flex items-center">

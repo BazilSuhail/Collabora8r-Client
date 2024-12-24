@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./Components/Navbar";
-import Login from "./Components/authentication/LoginUser";
+import LoginUser from "./Components/authentication/LoginUser";
 import Register from "./Components/authentication/RegisterUser";
 import Profile from "./Components/authentication/Profile";
 
@@ -48,7 +48,7 @@ const AppContent = () => {
         <Route path="/joinedprojects" element={<JoinedProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginUser />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
