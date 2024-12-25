@@ -2,7 +2,7 @@ import "./Loader.css"
 const Loader = ({ message }) => {
     return (
         <div className="h-screen flex flex-col justify-center items-center spin xsx:pl-[280px] w-screen">
-            <div className="scale-[0.35] md:scale-[0.5] ">
+            <div className="scale-[0.35] md:scale-[0.45] ">
                 <div className="animate-custom-spin">
                     <div className="container">
                         <div className="ring"></div>
