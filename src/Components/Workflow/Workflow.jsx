@@ -32,7 +32,7 @@ const TaskCard = ({ task,usersId }) => {
           <span className="bg-gray-400 p-[5px] xsx:p-[8px] rounded-full">
             <MdTask className="text-white text-[17px] xsx:text-[20px]" />
           </span>
-          <span className="ml-[8px] mt-[-3px]">{task.title || 'Untitled Task'}</span>
+          <span className="ml-[8px] mt-[-3px]">{task.title.slice(0,30) || 'Untitled Task'}{task.title.length > 30 && "..."}</span>
         </h3>
       </div>
 
@@ -69,12 +69,12 @@ const Column = ({ status, tasks,usersId, moveTask }) => {
 
   return (
     <div ref={drop} className={`w-full py-4 pr-[15px] border-r-[3px] ${isOver && canDrop ? 'bg-green-200' : ''}`}>
-      <h2 className={`text-[17px]  rounded-[25px] py-[5px] font-semibold mb-4
+      <h2 className={`text-[14px] md:text-[15px] rounded-[25px] py-[2px] font-semibold mb-4
        ${status === 'Not Started'
-          ? 'bg-blue-100 text-blue-600 w-[140px] text-center'
+          ? 'bg-blue-100 text-blue-600 w-[110px] md:w-[120px] text-center'
           : status === 'Completed'
-            ? 'text-green-600 bg-green-100  w-[120px] text-center'
-            : 'text-yellow-600 bg-yellow-100  w-[140px] text-center'
+            ? 'text-green-600 bg-green-100 w-[110px] md:w-[120px] text-center'
+            : 'text-yellow-600 bg-yellow-100 w-[110px] md:w-[120px] text-center'
         }`}>
         {status}
       </h2>
@@ -188,7 +188,7 @@ const Workflow = () => {
 
   return (
     <DndProvider backend={backend}>
-      <div className="min-h-screen xsx:pl-[280px] xl:pl-[287px] py-6 bg-white">
+      <div className="min-h-screen xsx:pl-[280px] pl-[15px] xl:pl-[287px] py-6 bg-white">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

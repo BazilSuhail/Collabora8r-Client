@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaTasks, FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
 import Loader from '../Assets/Loader';
+import NoTasks from "../Assets/NoOverView.webp";
 
 
 function decodeJWT(token) {
@@ -78,10 +79,6 @@ const Overview = () => {
     fetchData();
   }, []);
 
-  if (loading) return <Loader />;
-  if (error) return <div className='p-4 m-6 xsx:ml-[280px]  bg-red-100 text-red-600 border border-red-300 rounded-md'>
-    {error}
-  </div>;
 
   const now = new Date();
   const taskStatusCounts = {
@@ -108,6 +105,13 @@ const Overview = () => {
   };
   const totalTasks = taskStatusCounts['Not Started'] + taskStatusCounts['In Progress'] + taskStatusCounts['Overdue'];
 
+  if (loading) return <Loader />;
+  /*if (error) return (
+    <div className='xsx:ml-[265px] min-h-screen bg-white flex flex-col'>
+      <img src={NoTasks} alt='' className='scale-[0.2]' />
+      <p className="text-center text-blue-500 bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+    </div>
+  );*/
 
   return (
     <div className='xsx:ml-[265px] bg-gray-50 flex flex-col p-5'>
@@ -158,41 +162,49 @@ const Overview = () => {
 
       <div>
         <h3 className="text-xl font-semibold mb-4">Your Projects</h3>
-        {projects.length === 0 ? (
-          <p>No projects available</p>
-        ) : (
-          <div className="grid gap-4">
-            {projects.map((project) => (
-              <div
-                key={project._id}
-                className='border-b-[3px] border-[#dedede] hover:bg-gray-100 transition-colors cursor-pointer'
-                onClick={() => handleProjectClick(project._id)}
-              >
-                <div className="py-3 pl-[15px] flex items-center">
-                  {/* Random color for first letter */}
-                  <div className={`w-[40px] h-[40px] text-[22px] text-center pt-[3px] text-white font-bold rounded-full ${project.color}`}>
-                    {project.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p
-                      className="ml-6 font-[600] text-[28px] cursor-pointer hover:underline"
-                      onClick={() => handleProjectClick(project._id)}
-                    >
-                      {project.name}
-                    </p>
-                    <p
-                      className="ml-6 text-[14px] font-[700] text-[#999999] cursor-pointer hover:underline"
-                      onClick={() => handleProjectClick(project._id)}
-                    >
-                      {project.team.length} - {project.team.length <= 1 ? <>Collaborator</> : <>Collaborators</>}
-                    </p>
-                  </div>
-                </div>
+        {error ?
+          <div className='mt-[-138px]'>
+            <img src={NoTasks} alt='' className='scale-[0.50] mx-auto mix-blend-multiply' />
+            <p className="text-blue-600 text-[14px] text-center mt-[-88px] font-[600]">No Joined Project Found.</p>
+          </div> :
+          <>
+            {projects.length === 0 ? (
+              <p>No projects available</p>
+            ) : (
+              <div className="grid gap-4">
+                {projects.map((project) => (
+                  <div
+                    key={project._id}
+                    className='border-b-[3px] border-[#dedede] hover:bg-gray-100 transition-colors cursor-pointer'
+                    onClick={() => handleProjectClick(project._id)}
+                  >
+                    <div className="py-3 pl-[15px] flex items-center">
+                      {/* Random color for first letter */}
+                      <div className={`w-[40px] h-[40px] text-[22px] text-center pt-[3px] text-white font-bold rounded-full ${project.color}`}>
+                        {project.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p
+                          className="ml-6 font-[600] text-[28px] cursor-pointer hover:underline"
+                          onClick={() => handleProjectClick(project._id)}
+                        >
+                          {project.name}
+                        </p>
+                        <p
+                          className="ml-6 text-[14px] font-[700] text-[#999999] cursor-pointer hover:underline"
+                          onClick={() => handleProjectClick(project._id)}
+                        >
+                          {project.team.length} - {project.team.length <= 1 ? <>Collaborator</> : <>Collaborators</>}
+                        </p>
+                      </div>
+                    </div>
 
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
+            )}
+          </>}
+
       </div>
     </div>
   );

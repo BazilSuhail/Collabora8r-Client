@@ -69,7 +69,7 @@ const Navbar = () => {
                 const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                const fetchedProjects = response.data; 
+                const fetchedProjects = response.data;
 
                 const colorMapping = {};
                 fetchedProjects.forEach(project => {
@@ -93,7 +93,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav> 
+        <nav>
             <div className="hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
@@ -106,21 +106,24 @@ const Navbar = () => {
                         <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                     </div>
 
-                    <div className='  mt-[15px] flex items-center justify-between'>
+                    <div className='mt-[15px] flex items-center justify-between'>
                         <p className="text-[#6a6a6a] font-bold ml-[5px]">Account</p>
                         <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
                     </div>
 
-                    <NavLink to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] shadow-profile-navbar rounded-lg">
+                    <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
                         {loading || !profile?.avatar ? (
                             <p className='text-[#363636]'>Login To Continue</p>
                         ) : (
-                            <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[25px] h-[25px] rounded-full" />
+                            <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                         )}
                         {loading || !profile?.name ? (
                             <p className='text-white'>L</p>
                         ) : (
-                            <div className="text-[17px] ml-[10px] font-medium text-[#7f7f7f]">{profile.name}</div>
+                            <div>
+                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
+                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
+                            </div>
                         )}
                     </NavLink>
 
@@ -227,21 +230,24 @@ const Navbar = () => {
                                 exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
                                 className="flex flex-col mt-[25px]"
                             >
-                                <button  onClick={handleMenuToggle} className='flex items-center justify-between'>
+                                <button onClick={handleMenuToggle} className='flex items-center justify-between'>
                                     <p className="text-[#6a6a6a] font-bold ml-[18px]">Account</p>
                                     <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
                                 </button>
 
-                                <NavLink  onClick={handleMenuToggle} to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] bg-[#d3d3d3] rounded-lg">
+                                <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
                                     {loading || !profile?.avatar ? (
                                         <p className='text-[#363636]'>Login To Continue</p>
                                     ) : (
-                                        <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[30px] h-[30px] rounded-full" />
+                                        <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                                     )}
                                     {loading || !profile?.name ? (
                                         <p className='text-white'>L</p>
                                     ) : (
-                                        <div className="text-[20px] ml-[10px] font-medium text-[#5c5c5c]">{profile.name}</div>
+                                        <div>
+                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
+                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
+                            </div>
                                     )}
                                 </NavLink>
 

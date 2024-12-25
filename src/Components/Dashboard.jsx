@@ -59,7 +59,7 @@ const Dashboard = () => {
         const colorMapping = {};
 
         fetchedTasks.forEach(project => {
-          const projectId = project._id;  
+          const projectId = project._id;
           if (!colorMapping[projectId]) {
             colorMapping[projectId] = getRandomColor();
           }
@@ -69,7 +69,7 @@ const Dashboard = () => {
       }
       catch (err) {
         setError(err.message || 'Error fetching tasks');
-      } 
+      }
       finally {
         setLoading(false);
       }
@@ -108,7 +108,7 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   if (error) {
@@ -119,13 +119,12 @@ const Dashboard = () => {
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
 
       <section className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
-        <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[18px] md:text-[25px] lg:text-[35px] font-extrabold text-blue-700">
-          Hello,
-          <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
+        <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[18px] md:text-[25px] lg:text-[32px] font-extrabold text-blue-700">
+          Hello, <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
         </div>
       </section>
 
-      <section className='grid grid-cols-1 xsx:grid-cols-4 xl:grid-cols-7  xsx:grid-rows-1'>
+      <section className='grid grid-cols-1 xl:grid-cols-7  xsx:grid-rows-1'>
         <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
           <div className='flex mb-[15px] xsx:pl-[8px]'>
             <button
@@ -171,11 +170,10 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className='col-span-3 xl:col-span-5 xl:px-[25px]'>
+        <div className='col-span-3 xsx:mx-[8px] xl:col-span-5 xl:px-[25px]'>
           <div className="flex overflow-x-auto space-x-2 md:space-x-4 hide-scrollbar">
             <button
-              className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
-                }`}
+              className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'}`}
               onClick={() => setStatusFilter('All')}
             >
               <FaRedo className="mr-2" />
@@ -184,7 +182,7 @@ const Dashboard = () => {
             {['Not Started', 'In Progress', 'Completed'].map((status) => (
               <button
                 key={status}
-                className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'
+                className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[2px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
                   }`}
                 onClick={() => setStatusFilter(status)}
               >
@@ -206,7 +204,6 @@ const Dashboard = () => {
                   key={task._id}
                   className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"
                 >
-
                   <div className='flex xsx:flex-row flex-col xsx:items-center xsx:justify-between'>
                     <h1 className="text-[17px] xsx:text-[19px] flex items-center font-[600]"><span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'><FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' /></span><span className='ml-[8px] mt-[-3px]'>{task.title}</span></h1>
                     <p
@@ -220,7 +217,6 @@ const Dashboard = () => {
                       {task.status}
                     </p>
                   </div>
-                  {/*   <p className='text-[14px] xsx:text-[15px] xsx:mt-0 mt-[8px] ml-[35px] xsx:ml-[45px] text-gray-800 font-[450]'>{task.description}</p> */}
                   <p className="text-[15px] mt-[8px]  ml-[35px] xsx:ml-[45px] ">
                     <span className='text-red-500 mr-[5px]'>Due:</span> <span className='text-red-700 underline font-[600] rounded-xl '>{new Date(task.dueDate).toLocaleDateString()}</span>
                   </p>

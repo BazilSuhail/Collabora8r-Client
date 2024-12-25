@@ -157,10 +157,10 @@ const TaskDetails = () => {
   }
 
   return (
-    <main className="xsx:pl-[287px] grid lg:grid-cols-7 xsx:grid-rows-1  bg-white min-h-screen p-6">
-      <section className='lg:col-span-5 lg:px-[25px]'>
+    <main className="xsx:pl-[287px] grid xl:grid-cols-7 grid-cols-1 bg-white min-h-screen p-6">
+      <section className='lg:col-span-5 lg:mt-[25px] lg:px-[25px]'>
 
-        <h2 className="text-3xl flex items-center font-bold"><FaClipboardList className='text-blue-700 mr-[8px]' />{task.title}</h2>
+        <div className="text-[18px] md:text-[24px] flex md:flex-row flex-col md:items-center font-[600]"><p className='bg-blue-100 w-[50px] mr-[12px] h-[50px] rounded-full flex items-center justify-center text-[28px] text-blue-700  md:mb-0 mb-[15px] '><FaClipboardList /></p>{task.title}</div>
 
         <div className='flex mt-[15px] items-center'>
           <h2 className="text-[19px] text-gray-500 font-[500]">{creatorName}</h2>

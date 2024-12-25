@@ -14,6 +14,8 @@ const ProjectDetail = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const fetchProjectDetailsAndUsers = async () => {
       try {
@@ -86,19 +88,44 @@ const ProjectDetail = () => {
     setFilteredUsers(filtered);
   };
 
+  if (!project) {
+    return <Loader />;
+  }
+
   return (
     <div className='xsx:ml-[265px] h-screen bg-gray-100 flex flex-col p-5'>
-      {/* Project Details Section */}
-      <div className="flex items-center bg-white text-white rounded-lg p-6 border">
-        <FiFileText className="text-4xl mr-4" />
-        {project ? (
-          <div>
-            <h2 className="text-3xl flex mb-[15px] text-blue-950 items-center font-bold"><FaClipboardList className='text-blue-900 mr-[8px]' />{project.name}</h2>
-            <p className="text-[16px] lg:ml-[35px] text-blue-950 font-[500] mt-1">{project.description}</p>
+      {/* Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        >
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] lg:w-[50%]">
+            <h2 className="text-lg font-bold mb-4">Project Description</h2>
+            <p className="text-[16px] text-gray-800">{project.description}</p>
+            <button
+              className="mt-4 text-[15px] px-4 py-[3px] bg-blue-600 text-white rounded-lg"
+              onClick={() => setIsModalOpen(!isModalOpen)}
+            >
+              Close
+            </button>
           </div>
-        ) : (
-          <Loader />
-        )}
+        </div>
+      )}
+      {/* Project Details Section */}
+      <div className="flex items-center bg-white text-white rounded-lg p-3 lg:p-6 border">
+        <FiFileText className="text-4xl mr-4" />
+        {project &&
+          <div>
+            <h2 className="text-[19px] md:text-3xl flex mb-[15px] text-blue-950 items-center font-bold"><FaClipboardList className='text-blue-900 mr-[8px]' />{project.name}</h2>
+            <p className="text-[15px] text-blue-900 font-[600] lg:ml-[35px]" >
+              {project.description.split(" ").length > 40 ? `${project.description.split(" ").slice(0, 40).join(" ")}...` : project.description}
+              {project.description.split(" ").length > 40 && (
+                <span className="text-blue-600 cursor-pointer ml-2" onClick={() => setIsModalOpen(!isModalOpen)} >
+                  Read More
+                </span>
+              )}
+            </p>
+          </div>}
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
@@ -159,7 +186,7 @@ const ProjectDetail = () => {
           </ul>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 
