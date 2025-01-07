@@ -13,8 +13,11 @@ const Loader = ({ message }) => {
                 </div>
             </div>
             {message ?
-                <div className="mt-[58px] font-[600] text-center text-cyan-700 text-[17px]">{message}<p className="text-red-400 text-center">This May Take a while</p></div>
-                : <p className="mt-[58px] font-[600] text-red-700 text-[18px]">Lo<span className="text-cyan-600">ad</span><span className="text-blue-500">ing</span></p>
+                <div className="mt-[58px] font-[600] text-center text-cyan-700 text-[16px]">
+                    {message}<p className="text-red-400 mt-[3px] font-[500] text-[12px] text-center">Getting things ready </p>
+                </div>
+                : 
+                <p className="mt-[58px] font-[600] text-red-700 text-[18px]">Lo<span className="text-cyan-600">ad</span><span className="text-blue-500">ing</span></p>
             }
         </div>
     )

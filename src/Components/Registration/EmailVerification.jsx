@@ -41,12 +41,12 @@ const EmailVerification = ({ onSuccess }) => {
         otp_code: otpCode,
       };
 
-      await emailjs.send(
+      /*await emailjs.send(
         import.meta.env.VITE_REACT_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_REACT_APP_EMAILJS_TEMPLATE_ID,
         templateParams,
         import.meta.env.VITE_REACT_APP_EMAILJS_USER_ID
-      );
+      );*/
 
       setOtpSent(true);
       setError('');

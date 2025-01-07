@@ -111,10 +111,10 @@ const Dashboard = () => {
     return <Loader />;
   }
 
-  if (error) {
+  /*if (error) {
     navigate('/login');
   }
-
+  */
   return (
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
 
