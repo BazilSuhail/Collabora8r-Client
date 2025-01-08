@@ -50,9 +50,15 @@ const ProjectDetail = () => {
   const handleAddUser = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/send-project-invitation`, { userId, projectId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       // Add user to project
-      await axios.patch(
+      /*await axios.patch(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/addUser`,
         { userId },
         {
@@ -71,9 +77,9 @@ const ProjectDetail = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
+      );*/
 
-      setSuccess('User added to project successfully.');
+      setSuccess(response.data.message);
     } catch (err) {
       console.error(err);
       setError('Failed to add user to project.');

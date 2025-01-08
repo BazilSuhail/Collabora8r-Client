@@ -56,7 +56,7 @@ const MyTask = ({ task, user, creator }) => {
 const ProjectTasks = ({ creator, tasks }) => {
 
   return (
-    <div className="min-h-screen pb-6 xsx:px-6 bg-gray-100">
+    <div className="min-h-screen pb-6">
       {tasks.length === 0 ? (
         <p className="text-gray-500 text-center">No tasks found for this project.</p>
       ) : (

@@ -11,7 +11,6 @@ import decodeJWT from '../../decodeJWT';
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
- 
 const TaskCard = ({ task,usersId }) => {
   const navigate = useNavigate();
   const [, drag] = useDrag({

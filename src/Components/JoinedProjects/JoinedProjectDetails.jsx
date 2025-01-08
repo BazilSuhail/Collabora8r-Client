@@ -49,7 +49,8 @@ const JoinedProjectDetails = () => {
         if (response.data.project) {
           setProject(response.data.project);
           setTeamDetails(response.data.project.team);
-        } else {
+        } 
+        else {
           setError((prev) => ({ ...prev, project: 'Project not found.' }));
         }
       } catch (err) {
@@ -89,7 +90,6 @@ const JoinedProjectDetails = () => {
           <div className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
             <h2 className="text-3xl font-bold mb-2">{project.name}</h2>
             <p className="text-gray-700">{project.description}</p>
-
             {error.project && <p className="text-red-500">{error.project}</p>}
           </div>
 
@@ -98,14 +98,15 @@ const JoinedProjectDetails = () => {
           Team Members
           </button>
 
-          <section className='grid grid-cols-1 xsx:grid-cols-7 xsx:grid-rows-1'>
+          <section className='grid grid-cols-1 xl:grid-cols-7 xsx:grid-rows-1'>
+
             <div className='col-span-2 mb-[15px] xsx:mx-[8px]'>
-              <div className='flex mb-[15px] xsx:pl-[8px]'>
-                <button onClick={() => setView('my')} className={`mr-4 flex items-center px-4 py-2 rounded-xl ${view === 'my' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+              <div className='flex mb-[15px]'>
+                <button onClick={() => setView('my')} className={`mr-4 flex items-center px-4 py-[2px] rounded-[8px] ${view === 'my' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
                   <FaBorderAll className="mr-2" />All Tasks
                 </button>
-                <button onClick={() => setView('all')} className={`px-4 flex items-center rounded-xl py-2 ${view === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-                  <FaLandMineOn className="mr-2" />My Tasks
+                <button onClick={() => setView('all')} className={`px-4 flex items-center text-[14px] rounded-[8px] py-[2px] ${view === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+                  <FaLandMineOn className="mr-2 text-[18px]" /><span className=''></span>My Tasks
                 </button>
               </div>
 

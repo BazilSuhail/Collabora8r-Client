@@ -15,6 +15,7 @@ import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
+import NotificationsModal from './Profile/Notifications';
 
 const colors = [
     'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -31,6 +32,10 @@ const Navbar = () => {
     const [projects, setProjects] = useState([]);
 
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const hadnelModalToggle = () => {
+        setIsModalOpen(!isMenuOpen);
+    };
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleMenuToggle = () => {
@@ -94,11 +99,12 @@ const Navbar = () => {
 
     return (
         <nav>
+            {isModalOpen && <NotificationsModal isModalOpen={isModalOpen} setModalOpen={setIsModalOpen} />}
             <div className="hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
                         <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
-                        <NavLink to="get-notifications"><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></NavLink>
+                        <div  onClick={hadnelModalToggle}><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></div>
                     </div>
 
                     <div className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
@@ -166,13 +172,13 @@ const Navbar = () => {
                             >
                                 <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
                                     {projects.map((project) => (
-                                        <div key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
+                                        <div onClick={() => handleProjectClick(project._id)} key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl hover:cursor-pointer px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
                                             <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
                                                 {project.name.charAt(0)}
                                             </div>
-                                            <button className='ml-[8px] font-[600]' onClick={() => handleProjectClick(project._id)}>
+                                            <p className='ml-[8px] font-[600]' >
                                                 {project.name}
-                                            </button>
+                                            </p>
                                         </div>
                                     ))}
                                 </div>

@@ -17,9 +17,8 @@ import Dashboard from "./Components/Dashboard";
 import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
 import TaskDetails from "./Components/Tasks/TaskDetails";
-import TasksTimeline from "./Components/TasksTimeline";
-import Notifications from "./Components/Profile/Notifications";
-
+import TasksTimeline from "./Components/TasksTimeline"; 
+import ProjectInvitationDetails from "./Components/Profile/ProjectInvitation";
 const AppContent = () => {
   const location = useLocation();
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
@@ -28,11 +27,14 @@ const AppContent = () => {
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/get-notifications" element={<Notifications />} />
+        <Route path="/" element={<Dashboard />} /> 
         <Route path="/overview" element={<Overview />} />
         <Route path="/workflow" element={<Workflow />} />
 
+        <Route path="/project-details/:projectId/:senderId" element={<ProjectInvitationDetails />} />
+
+
+        
         <Route path="/projects/tasks-timeline/:projectId" element={<TasksTimeline />} />
 
         <Route path="/associated-projects" element={<AdminProjectList />} />
