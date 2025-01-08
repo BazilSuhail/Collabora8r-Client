@@ -54,7 +54,7 @@ const Navbar = () => {
                         Authorization: `Bearer ${token}`
                     }
                 };
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth`, config);
                 setProfile(response.data);
             } catch (err) {
                 console.error(err);
@@ -78,8 +78,8 @@ const Navbar = () => {
 
                 setProjects(fetchedProjects);
                 setProjectColors(colorMapping);
-            } catch (err) {
-                console.error(err);
+            } catch (error) {
+                console.error(error);
             }
         };
 
@@ -98,7 +98,7 @@ const Navbar = () => {
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
                         <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
-                        <FaBell className="mt-[10px] text-[#363636] text-[20px]" />
+                        <NavLink to="get-notifications"><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></NavLink>
                     </div>
 
                     <div className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">

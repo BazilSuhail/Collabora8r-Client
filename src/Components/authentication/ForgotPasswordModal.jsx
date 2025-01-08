@@ -32,7 +32,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
 
         try {
             // Check if email exists
-            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/forgot-password`, { email });
+            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/forgot-password`, { email });
             if (!response.data.success) {
                 setError('Email does not exist. Please check and try again.');
                 return;
@@ -92,7 +92,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
         }
 
         try {
-            await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/reset-password`, {
+            await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/reset-password`, {
                 email,
                 newPassword,
             });

@@ -22,7 +22,7 @@ const ProjectDetail = () => {
         const token = localStorage.getItem('token');
 
         // Fetch project details
-        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/viewProjects/${projectId}`, {
+        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/${projectId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

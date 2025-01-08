@@ -22,11 +22,12 @@ const AdminProjectList = () => {
     const fetchProjects = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/viewProjects/admin`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data)
         const updatedProjects = response.data.map((project) => ({
           ...project,
           color: getRandomColor(),

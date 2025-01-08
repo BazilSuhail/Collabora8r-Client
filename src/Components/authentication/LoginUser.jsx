@@ -40,7 +40,7 @@ const LoginUser = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/signin`, formData);
+      const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`, formData);
       localStorage.setItem('token', res.data.token);
       navigate('/');
     } catch (error) {
