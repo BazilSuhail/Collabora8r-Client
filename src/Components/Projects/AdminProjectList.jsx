@@ -68,7 +68,7 @@ const AdminProjectList = () => {
       </div>
       <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500' >List of All projects Adminstrated By you</p>
       <div className='h-[2px] bg-gray-300 w-full rounded-2xl mb-[6px]'></div>
-      
+
       {(error && !projects.length) ? (
         <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
           {error} No projects found.
@@ -143,7 +143,7 @@ const AdminProjectList = () => {
                   Assign A Manager
                 </p> : <p>
                 </p>}
-              </div> 
+              </div>
             </div>
           ))}
         </div>

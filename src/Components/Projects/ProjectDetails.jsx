@@ -1,66 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { FaUserPlus, FaSearch, FaClipboardList } from 'react-icons/fa'; // Import icons
-import { FiFileText } from 'react-icons/fi'; // Import icon for Project details
+import { FaUserPlus, FaSearch, FaClipboardList, FaUserAlt, FaUsers, FaEdit } from 'react-icons/fa';
 import Loader from '../../Assets/Loader';
+import { CgUiKit } from 'react-icons/cg';
+import { IoMdDoneAll } from 'react-icons/io';
+import { MdMarkEmailUnread } from 'react-icons/md';
+import EditProject from './EditProject';
+import { GrChapterAdd } from 'react-icons/gr';
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
+  const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState(null);
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [email, setEmail] = useState('');
+  const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  // Fetch project details
   useEffect(() => {
-    const fetchProjectDetailsAndUsers = async () => {
+    const fetchProjectDetails = async () => {
       try {
         const token = localStorage.getItem('token');
 
-        // Fetch project details
-        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/${projectId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const projectResponse = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/${projectId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setProject(projectResponse.data);
-
-        // Fetch all users
-        const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUsers(usersResponse.data);
-        setFilteredUsers(usersResponse.data);
-
       } catch (err) {
         console.error(err);
-        setError('Failed to fetch project details or users.');
+        setError('Failed to fetch project details.');
       }
     };
 
-    fetchProjectDetailsAndUsers();
+    fetchProjectDetails();
   }, [projectId]);
 
-  const handleAddUser = async (userId) => {
+  const handleSearch = async () => {
+    setError('');
+    setUser(null);
+    setSuccess('');
+    setIsLoading(true);
+
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/send-project-invitation`, { userId, projectId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      // Add user to project
-      /*await axios.patch(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/addUser`,
-        { userId },
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/get-searched-user`,
+        { email, projectId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,16 +62,31 @@ const ProjectDetail = () => {
         }
       );
 
-      // Add project ID to user's JoinProject document
-      await axios.patch(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${userId}/joinProject`,
-        { projectId },
+      setUser(response.data); // Assuming the API returns { name, email, avatar }
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || 'Failed to find the user.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAddUser = async () => {
+    setError('');
+    setSuccess('');
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/send-project-invitation`,
+        { userId: user._id, projectId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
-      );*/
+      );
 
       setSuccess(response.data.message);
     } catch (err) {
@@ -86,114 +95,227 @@ const ProjectDetail = () => {
     }
   };
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    const filtered = users.filter(user =>
-      user.email.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setFilteredUsers(filtered);
-  };
-
   if (!project) {
     return <Loader />;
   }
 
   return (
-    <div className='xsx:ml-[265px] h-screen bg-gray-100 flex flex-col p-5'>
-      {/* Modal */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-        >
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] lg:w-[50%]">
-            <h2 className="text-lg font-bold mb-4">Project Description</h2>
-            <p className="text-[16px] text-gray-800">{project.description}</p>
-            <button
-              className="mt-4 text-[15px] px-4 py-[3px] bg-blue-600 text-white rounded-lg"
-              onClick={() => setIsModalOpen(!isModalOpen)}
-            >
-              Close
-            </button>
+    <main className="xsx:pl-[287px] grid xl:grid-cols-7 grid-cols-1 pt-[35px] bg-gray-50 min-h-screen px-6">
+
+      {showModal && <EditProject project={project} setShowModal={setShowModal} />}
+      <section className='lg:col-span-5 xl:pr-[20px]'>
+
+        <div className='bg-white p-[12px] flex lg:items-center lg:justify-between lg:flex-row flex-col xl:p-[25px] border rounded-[18px] '>
+          <div className="text-[18px] md:text-[24px] flex md:flex-row flex-col md:items-center font-[600]">
+            <p className='bg-blue-200 w-[50px] mr-[12px] h-[50px] rounded-full flex items-center justify-center text-[28px] text-blue-600  md:mb-0 mb-[15px] '>
+              <FaClipboardList />
+            </p>
+            {project.name}
+          </div>
+          <div onClick={() => setShowModal(true)} className='w-[170px] py-[8px] flex items-center bg-gradient-to-r to-blue-950 from-cyan-800 rounded-[15px]'>
+            <FaEdit className="ml-[15px] text-[18px] mt-[2px] text-blue-50" />
+            <span className='text-[13px] ml-[8px] font-[600] mt-[px] text-blue-50'>Edit Project Details</span>
           </div>
         </div>
-      )}
-      {/* Project Details Section */}
+
+
+        <div className='bg-white p-[12px] mt-[15px] xl:px-[35px] py-[15px] border rounded-[18px] '>
+          <div className='flex  text-blue-600 items-center'>
+            <CgUiKit className='text-[18px]  mr-[5px]' />
+            <span className='text-[14px] font-[600]'>Task Guidelines</span>
+          </div>
+          <p className="mt-2 font-[500] text-[14px] pl-[22px] text-gray-500">{project.description}</p>
+        </div>
+
+        <div className='bg-white min-h-[450px] p-[12px] mt-[15px] xl:px-[35px] py-[15px] border rounded-[18px] '>
+          <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
+            <MdMarkEmailUnread className="mr-2 text-[20px]" />
+            <span className="font-medium  text-[15px]">
+              Search User by Email
+            </span>
+          </div>
+
+          <div className="flex items-center border-2 rounded-[25px] border-gray-300 mb-6">
+            <FaSearch className="text-gray-400 text-[20px] ml-3" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter user email"
+              className="w-full pl-3 py-[6px] text-gray-600 focus:outline-none"
+            />
+            <button
+              onClick={handleSearch}
+              className="text-[14px] px-4 py-[7px] bg-blue-800 text-white rounded-[25px] hover:bg-indigo-600 transition"
+            >
+              Search
+            </button>
+          </div>
+
+          {error && <p className="text-red-500">{error}</p>}
+          {success && <p className="text-green-500">{success}</p>}
+          {isLoading && <Loader />}
+          {user && (
+            <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border">
+              <div className="flex items-center space-x-4">
+                <img
+                  src={`/Assets/${user.avatar}.jpg`}
+                  alt={user.name}
+                  className="w-12 h-12 rounded-full"
+                />
+                <div>
+                  <p className="text-gray-800 font-semibold">{user.name}</p>
+                  <p className="text-gray-600">{user.email}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleAddUser}
+                className="flex items-center space-x-2 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
+              >
+                <FaUserPlus />
+                <span>Add User</span>
+              </button>
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      <section className='lg:col-span-2 lg:px-[8px]'>
+        {/* Team Members Section */}
+        <div className="px-[20px] py-[15px] mb-[25px] bg-white rounded-lg border-[2px]">
+          <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
+            <FaUsers className="mr-2 text-[23px]" />
+            <span className="font-medium  text-[17px]">
+              Team Member
+            </span>
+          </div>
+          {project.team.length > 0 ? (
+            <div className="space-y-3">
+              {project.team.map((member, index) => (
+                <div
+                  key={index}
+                  className="flex items-center pl-3 border-b-[2px] border-gray-300 pb-[8px] rounded-lg"
+                >
+                  <img
+                    src={`/Assets/${member.avatar}.jpg`}
+                    alt={member.name}
+                    className="w-[35px] h-[35px] border border-gray-400 rounded-full mr-4"
+                  />
+                  <div>
+                    <p className="text-[16px] font-semibold text-gray-800">{member.name}</p>
+                    <p className="text-[12px] text-gray-600">{member.email}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No team members available.</p>
+          )}
+        </div>
+
+        {/* Tasks Section */}
+        <div className="p-[20px] bg-white rounded-lg border">
+          <div className="flex items-center text-blue-700 pb-[3px] border-b-[2px] mb-[15px] mt-4">
+            <IoMdDoneAll className="mr-2 text-[23px]" />
+            <span className="font-medium text-[17px]">
+              Project Tasks
+            </span>
+          </div>
+          {project.tasks.length > 0 ? (
+            <div className="space-y-3">
+              {project.tasks.map((task, index) => (
+                <div key={index} className="p-3 bg-gray-50 rounded-lg shadow-sm border">
+                  <p className="text-[15px] font-[600] text-gray-800 mb-[12px] pl-[5px] ">{task.title}</p>
+
+                  <div className='w-full flex justify-between items-center'>
+                    <p className={`text-[11px] rounded-2xl py-[2px] w-[65px] text-center font-semibold ${task.priority === 'High'
+                      ? 'text-red-700 bg-red-100' : task.priority === 'Medium' ? 'text-yellow-700 border bg-yellow-100'
+                        : 'text-green-700 bg-green-100'
+                      }`}>
+                      {task.priority}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <span className='mr-[3px] text-[10px] font-[600] text-red-700'>Due:</span> <span className="text-red-600 text-[12px] font-[600]">{new Date(task.dueDate).toLocaleDateString()}</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No tasks available.</p>
+          )}
+        </div>
+      </section>
+
+    </main>
+
+  );
+};
+
+export default ProjectDetail;
+/*
+
+ <div className="xsx:ml-[265px] h-screen bg-gray-100 flex flex-col p-5"> 
       <div className="flex items-center bg-white text-white rounded-lg p-3 lg:p-6 border">
-        <FiFileText className="text-4xl mr-4" />
-        {project &&
-          <div>
-            <h2 className="text-[19px] md:text-3xl flex mb-[15px] text-blue-950 items-center font-bold"><FaClipboardList className='text-blue-900 mr-[8px]' />{project.name}</h2>
-            <p className="text-[15px] text-blue-900 font-[600] lg:ml-[35px]" >
-              {project.description.split(" ").length > 40 ? `${project.description.split(" ").slice(0, 40).join(" ")}...` : project.description}
-              {project.description.split(" ").length > 40 && (
-                <span className="text-blue-600 cursor-pointer ml-2" onClick={() => setIsModalOpen(!isModalOpen)} >
-                  Read More
-                </span>
-              )}
-            </p>
-          </div>}
+        <h2 className="text-[19px] md:text-3xl flex mb-[15px] text-blue-950 items-center font-bold">
+          {project.name}
+        </h2>
+        <p className="text-[15px] text-blue-900 font-[600] lg:ml-[35px]">
+          {project.description}
+        </p>
       </div>
 
       {error && <p className="text-red-500">{error}</p>}
       {success && <p className="text-green-500">{success}</p>}
-
-      {/* Add Users Section */}
+ 
       <div className="bg-white mt-[28px] rounded-lg border p-8">
         <div className="flex items-center mb-6">
           <FaUserPlus className="text-indigo-600 text-3xl mr-3" />
           <h2 className="text-2xl font-semibold text-gray-800">Add Users to Project</h2>
         </div>
-
+ 
         <div className="flex items-center border-2 rounded-lg border-gray-300 mb-6">
           <FaSearch className="text-gray-400 text-xl ml-3" />
           <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search users by email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter user email"
             className="w-full px-4 py-2 text-gray-600 focus:outline-none"
           />
+          <button
+            onClick={handleSearch}
+            className="ml-2 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition"
+          >
+            Search
+          </button>
         </div>
 
-        {searchQuery === '' && (
-          <div className="flex mt-[75px] flex-col items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="grayscale-1 w-32 h-32 mb-4">
-              <path fill="#fdd835" d="M32 4a28 28 0 1028 28A28.031 28.031 0 0032 4z"></path>
-              <g fill="#f9a825">
-                <path d="M32 0v8a24 24 0 000 48v8A32 32 0 1132 0zM0 32h8a24 24 0 0048 0h8A32 32 0 110 32z"></path>
-              </g>
-              <path fill="#fff" d="M23 43H9a3 3 0 01-3-3v-3a5 5 0 015-5h6a5 5 0 015 5v3a3 3 0 01-3 3zM41 43H27a3 3 0 01-3-3v-3a5 5 0 015-5h6a5 5 0 015 5v3a3 3 0 01-3 3z"></path>
-              <circle cx="16" cy="27" r="6" fill="#f9a825"></circle>
-              <circle cx="32" cy="27" r="6" fill="#fdd835"></circle>
-            </svg>
-            <p className="rounded-lg p-2 text-center font-[600] text-blue-600 text-[15px]">Start typing to find and add users to the project.</p>
+        {isLoading && <Loader />}
+        {user && (
+          <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border">
+            <div className="flex items-center space-x-4">
+              <img
+                src={user.avatar || '/default-avatar.png'}
+                alt={user.name}
+                className="w-12 h-12 rounded-full"
+              />
+              <div>
+                <p className="text-gray-800 font-semibold">{user.name}</p>
+                <p className="text-gray-600">{user.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={handleAddUser}
+              className="flex items-center space-x-2 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
+            >
+              <FaUserPlus />
+              <span>Add User</span>
+            </button>
           </div>
         )}
-
-        {/* User List */}
-        {searchQuery !== '' && (
-          <ul className="space-y-4">
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <li key={user._id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border">
-                  <span className="text-gray-800">{user.email}</span>
-                  <button
-                    onClick={() => handleAddUser(user._id)}
-                    className="flex items-center space-x-2 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
-                  >
-                    <FaUserPlus />
-                    <span>Add User</span>
-                  </button>
-                </li>
-              ))
-            ) : (
-              <p className="text-gray-500">No users found</p>
-            )}
-          </ul>
-        )}
       </div>
-    </div >
-  );
-};
+    </div>
 
-export default ProjectDetail;
+*/
