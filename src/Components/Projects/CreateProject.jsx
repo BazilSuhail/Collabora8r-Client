@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { MdLowPriority, MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';
+import { IoCheckmarkDoneCircleOutline, IoMailUnreadOutline } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
 
 const CreateProject = ({ setShowModal }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [projectManagerEmail, setProjectManagerEmail] = useState('');
+  const [theme, setTheme] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showThemeModal, setShowThemeModal] = useState(false);
 
   const handleCreateProject = async (e) => {
     e.preventDefault();
@@ -16,7 +21,7 @@ const CreateProject = ({ setShowModal }) => {
     try {
       await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projects/create`,
-        { name, description, projectManagerEmail },
+        { name, description, projectManagerEmail, theme },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,6 +32,7 @@ const CreateProject = ({ setShowModal }) => {
       setName('');
       setDescription('');
       setProjectManagerEmail('');
+      setTheme(null);
       setShowModal(false);
     } catch (err) {
       setError('Failed to create project.');
@@ -43,59 +49,108 @@ const CreateProject = ({ setShowModal }) => {
           stiffness: 120,
           damping: 12,
         }}
-        className="bg-white p-6 rounded-lg w-96"
+        className="bg-white flex flex-col p-6 rounded-lg xl:w-[35vw] w-96"
       >
-        <h2 className="text-2xl font-bold mb-4">Create A New Project</h2>
+        <button onClick={() => setShowModal(false)} className="cursor-pointer ml-auto text-[22px] mt-[-5px] text-gray-500">
+          <RxCross2 />
+        </button>
+        <h3 className="text-lg font-[600] mt-[-5px] text-center text-gray-700">
+          Create A New Project
+        </h3>
+        <div className="w-full rounded-xl bg-gray-300 h-[2px] mt-[10px] mb-[15px]"></div>
+
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}
 
         <form onSubmit={handleCreateProject}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Project Name:</label>
+          <div>
+            <div className="flex text-[15px] items-center">
+              <MdOutlineSubtitles />
+              <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Project Name</p>
+            </div>
             <input
-              className="border border-gray-300 p-2 w-full rounded"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full mt-1 px-[5px] text-[14px] py-[2px] border border-gray-400 rounded focus:ring-2 focus:outline-none"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Description:</label>
-            <input
-              className="border border-gray-300 p-2 w-full rounded"
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+
+          <div className="flex items-center mt-[18px] justify-between w-full">
+            <div className="w-[48%]">
+              <div className="flex text-[15px] items-center">
+                <MdLowPriority />
+                <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Select Theme</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowThemeModal(true)}
+                className="w-full mt-1 px-[5px] py-[5px] text-[14px] border border-gray-300 rounded focus:ring-2 focus:outline-none"
+              >
+                {theme !== null ? `Theme ${theme + 1}` : 'Select Theme'}
+              </button>
+            </div>
+            <div className="w-[48%]">
+              <div className="flex text-[15px] items-center">
+                <IoMailUnreadOutline />
+                <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Manager Email</p>
+              </div>
+              <input
+                type="email"
+                value={projectManagerEmail}
+                onChange={(e) => setProjectManagerEmail(e.target.value)}
+                className="w-full mt-1 px-[5px] py-[5px] text-[14px] border border-gray-300 rounded focus:ring-2 focus:outline-none"
+                required
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Project Manager Email:</label>
-            <input
-              className="border border-gray-300 p-2 w-full rounded"
-              type="email"
-              value={projectManagerEmail}
-              onChange={(e) => setProjectManagerEmail(e.target.value)}
-              required
-            />
+
+          <div className="flex mt-[15px] text-[15px] items-center">
+            <MdOutlineDescription />
+            <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Project Description</p>
           </div>
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              onClick={() => setShowModal(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-600"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
-            >
-              Create Project
-            </button>
-          </div>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:outline-none"
+            required
+          />
+
+          <button
+            type="submit"
+            className="bg-[#275ca2] mt-[12px] flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]"
+          >
+            <IoCheckmarkDoneCircleOutline className="ml-[10px] mr-[5px] text-[18px]" />
+            Create Project
+          </button>
         </form>
       </motion.div>
+
+      {showThemeModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 z-[1000] flex flex-col items-center justify-center">
+          <button
+            onClick={() => setShowThemeModal(false)}
+            className="mb-4 text-white px-4 py-2 bg-red-500 rounded"
+          >
+            Close
+          </button>
+          <div className="grid grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <img
+                key={index}
+                src={`/Assets/${index+1}.jpg`}
+                alt={`Theme ${index}`}
+                className="w-32 h-32 object-cover cursor-pointer"
+                onClick={() => {
+                  setTheme(index);
+                  setShowThemeModal(false);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

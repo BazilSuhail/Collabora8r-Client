@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import TaskModal from './CreateTaskModal';
+import { GrChapterAdd } from 'react-icons/gr';
+import { FiFolder } from 'react-icons/fi';
+import { FaRegTrashAlt, FaUserEdit } from 'react-icons/fa';
+import { LuDoorOpen } from 'react-icons/lu';
 
 const AssignTasks = () => {
   const { projectId } = useParams();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [projectName, setProjectName] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [newTask, setNewTask] = useState({
@@ -27,7 +32,8 @@ const AssignTasks = () => {
         const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setTasks(tasksResponse.data);
+        setTasks(tasksResponse.data.validTasks);
+        setProjectName(tasksResponse.data.projectName);
 
         const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/get-all-users`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -73,7 +79,7 @@ const AssignTasks = () => {
       const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setTasks(tasksResponse.data);
+      setTasks(tasksResponse.data.validTasks);
 
       handleCloseModal();
     } catch (err) {
@@ -121,7 +127,7 @@ const AssignTasks = () => {
       const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setTasks(tasksResponse.data);
+      setTasks(tasksResponse.data.validTasks);
 
       handleCloseModal();
     } catch (err) {
@@ -142,7 +148,7 @@ const AssignTasks = () => {
       const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageTasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setTasks(tasksResponse.data);
+      setTasks(tasksResponse.data.validTasks);
 
     } catch (err) {
       console.error(err);
@@ -154,39 +160,89 @@ const AssignTasks = () => {
 
   return (
     <div className='xsx:ml-[265px] bg-white flex flex-col p-6 rounded-lg shadow-lg'>
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Assign Tasks</h2>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      {success && <p className="text-green-500 mb-4">{success}</p>}
+      <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+        <div className="flex items-center space-x-2">
+          <FiFolder className="text-2xl text-gray-600" />
+          <h2 className="text-[24px] text-gray-600 font-bold">{projectName} Tasks</h2>
+        </div>
+      </div>
+      <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500' >List of All projects Adminstrated By you</p>
+      <div className='h-[2px] bg-gray-300 w-full rounded-2xl mb-[6px]'></div>
 
-      <h3 className="text-lg font-semibold text-gray-700 mb-2">Existing Tasks</h3>
-      <div className='overflow-y-auto w-full'>
-        <table className="bg-white w-full border border-gray-300">
-          <thead>
-            <tr>
-              <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-600">Title</th>
-              <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-600">Description</th>
-              <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-600">Assigned To</th>
-              <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-600">Actions</th>
-            </tr>
+      <div onClick={handleOpenModal} className='lg:w-[150px] py-[7px] cursor-pointer flex items-center mt-[15px] bg-gradient-to-r to-blue-800 from-cyan-600 rounded-[10px]'>
+        <GrChapterAdd className="ml-[15px] text-[18px] mt-[2px] text-blue-50" />
+        <span className='text-[15px] ml-[8px] font-[600] mt-[px] text-blue-50'>Create Task</span>
+      </div>
+
+      {/*error && <p className="text-red-500 mb-4">{error}</p>*/}
+      {/*success && <p className="text-green-500 mb-4">{success}</p>*/}
+
+      <h3 className="text-[21px] flex mb-[10px] items-center mt-[15px] font-semibold text-gray-700"><LuDoorOpen className='mr-[6px] mt-[4px] text-[25px]' />Existing Tasks</h3>
+
+      <div className='overflow-x-auto rounded-lg border no-scrollbar border-gray-300 w-full'>
+        <table className="bg-white w-full">
+          <thead className='text-[14px] bg-gray-100'>
+            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Title</th>
+            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Priority</th>
+            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Assigned To</th>
+            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Status</th>
+            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Actions</th>
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task._id} className="hover:bg-gray-100">
-                <td className="py-2 whitespace-nowrap font-[700] px-4 border-b border-gray-300">{task.title}</td>
-                <td className="py-2 px-4 border-b border-gray-300">{task.description}</td>
-                <td className="py-2 px-4 font-[600] text-gray-500 underline border-b border-gray-300">
-                  {task.assignedTo ? task.assignedTo.email : 'Unassigned'}
+              <tr key={task._id} className="hover:bg-gray-100"><td className="py-2 whitespace-nowrap font-[700] px-4 text-center border-b border-gray-300">
+                {task.title.length > 15 ? `${task.title.slice(0, 15)}..` : task.title}
+              </td>
+
+                <td className="py-2 px-4 border-b text-center">
+                  <p
+                    className={`text-[13px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[80px] ${task.priority === 'Low'
+                      ? 'text-green-700 bg-green-100 border border-green-400'
+                      : task.priority === 'Medium'
+                        ? 'text-blue-700 bg-blue-100 border border-blue-300'
+                        : 'text-red-900 bg-red-200'
+                      }`}
+                  >
+                    {task.priority}
+                  </p>
                 </td>
-                <td className="py-2 whitespace-nowrap px-4 border-b border-gray-300">
+
+                <td className="text-center">
+                  <div className='flex justify-center items-center'>
+                    <img
+                      src={`/Assets/${task.assignedTo.avatar}.jpg`}
+                      alt={task.assignedTo.name}
+                      className="w-[28px] h-[28px] rounded-full border-2 border-gray-300 mr-[6px]"
+                    />
+                    <div>
+                      <p className="font-semibold text-[14px]">{task.assignedTo ? <>{task.assignedTo.name}</> : 'Unassigned'}</p>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="py-2 px-4 border-b text-center">
+                  <p
+                    className={`text-[12px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[90px] ${task.status === 'Completed'
+                      ? 'text-green-50 bg-green-600'
+                      : task.status === 'In Progress'
+                        ? 'text-blue-50 bg-blue-600'
+                        : 'text-yellow-100 bg-yellow-600'
+                      }`}
+                  >
+                    {task.status}
+                  </p>
+                </td>
+
+                <td className="py-2 whitespace-nowrap text-center px-4 border-b border-gray-300">
                   <button
                     onClick={() => handleEditTask(task)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
-                    Edit
+                    className="bg--500 text-blue-600 text-[21px] mr-3">
+                    <FaUserEdit />
                   </button>
                   <button
                     onClick={() => handleDeleteTask(task._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                    Delete
+                    className="text-red-700 text-[19px]">
+                    <FaRegTrashAlt />
                   </button>
                 </td>
               </tr>
@@ -194,10 +250,6 @@ const AssignTasks = () => {
           </tbody>
         </table>
       </div>
-
-      <button onClick={handleOpenModal} className="bg-blue-500 text-white px-4 py-2 rounded">
-     Create Task 
-      </button>
 
       <TaskModal
         isOpen={isModalOpen}

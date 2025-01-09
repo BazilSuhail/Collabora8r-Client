@@ -57,7 +57,6 @@ const JoinedProjects = () => {
       </div>
       <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500' >View all of the projects associated with your account</p>
 
-
       {(error && !projects.length) ? (
         <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
           {error} No projects found.

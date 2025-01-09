@@ -83,7 +83,6 @@ const AdminProjectList = () => {
 
           <div onClick={() => setShowModal(true)} className='lg:hidden w-full xlx:w-[380px] py-[10px] flex items-center mt-[15px] bg-gradient-to-r from-blue-100 to-cyan-300 border-[2px]  border-blue-300 hover:bg-blue-50 rounded-[5px]'>
             <GrChapterAdd className="ml-[15px] text-[18px] mt-[2px] text-blue-700" />
-
             <span className='text-[15px] ml-[8px] font-[600] mt-[px] text-blue-700'>Create a new Project</span>
           </div>
 
