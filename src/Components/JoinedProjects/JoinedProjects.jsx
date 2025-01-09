@@ -44,12 +44,15 @@ const JoinedProjects = () => {
   // Render conditional components
   return (
     <div className='xsx:ml-[265px] bg-white flex flex-col p-5'>
-      <div className="flex items-center space-x-4">
-        <FaPeopleRoof className="text-[32px] text-gray-600" />
-        <h2 className="text-2xl font-bold">Joined Projects</h2>
-      </div>
 
-      <p className='mt-[8px] mb-[15px] font-[400] text-gray-500'>View all of the projects associated with your account.</p>
+      <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+              <div className="flex items-center space-x-2">
+                <FaPeopleRoof className="text-2xl text-gray-600" />
+                <h2 className="text-[24px] text-gray-600 font-bold">Joined Projects</h2>
+              </div> 
+            </div>
+            <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500' >View all of the projects associated with your account</p>
+      
 
       {error && !projects.length ? (
         <div className='p-4 bg-blue-100 text-blue-600 border border-blue-300 rounded-md'>

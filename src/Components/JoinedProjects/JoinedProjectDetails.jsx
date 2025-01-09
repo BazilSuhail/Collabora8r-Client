@@ -7,7 +7,6 @@ import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
 import { FaBorderAll } from 'react-icons/fa'
 import decodeJWT from "../../decodeJWT"
 
-
 const JoinedProjectDetails = () => {
   const { projectId } = useParams();
   const [loggedUser, setloggedUser] = useState(null);
@@ -44,7 +43,7 @@ const JoinedProjectDetails = () => {
         else {
           setError((prev) => ({ ...prev, project: 'Project not found.' }));
         }
-      } 
+      }
       catch (err) {
         console.error(err);
         setError((prev) => ({ ...prev, project: 'Failed to fetch project details.' }));
@@ -62,7 +61,7 @@ const JoinedProjectDetails = () => {
 
         setMyTasks(assignedToMe);
         setOtherTasks(assignedToOthers);
-      } 
+      }
       catch (err) {
         console.error(err);
         setError((prev) => ({ ...prev, tasks: 'Failed to fetch project tasks.' }));

@@ -34,7 +34,7 @@ const CreateProject = ({ setShowModal }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-[999] flex items-center justify-center">
       <motion.div
         initial={{ x: -200, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
