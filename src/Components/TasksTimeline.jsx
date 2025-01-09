@@ -131,7 +131,6 @@ const TasksTimeline = ({ projectId }) => {
 
     return (
         <main>
-            <div className='h-[4px] rounded-lg bg-gray-300 w-full my-[35px]'></div>
             {error.project && <p>{error.project}</p>}
             {project && (
                 <div className='bg-white lg:w-full w-[950px] overflow-auto py-[20px] shadow-lg border-[2px] rounded-xl px-3'>

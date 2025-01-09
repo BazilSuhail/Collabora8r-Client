@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import TaskModal from './CreateTaskModal';
 
 const AssignTasks = () => {
   const { projectId } = useParams();
+  const [isModalOpen, setModalOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [newTask, setNewTask] = useState({
@@ -27,7 +29,7 @@ const AssignTasks = () => {
         });
         setTasks(tasksResponse.data);
 
-        const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/getallUsers`, {
+        const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/get-all-users`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUsers(usersResponse.data);
@@ -72,6 +74,8 @@ const AssignTasks = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);
+
+      handleCloseModal();
     } catch (err) {
       console.error(err);
       setError('Failed to create task.');
@@ -79,6 +83,7 @@ const AssignTasks = () => {
   };
 
   const handleEditTask = async (task) => {
+    handleOpenModal();
     setEditingTaskId(task._id);
     setNewTask({
       title: task.title,
@@ -117,6 +122,8 @@ const AssignTasks = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);
+
+      handleCloseModal();
     } catch (err) {
       console.error(err);
       setError('Failed to update task.');
@@ -136,11 +143,14 @@ const AssignTasks = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data);
+
     } catch (err) {
       console.error(err);
       setError('Failed to delete task.');
     }
   };
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
     <div className='xsx:ml-[265px] bg-white flex flex-col p-6 rounded-lg shadow-lg'>
@@ -185,7 +195,20 @@ const AssignTasks = () => {
         </table>
       </div>
 
-      <h3 className="text-lg font-semibold text-gray-700 mt-6">{editingTaskId ? 'Edit Task' : 'Create New Task'}</h3>
+      <button onClick={handleOpenModal} className="bg-blue-500 text-white px-4 py-2 rounded">
+     Create Task 
+      </button>
+
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={editingTaskId ? handleUpdateTask : handleCreateTask}
+        newTask={newTask}
+        users={users}
+        handleChange={handleChange}
+        editingTaskId={editingTaskId}
+      />
+      {/*<h3 className="text-lg font-semibold text-gray-700 mt-6">{editingTaskId ? 'Edit Task' : 'Create New Task'}</h3>
       <form onSubmit={editingTaskId ? handleUpdateTask : handleCreateTask} className="space-y-4">
         <div>
           <label className="block text-gray-700">Title</label>
@@ -265,8 +288,8 @@ const AssignTasks = () => {
           className="bg-[#072f63] text-white px-4 py-2 rounded hover:bg-[#396fb6]">
           {editingTaskId ? 'Update Task' : 'Create Task'}
         </button>
-      </form>
-    </div>
+      </form>*/}
+    </div >
   );
 };
 

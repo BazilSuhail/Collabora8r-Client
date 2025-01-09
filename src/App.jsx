@@ -12,7 +12,7 @@ import AdminProjectList from "./Components/Projects/AdminProjectList";
 import ProjectDetail from "./Components/Projects/ProjectDetails";
 import JoinedProjectDetails from "./Components/JoinedProjects/JoinedProjectDetails";
 import JoinedProjects from "./Components/JoinedProjects/JoinedProjects";
-import AssignTasks from "./Components/Tasks/AssignTasks"; 
+import ManageTasks from "./Components/Tasks/ManageTasks"; 
 import Dashboard from "./Components/Dashboard";
 import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
@@ -46,7 +46,7 @@ const AppContent = () => {
 
         <Route path="/projects" element={<AdminProjectList />} />
         <Route path="/projects/:projectId" element={<ProjectDetail />} />
-        <Route path="/tasks/:projectId" element={<AssignTasks />} />
+        <Route path="/tasks/:projectId" element={<ManageTasks />} />
 
         <Route path="/joinedprojects" element={<JoinedProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
