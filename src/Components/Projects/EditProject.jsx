@@ -5,7 +5,7 @@ import { MdLowPriority, MdOutlineDescription, MdOutlineSubtitles } from 'react-i
 import { IoCheckmarkDoneCircleOutline, IoMailUnreadOutline } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
 
-const EditProject = ({ setShowModal, project }) => {
+const EditProject = ({ setShowModal, project,heading="Edit Project" }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [projectManagerEmail, setProjectManagerEmail] = useState('');
@@ -60,7 +60,7 @@ const EditProject = ({ setShowModal, project }) => {
           <RxCross2 />
         </button>
         <h3 className="text-lg font-[600] mt-[-5px] text-center text-gray-700">
-          Edit Project
+{heading}
         </h3>
         <div className="w-full rounded-xl bg-gray-300 h-[2px] mt-[10px] mb-[15px]"></div>
 

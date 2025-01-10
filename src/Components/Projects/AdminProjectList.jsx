@@ -8,6 +8,7 @@ import { GrChapterAdd, GrTask, } from 'react-icons/gr';
 import { RiTeamLine } from 'react-icons/ri';
 import { PiGraphDuotone } from 'react-icons/pi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
+import EditProject from './EditProject';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -16,11 +17,11 @@ const colors = [
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const AdminProjectList = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
+  const [projectDetails, setProjectDetails] = useState([]);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // Track the active dropdown
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -46,13 +47,16 @@ const AdminProjectList = () => {
   }, []);
 
   const handleTaskManagement = (projectId) => {
-    setActiveDropdown(null);
     navigate(`/tasks/${projectId}`);
   };
 
   const handleProjectClick = (projectId) => {
-    setActiveDropdown(null);
     navigate(`/projects/${projectId}`);
+  };
+
+  const handleManagerAssignmentClick = (project) => {
+    setShowModal(true)
+    setProjectDetails(project)
   };
 
 
@@ -60,6 +64,8 @@ const AdminProjectList = () => {
     <div className='xsx:ml-[265px] h-full pb-[250px] bg-gray-50 flex flex-col p-5'>
 
       {showModal && <CreateProject setShowModal={setShowModal} />}
+      {showModal && <EditProject project={projectDetails} heading={'Assign a Manager'} setShowModal={setShowModal} />}
+
       <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
         <div className="flex items-center space-x-2">
           <FiFolder className="text-2xl text-gray-600" />
@@ -137,12 +143,14 @@ const AdminProjectList = () => {
                 </button>
               </div>
 
-              <div className='flex items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>
+              <div onClick={() => handleManagerAssignmentClick(project)} className='flex cursor-pointer items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>
                 <PiGraphDuotone className='text-red-600 text-[22px] spin-slow mr-[8px]' />
-                {project.projectManager.status === 'Pending' ? <p className='text-[14px] font-[700] text-blue-800'>
-                  Assign A Manager
-                </p> : <p>
-                </p>}
+                {project.projectManager.status === 'Pending' ?
+                  <p className='text-[14px] font-[700] text-blue-800'>
+                    Assign Manager
+                  </p> :
+                  <p>
+                  </p>}
               </div>
             </div>
           ))}

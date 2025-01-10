@@ -67,23 +67,22 @@ const JoinedProjects = () => {
       ) : (
         <div className="w-full mb-[25px] grid grid-cols-1 lg:grid-cols-2 xlx:grid-cols-3 gap-x-3 gap-y-3">
           {projects.map((project) => (
-            <div key={project._id} className="w-full xlx:w-[380px] mt-[15px] h-[240px] bg-white overflow-hidden border-[2px] border-[#e5e4e4] shadow-md rounded-[15px]">
+            <div key={project._id} className="w-full xlx:w-[380px] mt-[15px] h-[275px] bg-white overflow-hidden border-[2px] border-[#e5e4e4] shadow-md rounded-[15px]">
 
-              <div className="relative w-full h-[120px] overflow-hidden bg-yellow-300">
+              <div className="relative w-full h-[140px] overflow-hidden bg-yellow-300">
                 <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
-                  <img src={`/Themes/${project.theme}.jpg`} alt="" className="h-[120px] w-full object-cover" />
+                  <img src={`/Themes/${project.theme}.jpg`} alt="" className="h-[140px] w-full object-cover" />
                 </div>
 
-                <div className="absolute h-[125px] inset-0 w-full flex items-center justify-between px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
+                <div className="absolute h-[135px] inset-0 w-full flex items-center justify-between px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
 
-                  <Link to={`/joinedprojects/${project._id}`} className="flex items-center">
-                    <div
-                      className={`w-[32px] h-[32px] md:w-[38px] md:h-[38px] cursor-pointer rounded-full flex items-center justify-center text-[20px] ${project.color} text-blue-50`}>
-                      <span className="mt-[-4px]">{project.name.charAt(0)}</span>
-                    </div>
+                  <Link to={`/joinedprojects/${project._id}`}>
                     <p className="font-[600] ml-[8px] text-[15px] md:text-[20px] text-white">
-                     {project.name} 
-                    </p> 
+                      {project.name}
+                    </p>
+                    <p className="font-[600] ml-[8px] text-[13px] md:text-[13px] text-white">
+                      {project.createdBy.name}
+                    </p>
                   </Link>
 
                   <button onClick={() => handleProjectClick(project._id)} className='flex hover:underline mr-[10px] items-center mt-[5px] space-x-2'>
@@ -92,18 +91,21 @@ const JoinedProjects = () => {
                 </div>
               </div>
 
-              <Link to={`/joinedprojects/${project._id}`}>
-                <div className='pl-[53px] md:mt-[15px]'>
+              <Link to={`/joinedprojects/${project._id}`} className='flex flex-col'>
+                <div className='ml-auto mr-[45px] xl:mr-[56px] mt-[-45px] xl:mt-[-40px] mb-[-20px] z-[999] rounded-full overflow-hidden'>
+                  <img src={`/Assets/${project.createdBy.avatar}.jpg`} alt="" className="h-[95px] w-[95px] xl:h-[80px] xl:w-[80px]" />
+                </div>
+                <div className='pl-[25px] md:mt-[15px]'>
                   <div className='flex items-center space-x-2'>
                     <GrTask className='text-blue-800 mt-[2px]' />
-                    <p className='text-[14px] font-[600] text-gray-500'>Team:</p>
-                    <p className='font-[600] text-[14px] text-blue-700'>{project.team.length}</p>
+                    <p className='text-[13px] font-[600] text-gray-500'>Team:</p>
+                    <p className='font-[600] text-[14px] text-blue-700'>{project.teamCount} <span className='text-[12px]'>{project.teamCount === 1 ?'member':'members'}</span></p>
                   </div>
 
                   <div className='flex items-center mt-[5px] space-x-2'>
                     <RiTeamLine className='text-blue-800 mt-[2px]' />
                     <p className='text-[13px] font-[600] text-gray-500'>Tasks:</p>
-                    <p className='font-[600] text-[14px] text-blue-800'>{project.tasks.length}</p>
+                    <p className='font-[600] text-[14px] text-blue-800'>{project.taskCount}  <span className='text-[12px]'>{project.teamCount === 1 ?'task':'tasks'}</span></p>
                   </div>
 
                   <div className='flex items-center mt-[5px] space-x-2'>
@@ -129,7 +131,7 @@ const JoinedProjects = () => {
       <div className='w-full overflow-x-auto'>
         {selectedProjectId && (
           <>
-            <div className='h-[4px] rounded-lg bg-gray-300 w-full my-[35px]'></div>
+            <div className='h-[4px] rounded-lg w-full my-[35px]'></div>
             <TasksTimeline projectId={selectedProjectId} />
           </>
         )}

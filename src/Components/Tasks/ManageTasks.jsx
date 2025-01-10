@@ -184,7 +184,7 @@ const AssignTasks = () => {
           <thead className='text-[14px] bg-gray-100'>
             <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Title</th>
             <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Priority</th>
-            <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Assigned To</th>
+            <th className="text-center py-2 px-4 whitespace-nowrap border-b border-gray-300 text-gray-600">Assigned To</th>
             <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Status</th>
             <th className="text-center py-2 px-4 border-b border-gray-300 text-gray-600">Actions</th>
           </thead>
@@ -196,7 +196,7 @@ const AssignTasks = () => {
 
                 <td className="py-2 px-4 border-b text-center">
                   <p
-                    className={`text-[13px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[80px] ${task.priority === 'Low'
+                    className={`sm:scale-[1] scale-[0.8] text-[13px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[80px] ${task.priority === 'Low'
                       ? 'text-green-700 bg-green-100 border border-green-400'
                       : task.priority === 'Medium'
                         ? 'text-blue-700 bg-blue-100 border border-blue-300'
@@ -208,21 +208,21 @@ const AssignTasks = () => {
                 </td>
 
                 <td className="text-center">
-                  <div className='flex justify-center items-center'>
+                  <div className='flex justify-center sm:w-full w-[200px] items-center'>
                     <img
                       src={`/Assets/${task.assignedTo.avatar}.jpg`}
                       alt={task.assignedTo.name}
                       className="w-[28px] h-[28px] rounded-full border-2 border-gray-300 mr-[6px]"
                     />
                     <div>
-                      <p className="font-semibold text-[14px]">{task.assignedTo ? <>{task.assignedTo.name}</> : 'Unassigned'}</p>
+                      <p className="font-semibold whitespace-nowrap text-[14px]">{task.assignedTo ? <>{task.assignedTo.name}</> : 'Unassigned'}</p>
                     </div>
                   </div>
                 </td>
 
                 <td className="py-2 px-4 border-b text-center">
                   <p
-                    className={`text-[12px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[90px] ${task.status === 'Completed'
+                    className={`sm:scale-[1] scale-[0.8] text-[12px] text-center pb-[4px] rounded-2xl pt-[3px] font-[600] mx-auto w-[90px] ${task.status === 'Completed'
                       ? 'text-green-50 bg-green-600'
                       : task.status === 'In Progress'
                         ? 'text-blue-50 bg-blue-600'

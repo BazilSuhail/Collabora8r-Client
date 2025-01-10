@@ -73,11 +73,11 @@ const JoinedProjectDetails = () => {
   }, [projectId, loggedUser]);
 
   return (
-    <main className="xsx:ml-[265px] min-h-screen bg-gray-50 p-5">
+    <main className="xsx:ml-[265px] min-h-screen bg-white p-5">
       {project ? (
         <section>
 
-{error.project && <p className="text-red-500">{error.project}</p>}
+          {error.project && <p className="text-red-500">{error.project}</p>}
           <div className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
             <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
               <img src={`/Themes/${project.theme}.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
@@ -95,7 +95,7 @@ const JoinedProjectDetails = () => {
               </Link>
             </div>
           </div>
- 
+
           <button onClick={openModal} className='xsx:hidden bg-blue-900 flex text-[13px] mt-[10px] text-blue-50 py-[5px] rounded-[8px] mb-[15px] px-[15px] font-[600] items-center '>
             <FaPeopleGroup className='mr-[8px] text-[17px] mt-[2px]' />
             Team Members
