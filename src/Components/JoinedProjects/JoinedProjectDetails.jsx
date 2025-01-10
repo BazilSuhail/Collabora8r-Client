@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import TeamMembers from './TeamMembersModal'
 import ProjectTasks from './ProjectTasks'
 import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
@@ -77,12 +77,25 @@ const JoinedProjectDetails = () => {
       {project ? (
         <section>
 
-          <div className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
-            <h2 className="text-3xl font-bold mb-2">{project.name}</h2>
-            <p className="text-gray-700">{project.description}</p>
-            {error.project && <p className="text-red-500">{error.project}</p>}
-          </div>
+{error.project && <p className="text-red-500">{error.project}</p>}
+          <div className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
+            <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
+              <img src={`/Themes/${project.theme}.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+            </div>
 
+            <div className="absolute h-[120px] lg:h-[180px] xl:h-[220px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
+              <Link to={`/joinedprojects/${projectId}`}>
+                <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
+                  {project.name}
+                </p>
+
+                <p className="font-[600] mt-[15px] ml-[8px] text-[15px] md:text-[14px] text-white">
+                  {project.description}
+                </p>
+              </Link>
+            </div>
+          </div>
+ 
           <button onClick={openModal} className='xsx:hidden bg-blue-900 flex text-[13px] mt-[10px] text-blue-50 py-[5px] rounded-[8px] mb-[15px] px-[15px] font-[600] items-center '>
             <FaPeopleGroup className='mr-[8px] text-[17px] mt-[2px]' />
             Team Members
