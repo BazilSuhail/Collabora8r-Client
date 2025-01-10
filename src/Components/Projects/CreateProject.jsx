@@ -131,22 +131,23 @@ const CreateProject = ({ setShowModal }) => {
         <div className="fixed inset-0 bg-black bg-opacity-75 z-[1000] flex flex-col items-center justify-center">
           <button
             onClick={() => setShowThemeModal(false)}
-            className="mb-4 text-white px-4 py-2 bg-red-500 rounded"
+            className="mb-4  text-white px-4 py-2 bg-red-500 rounded"
           >
             Close
           </button>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <img
-                key={index}
-                src={`/Assets/${index+1}.jpg`}
+              <div key={index}   className="xl:w-[350px] w-[158px] h-32 xl:h-36 overflow-hidden rounded-lg cursor-pointer">
+                <img
+                src={`/Themes/${index+1}.jpg`}
                 alt={`Theme ${index}`}
-                className="w-32 h-32 object-cover cursor-pointer"
+                className=" h-full w-[350px]"
                 onClick={() => {
                   setTheme(index);
                   setShowThemeModal(false);
                 }}
               />
+                </div>
             ))}
           </div>
         </div>

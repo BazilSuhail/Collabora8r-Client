@@ -15,7 +15,6 @@ const EditProject = ({ setShowModal, project }) => {
   const [showThemeModal, setShowThemeModal] = useState(false);
 
   useEffect(() => {
-    // Populate fields with project data
     if (project) {
       setName(project.name || '');
       setDescription(project.description || '');
@@ -145,7 +144,7 @@ const EditProject = ({ setShowModal, project }) => {
             {Array.from({ length: 6 }).map((_, index) => (
               <img
                 key={index}
-                src={`/Assets/${index+1}.jpg`}
+                src={`/Themes/${index+1}.jpg`}
                 alt={`Theme ${index}`}
                 className="w-32 h-32 object-cover cursor-pointer"
                 onClick={() => {
