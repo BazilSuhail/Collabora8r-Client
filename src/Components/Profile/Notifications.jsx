@@ -41,12 +41,14 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
         setModalOpen(false);
     };
 
-    const handleNotificationClick = (projectId, from) => {
-        navigate(`/project-details/${projectId}/${from}`);
-    };
     const handleClose = () => {
         setTempModal(false) 
         setTimeout(closeModal, 500);
+    };
+    
+    const handleNotificationClick = (projectId, from) => {
+        handleClose();
+        navigate(`/project-details/${projectId}/${from}`);
     };
 
     return (
@@ -54,8 +56,7 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
             <AnimatePresence>
                 <motion.div
                     initial={{ x: 900 }}
-                    animate={{ x: tempModal ? 0 : 900 }}
-                    exit={{ x: -900 }}
+                    animate={{ x: tempModal ? 0 : 900 }} 
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="bg-white w-[340px] overflow-y-auto md:w-[500px] p-6 rounded-l-[15px] shadow-lg relative">
                     {/* Close button */}

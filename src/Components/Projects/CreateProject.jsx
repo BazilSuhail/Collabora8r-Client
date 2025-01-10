@@ -137,17 +137,17 @@ const CreateProject = ({ setShowModal }) => {
           </button>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index}   className="xl:w-[350px] w-[158px] h-32 xl:h-36 overflow-hidden rounded-lg cursor-pointer">
+              <div key={index} className="xl:w-[350px] w-[158px] h-32 xl:h-36 overflow-hidden rounded-lg cursor-pointer">
                 <img
-                src={`/Themes/${index+1}.jpg`}
-                alt={`Theme ${index}`}
-                className=" h-full w-[350px]"
-                onClick={() => {
-                  setTheme(index);
-                  setShowThemeModal(false);
-                }}
-              />
-                </div>
+                  src={`/Themes/${index + 1}.jpg`}
+                  alt={`Theme ${index}`}
+                  className=" h-full w-[350px]"
+                  onClick={() => {
+                    setTheme(index);
+                    setShowThemeModal(false);
+                  }}
+                />
+              </div>
             ))}
           </div>
         </div>
