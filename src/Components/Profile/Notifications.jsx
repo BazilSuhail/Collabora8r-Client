@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
 import axios from 'axios';
-
+import { AnimatePresence, motion } from "framer-motion"
+import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
+import { VscProject } from 'react-icons/vsc';
 const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
     const [notifications, setNotifications] = useState([]);
+    const [tempModal, setTempModal] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate(); // Initialize navigate
@@ -39,103 +42,95 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
     };
 
     const handleNotificationClick = (projectId, from) => {
-        // Navigate to the desired route with projectId and from as query params
         navigate(`/project-details/${projectId}/${from}`);
+    };
+    const handleClose = () => {
+        setTempModal(false) 
+        setTimeout(closeModal, 500);
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white w-full max-w-2xl p-6 rounded-lg shadow-lg relative">
-                {/* Close button */}
-                <button
-                    onClick={closeModal}
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                        />
-                    </svg>
-                </button>
+        <div className="fixed inset-0 flex  justify-end bg-black bg-opacity-20 z-[999]">
+            <AnimatePresence>
+                <motion.div
+                    initial={{ x: 900 }}
+                    animate={{ x: tempModal ? 0 : 900 }}
+                    exit={{ x: -900 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="bg-white w-[340px] overflow-y-auto md:w-[500px] p-6 rounded-l-[15px] shadow-lg relative">
+                    {/* Close button */}
+                    <button onClick={handleClose} className="absolute top-2 left-2 flex items-center text-gray-400 hover:text-gray-700">
+                        <MdKeyboardDoubleArrowRight className='text-[28px]' />
+                        <h1 className="text-[16px] ml-[5px] font-[600]">Notifications</h1>
+                    </button>
 
-                <h1 className="text-2xl font-bold mb-4">Notifications</h1>
+                    {loading ? (
+                        <p className="text-center text-gray-600">Loading...</p>
+                    ) : error ? (
+                        <p className="text-center text-red-500">{error}</p>
+                    ) : notifications.length > 0 ? (
+                        <div className="mt-[35px]  space-y-4">
+                            {notifications.map((notification, index) => {
+                                const { type, data } = notification;
+                                return (
+                                    <div
+                                        key={index}
+                                        className="px-4 py-[14px] bg-gra border-[2px] rounded-[8px] border-gray-200 cursor-pointer"
+                                        onClick={() =>
+                                            type === 'teamMember' &&
+                                            handleNotificationClick(data.projectId, data.from)
+                                        } // Handle click
+                                    >
+                                        {type === 'projectManager' && (
+                                            <>
+                                               <div className='flex items-center'>
+                                                    <div className='bg-bluepx] rounded-full'>
+                                                        <MdManageAccounts className='text-blue-800 text-[25px]' />
+                                                    </div>
+                                                    <p className="text-blue-600 font-[600] ml-[8px] text-[14px] sm:text-[17px]">
+                                                       Invitation for Product Manager
+                                                    </p>
+                                                </div >
+                                                <div className='ml-[35px] flex flex-col mt-[8px]'>
+                                                    <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        {data.description}
+                                                    </p>
+                                                    <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
+                                                        {new Date(data.createdAt).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
 
-                {loading ? (
-                    <p className="text-center text-gray-600">Loading...</p>
-                ) : error ? (
-                    <p className="text-center text-red-500">{error}</p>
-                ) : notifications.length > 0 ? (
-                    <ul className="space-y-4">
-                        {notifications.map((notification, index) => {
-                            const { type, data } = notification;
-
-                            return (
-                                <li
-                                    key={index}
-                                    className="p-4 bg-gray-100 rounded-lg shadow-md cursor-pointer"
-                                    onClick={() =>
-                                        type === 'teamMember' &&
-                                        handleNotificationClick(data.projectId, data.from)
-                                    } // Handle click
-                                >
-                                    {type === 'projectManager' && (
-                                        <>
-                                            <h2 className="text-lg font-semibold">
-                                                {data.title}
-                                            </h2>
-                                            <p className="text-gray-700">
-                                                {data.description}
-                                            </p>
-                                            {data.isLink && (
-                                                <a
-                                                    href={data.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-500 underline"
-                                                >
-                                                    Visit Link
-                                                </a>
-                                            )}
-                                            <p className="text-sm text-gray-500 mt-2">
-                                                Sent by: {data.from} |{' '}
-                                                {new Date(
-                                                    data.createdAt
-                                                ).toLocaleString()}
-                                            </p>
-                                        </>
-                                    )}
-
-                                    {type === 'teamMember' && (
-                                        <>
-                                            <p className="text-gray-700">
-                                                {data.description}
-                                            </p>
-                                            <p className="text-sm text-gray-500 mt-2">
-                                                Project ID: {data.projectId} | Sent by:{' '}
-                                                {data.from} |{' '}
-                                                {new Date(
-                                                    data.createdAt
-                                                ).toLocaleString()}
-                                            </p>
-                                        </>
-                                    )}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                ) : (
-                    <p className="text-gray-600">No notifications available.</p>
-                )}
-            </div>
+                                        {type === 'teamMember' && (
+                                            <>
+                                                <div className='flex items-center'>
+                                                    <div className='bg-blue-800 p-[6px] rounded-full'>
+                                                        <VscProject className='text-white text-[15px]' />
+                                                    </div>
+                                                    <p className="text-blue-700 font-[500] ml-[8px] text-[14px] sm:text-[17px]">
+                                                        {data.title}
+                                                    </p>
+                                                </div >
+                                                <div className='ml-[40px] flex flex-col mt-[8px]'>
+                                                    <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        {data.description}
+                                                    </p>
+                                                    <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
+                                                        {new Date(data.createdAt).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <p className="text-gray-600">No notifications available.</p>
+                    )}
+                </motion.div>
+            </AnimatePresence>
         </div>
     );
 };

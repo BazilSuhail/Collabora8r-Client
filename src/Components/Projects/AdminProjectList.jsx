@@ -22,6 +22,7 @@ const AdminProjectList = () => {
   const [projectDetails, setProjectDetails] = useState([]);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [editModal, showEditModal] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -55,7 +56,7 @@ const AdminProjectList = () => {
   };
 
   const handleManagerAssignmentClick = (project) => {
-    setShowModal(true)
+    showEditModal(true)
     setProjectDetails(project)
   };
 
@@ -64,7 +65,7 @@ const AdminProjectList = () => {
     <div className='xsx:ml-[265px] h-full pb-[250px] bg-gray-50 flex flex-col p-5'>
 
       {showModal && <CreateProject setShowModal={setShowModal} />}
-      {showModal && <EditProject project={projectDetails} heading={'Assign a Manager'} setShowModal={setShowModal} />}
+      {editModal && <EditProject project={projectDetails} heading={'Assign a Manager'} setShowModal={showEditModal} />}
 
       <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
         <div className="flex items-center space-x-2">

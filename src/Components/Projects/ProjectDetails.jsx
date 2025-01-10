@@ -61,7 +61,7 @@ const ProjectDetail = () => {
           },
         }
       );
-
+console.log(response.data)
       setUser(response.data); // Assuming the API returns { name, email, avatar }
     } catch (err) {
       console.error(err);
@@ -80,7 +80,7 @@ const ProjectDetail = () => {
 
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/admin-projects/send-project-invitation`,
-        { userId: user._id, projectId },
+        { userId: user.userId, projectId },
         {
           headers: {
             Authorization: `Bearer ${token}`,

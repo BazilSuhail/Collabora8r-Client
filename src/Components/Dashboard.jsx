@@ -41,12 +41,12 @@ const Dashboard = () => {
         setUsersId(userId);
 
         // Fetch user profile
-        const profileResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, {
+        /*const profileResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const { name } = profileResponse.data;
-        setUserName(name);
+        const { name } = profileResponse.data;*/
+        setUserName("asdasd");
 
         const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -117,10 +117,16 @@ const Dashboard = () => {
   */
   return (
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
+ 
+      <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
+        <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
+          <img src={`/Themes/1.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+        </div>
 
-      <section className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
-        <div className="flex xl:mt-[75px] lg:flex-row flex-col lg:items-end text-[18px] md:text-[25px] lg:text-[32px] font-extrabold text-blue-700">
-          Hello, <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{userName}</p>
+        <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10"> 
+          <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
+            asd
+          </p>
         </div>
       </section>
 
@@ -128,7 +134,7 @@ const Dashboard = () => {
         <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
           <div className='flex mb-[15px] xsx:pl-[8px]'>
             <button
-              className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'
+              className={`text-[15px] border border-gray-300 flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'
                 }`}
               onClick={() => setDateFilter('All')}
             >
@@ -136,7 +142,7 @@ const Dashboard = () => {
               All Dates
             </button>
             <button
-              className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'
+              className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700'
                 }`}
               onClick={() => setDateFilter('Missed')}
             >
@@ -171,9 +177,9 @@ const Dashboard = () => {
         </div>
 
         <div className='col-span-3 xsx:mx-[8px] xl:col-span-5 xl:px-[25px]'>
-          <div className="flex overflow-x-auto space-x-2 md:space-x-4 hide-scrollbar">
+          <div className="flex overflow-x-auto space-x-[4px space-x-[8px] hide-scrollbar">
             <button
-              className={`flex whitespace-nowrap items-center px-4 py-[4px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-700'}`}
+              className={`flex text-[15px] border border-gray-300 whitespace-nowrap items-center px-3 py-[2px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}
               onClick={() => setStatusFilter('All')}
             >
               <FaRedo className="mr-2" />
@@ -182,7 +188,7 @@ const Dashboard = () => {
             {['Not Started', 'In Progress', 'Completed'].map((status) => (
               <button
                 key={status}
-                className={`md:scale-[1] scale-[0.9] flex whitespace-nowrap items-center px-4 py-[2px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
+                className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-3 py-[3px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'
                   }`}
                 onClick={() => setStatusFilter(status)}
               >
