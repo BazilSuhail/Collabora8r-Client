@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AnimatePresence, motion } from "framer-motion"
 import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
+
 const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
     const [notifications, setNotifications] = useState([]);
     const [tempModal, setTempModal] = useState(true);
@@ -42,13 +43,19 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
     };
 
     const handleClose = () => {
-        setTempModal(false) 
+        setTempModal(false)
         setTimeout(closeModal, 500);
     };
-    
-    const handleNotificationClick = (projectId, from) => {
+
+    const handleUserNotificationClick = (projectId, from) => {
         handleClose();
         navigate(`/project-details/${projectId}/${from}`);
+    };
+
+
+    const handleManagerNotificationClick = (projectId) => {
+        handleClose();
+        navigate(`/manager-invitation/${projectId}`);
     };
 
     return (
@@ -56,7 +63,7 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
             <AnimatePresence>
                 <motion.div
                     initial={{ x: 900 }}
-                    animate={{ x: tempModal ? 0 : 900 }} 
+                    animate={{ x: tempModal ? 0 : 900 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="bg-white w-[340px] overflow-y-auto md:w-[500px] p-6 rounded-l-[15px] shadow-lg relative">
                     {/* Close button */}
@@ -74,22 +81,16 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
                             {notifications.map((notification, index) => {
                                 const { type, data } = notification;
                                 return (
-                                    <div
-                                        key={index}
-                                        className="px-4 py-[14px] bg-gra border-[2px] rounded-[8px] border-gray-200 cursor-pointer"
-                                        onClick={() =>
-                                            type === 'teamMember' &&
-                                            handleNotificationClick(data.projectId, data.from)
-                                        } // Handle click
-                                    >
+                                    <div key={index}
+                                        className="px-4 py-[14px] bg-gra border-[2px] rounded-[8px] border-gray-200 cursor-pointer">
                                         {type === 'projectManager' && (
-                                            <>
-                                               <div className='flex items-center'>
+                                            <div  onClick={() => handleManagerNotificationClick(data.projectId)}>
+                                                <div className='flex items-center'>
                                                     <div className='bg-bluepx] rounded-full'>
                                                         <MdManageAccounts className='text-blue-800 text-[25px]' />
                                                     </div>
                                                     <p className="text-blue-600 font-[600] ml-[8px] text-[14px] sm:text-[17px]">
-                                                       Invitation for Product Manager
+                                                        Invitation for Product Manager
                                                     </p>
                                                 </div >
                                                 <div className='ml-[35px] flex flex-col mt-[8px]'>
@@ -100,11 +101,11 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
                                                         {new Date(data.createdAt).toLocaleString()}
                                                     </p>
                                                 </div>
-                                            </>
+                                            </div>
                                         )}
 
                                         {type === 'teamMember' && (
-                                            <>
+                                            <div onClick={() => handleUserNotificationClick(data.projectId, data.from)}>
                                                 <div className='flex items-center'>
                                                     <div className='bg-blue-800 p-[6px] rounded-full'>
                                                         <VscProject className='text-white text-[15px]' />
@@ -121,7 +122,7 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
                                                         {new Date(data.createdAt).toLocaleString()}
                                                     </p>
                                                 </div>
-                                            </>
+                                            </div>
                                         )}
                                     </div>
                                 );

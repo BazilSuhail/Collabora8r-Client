@@ -18,7 +18,8 @@ import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
 import TaskDetails from "./Components/Tasks/TaskDetails";
 import TasksTimeline from "./Components/TasksTimeline"; 
-import ProjectInvitationDetails from "./Components/Profile/ProjectInvitation";
+import ProjectInvitationDetails from "./Components/Profile/MemberAccept";
+import ProjectManagerInvitation from "./Components/Profile/ManagerAccept";
 const AppContent = () => {
   const location = useLocation();
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
@@ -32,6 +33,7 @@ const AppContent = () => {
         <Route path="/workflow" element={<Workflow />} />
 
         <Route path="/project-details/:projectId/:senderId" element={<ProjectInvitationDetails />} />
+        <Route path="/manager-invitation/:projectId" element={<ProjectManagerInvitation />} />
 
 
         

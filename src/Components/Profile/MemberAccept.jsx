@@ -92,6 +92,7 @@ const ProjectInvite = ({ project, createdBy, onClose }) => {
   );
 };
 
+
 const ProjectInvitationDetails = () => {
   const navigate=useNavigate();
   const { projectId } = useParams();
@@ -103,10 +104,8 @@ const ProjectInvitationDetails = () => {
     const fetchProjectDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/get-project-details`,
-          { projectId },
-          {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/get-project-details`,
+          { projectId }, {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
