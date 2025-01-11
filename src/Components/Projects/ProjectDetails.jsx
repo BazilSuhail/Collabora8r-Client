@@ -5,7 +5,7 @@ import { FaUserPlus, FaSearch, FaClipboardList, FaUserAlt, FaUsers, FaEdit } fro
 import Loader from '../../Assets/Loader';
 import { CgUiKit } from 'react-icons/cg';
 import { IoMdDoneAll } from 'react-icons/io';
-import { MdMarkEmailUnread } from 'react-icons/md';
+import { MdMarkEmailUnread, MdOutlineAdminPanelSettings } from 'react-icons/md';
 import EditProject from './EditProject';
 import { GrChapterAdd } from 'react-icons/gr';
 
@@ -61,7 +61,7 @@ const ProjectDetail = () => {
           },
         }
       );
-console.log(response.data)
+      console.log(response.data)
       setUser(response.data); // Assuming the API returns { name, email, avatar }
     } catch (err) {
       console.error(err);
@@ -112,8 +112,8 @@ console.log(response.data)
             </p>
             {project.name}
           </div>
-          <div onClick={() => setShowModal(true)} className='w-[170px] py-[8px] flex items-center bg-gradient-to-r to-blue-950 from-cyan-800 rounded-[15px]'>
-            <FaEdit className="ml-[15px] text-[18px] mt-[2px] text-blue-50" />
+          <div onClick={() => setShowModal(true)} className='w-[170px] lg:mt-0 mt-[15px] py-[8px] flex items-center bg-gradient-to-r to-blue-950 from-cyan-800 rounded-[15px]'>
+            <FaEdit className="lg:scale-[1] scale-[0.8] ml-[15px] text-[18px] mt-[2px] text-blue-50" />
             <span className='text-[13px] ml-[8px] font-[600] mt-[px] text-blue-50'>Edit Project Details</span>
           </div>
         </div>
@@ -182,6 +182,40 @@ console.log(response.data)
       </section>
 
       <section className='lg:col-span-2 lg:px-[8px]'>
+        {project.projectManager.status === 'Pending' ?
+          <div className="px-[20px] py-[15px] mb-[25px] bg-white rounded-lg border-[2px]">
+            <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
+              <MdOutlineAdminPanelSettings className="mr-2 text-[20px]" />
+              <span className="font-medium  text-[15px]">
+                Project Manager Member
+              </span>
+            </div>
+         <div className='ml-[30px] text-[12px] bg-yellow-100 w-[214px] px-[15px] pt-[2px] pb-[4px] rounded-lg text-yellow-700 font-[600]'>Pending !! waiting for response ...</div>
+          </div>
+          :
+          <div className="px-[20px] py-[15px] mb-[25px] bg-white rounded-lg border-[2px]">
+            <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
+              <FaUsers className="mr-2 text-[23px]" />
+              <span className="font-medium  text-[17px]">
+                Team Member
+              </span>
+            </div>
+            <div
+              className="flex items-center pl-3 border-b-[2px] border-gray-300 pb-[8px] rounded-lg"
+            >
+              <img
+                src={`/Assets/${project.projectManager.email}.jpg`}
+                alt={project.projectManager.name}
+                className="w-[35px] h-[35px] border border-gray-400 rounded-full mr-4"
+              />
+              <div>
+                <p className="text-[16px] font-semibold text-gray-800">{project.projectManager.name}</p>
+                <p className="text-[12px] text-gray-600">{project.projectManager.email}</p>
+              </div>
+            </div>
+          </div>
+        }
+
         {/* Team Members Section */}
         <div className="px-[20px] py-[15px] mb-[25px] bg-white rounded-lg border-[2px]">
           <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">

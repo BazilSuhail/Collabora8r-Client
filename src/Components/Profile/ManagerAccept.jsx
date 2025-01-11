@@ -45,7 +45,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative">
+      className="bg-white rounded-lg md::w-[450px] shadow-lg w-full p-6 relative">
       {/* Close Button */}
       {onClose && (
         <button
@@ -56,7 +56,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
           ✕
         </button>
       )}
-      <div className="flex text-[28px] items-center">
+      <div className="flex mt-[15px] text-[28px] items-center">
         <MdOutlineSubtitles />
         <h3 className="ml-[8px] mb-[2px] text-[18px] font-[600] text-gray-700"> Invitation to Collaborate on {project.name}</h3>
       </div>
@@ -81,11 +81,11 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
           You have successfully joined the project!
         </p>
       ) : (
-        <div className='flex items-center'>
+        <div className='flex items-center space-x-3'>
           <button onClick={() => handleAcceptDecline('Accept')}
             className="bg-green-700 flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-green-700"
           >
-            <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
+            <IoCheckmarkDoneCircleOutline className='mx-[10px] mr-[5px] text-[18px]' />
             Accept Invite
           </button>
           <button onClick={() => handleAcceptDecline('Decline')}

@@ -121,16 +121,18 @@ const AdminProjectList = () => {
                   <p className='font-[600] text-[14px] text-blue-800'>{project.tasks.length}</p>
                 </div>
 
-                <div className='flex items-center mt-[5px] space-x-2'>
-                  <MdOutlineManageAccounts className='text-blue-800 mt-[2px]' />
-                  <p className='text-[13px] font-[600] text-gray-500 '> {project.projectManager.status === 'Pending' && 'Requested'} Manager:</p>
-                  <p className='font-[600] text-[14px] text-blue-800'>
-                    {project.projectManager.status === 'Pending' ? <p className='text-[11px] font-[700] text-yellow-600 underline'>
-                      {project.projectManager.email}
-                    </p> : <p>
-                    </p>}
-                  </p>
-                </div>
+                {project.projectManager.status === 'Pending' &&
+                  <div className='flex items-center mt-[5px] space-x-2'>
+                    <MdOutlineManageAccounts className='text-blue-800 mt-[2px]' />
+                    <p className='text-[13px] font-[600] text-gray-500 '> {project.projectManager.status === 'Pending' && 'Requested'} Manager:</p>
+                    <p className='font-[600] text-[14px] text-blue-800'>
+                      {project.projectManager.status === 'Pending' ? <p className='text-[11px] font-[700] text-yellow-600 underline'>
+                        {project.projectManager.email}
+                      </p> : <p>
+                      </p>}
+                    </p>
+                  </div>
+                }
 
                 <div className='h-[2px] bg-gray-200 rounded-xl w-[280px] my-[12px]'></div>
                 <button onClick={() => handleProjectClick(project._id)} className='flex hover:underline items-center mt-[5px] space-x-2'>
@@ -144,15 +146,24 @@ const AdminProjectList = () => {
                 </button>
               </div>
 
-              <div onClick={() => handleManagerAssignmentClick(project)} className='flex cursor-pointer items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>
-                <PiGraphDuotone className='text-red-600 text-[22px] spin-slow mr-[8px]' />
-                {project.projectManager.status === 'Pending' ?
+              
+              {project.projectManager.status === 'Pending' ?
+                <div onClick={() => handleManagerAssignmentClick(project)}
+                  className='flex cursor-pointer items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>
+                  <PiGraphDuotone className='text-red-600 text-[28px] spin-slow mr-[8px]' />
                   <p className='text-[14px] font-[700] text-blue-800'>
                     Assign Manager
-                  </p> :
-                  <p>
-                  </p>}
-              </div>
+                  </p>
+                </div> :
+                <div className='flex  items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>
+                  <PiGraphDuotone className='text-red-600 text-[28px] spin-slow mr-[8px]' />
+                  <div className='ml-[4px]'>
+                    <p className='text-[12px] font-[600] text-gray-500'>Manager:</p>
+                    <p className='text-[13px] font-[600] text-gray-700'> {project.projectManager.email} </p>
+                  </div>
+                </div>
+              }
+
             </div>
           ))}
         </div>

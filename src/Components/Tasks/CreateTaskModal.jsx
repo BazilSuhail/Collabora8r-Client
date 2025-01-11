@@ -80,6 +80,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
                 type="date"
                 name="dueDate"
                 value={newTask.dueDate}
+                required
                 onChange={handleChange}
                 className="w-full mt-1 px-[5px] py-[5px] text-[12px] pl-[10px] outline-none font-[600] text-blue-700 border border-blue-700 rounded focus:ring-2 focus:outline-none"
               />

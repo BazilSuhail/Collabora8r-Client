@@ -78,7 +78,7 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
                         <p className="text-center text-red-500">{error}</p>
                     ) : notifications.length > 0 ? (
                         <div className="mt-[35px]  space-y-4">
-                            {notifications.map((notification, index) => {
+                            {notifications.slice().reverse().map((notification, index) => {
                                 const { type, data } = notification;
                                 return (
                                     <div key={index}

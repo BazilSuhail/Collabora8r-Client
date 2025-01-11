@@ -10,7 +10,8 @@ import { LuDoorOpen } from 'react-icons/lu';
 const AssignTasks = () => {
   const { projectId } = useParams();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [projectName, setProjectName] = useState([]);
+  const [projectName, setProjectName] = useState('');
+  const [projectTeam, setProjectTeam] = useState('');
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [newTask, setNewTask] = useState({
@@ -34,6 +35,7 @@ const AssignTasks = () => {
         });
         setTasks(tasksResponse.data.validTasks);
         setProjectName(tasksResponse.data.projectName);
+        setProjectTeam(tasksResponse.data.projectTeam);
 
         const usersResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/manageusers/${projectId}/get-all-users`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -80,6 +82,8 @@ const AssignTasks = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTasks(tasksResponse.data.validTasks);
+      setProjectName(tasksResponse.data.projectName);
+      setProjectTeam(tasksResponse.data.projectTeam);
 
       handleCloseModal();
     } catch (err) {
@@ -155,6 +159,9 @@ const AssignTasks = () => {
       setError('Failed to delete task.');
     }
   };
+
+
+
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
@@ -173,7 +180,10 @@ const AssignTasks = () => {
         <GrChapterAdd className="ml-[15px] text-[18px] mt-[2px] text-blue-50" />
         <span className='text-[15px] ml-[8px] font-[600] mt-[px] text-blue-50'>Create Task</span>
       </div>
-
+      {projectTeam === 0 &&
+        <p className='px-[15px] my-[25px] pt-[5px] pb-[7px] rounded-lg text-[14px] font-[600] w-[320px] bg-red-100 border border-red-500 text-red-700'>
+          Kindly add a member to start assigning tasks
+        </p>}
       {/*error && <p className="text-red-500 mb-4">{error}</p>*/}
       {/*success && <p className="text-green-500 mb-4">{success}</p>*/}
 
@@ -260,7 +270,7 @@ const AssignTasks = () => {
         handleChange={handleChange}
         editingTaskId={editingTaskId}
       />
-      
+
     </div >
   );
 };

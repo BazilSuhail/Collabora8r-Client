@@ -113,12 +113,12 @@ const JoinedProjects = () => {
                     <p className='text-[13px] font-[600] text-gray-500'>
                       {project.projectManager.status === 'Pending' && 'Requested'} Manager:
                     </p>
-                    <p className='font-[600] text-[14px] text-blue-800'>
-                      {project.projectManager.status === 'Pending' ?
+                    <p className='font-[600] text-[11px] pb-[1px] bg-blue-100 px-[15px] rounded-lg  text-blue-500'>
+                      {project.projectManager.status === 'Pending' ?  'No manager assigned' :
                         <span className='text-[11px] font-[700] text-yellow-600 underline'>
                           {project.projectManager.email}
-                        </span> :
-                        'No manager assigned'}
+                        </span> 
+                       }
                     </p>
                   </div>
                 </div>
