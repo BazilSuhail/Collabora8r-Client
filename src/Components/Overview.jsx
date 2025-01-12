@@ -1,57 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { useNavigate } from 'react-router-dom';
+import { Pie, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 
 import { motion } from 'framer-motion';
 import { FaTasks, FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
 import Loader from '../Assets/Loader';
 import NoTasks from "../Assets/NoOverView.webp";
+import { GiProgression } from 'react-icons/gi';
+import { SiMyspace } from 'react-icons/si';
+import { MdManageAccounts, MdOutlineJoinInner } from 'react-icons/md';
 
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-const colors = [
-  'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
-];
-
-const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 const Overview = () => {
   const [tasks, setTasks] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const [projectsCount, setProjectsCount] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  const handleProjectClick = (projectId) => {
-    navigate(`/joinedprojects/${projectId}`);
-  };
-
-  // Fetch tasks and projects
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('token'); 
-
-        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`, {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/progress-overview`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setTasks(tasksResponse.data.tasks);
+        setTasks(response.data.tasks);
+        console.log(response.data.tasks);
+        setProjectsCount(response.data.projectCounts);
+        console.log(projectsCount);
 
-        const projectResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const updatedProjects = projectResponse.data.map((project) => ({
-          ...project,
-          color: getRandomColor(),
-        }));
-        setProjects(updatedProjects);
       } catch (err) {
-        setError('You Have Not Joinded Any Projects :/');
+        setError('You Have Not Joined Any Projects :/');
       } finally {
         setLoading(false);
       }
@@ -60,17 +43,16 @@ const Overview = () => {
     fetchData();
   }, []);
 
-
   const now = new Date();
   const taskStatusCounts = {
     'Not Started': tasks.filter((task) => task.status === 'Not Started').length,
     'In Progress': tasks.filter((task) => task.status === 'In Progress').length,
     'Completed': tasks.filter((task) => task.status === 'Completed').length,
-    'Overdue': tasks.filter(task => new Date(task.dueDate) < now && task.status !== 'Completed').length,
+    'Overdue': tasks.filter((task) => new Date(task.dueDate) < now && task.status !== 'Completed').length,
   };
 
   const pieData = {
-    labels: ['Scheduled', 'Ongoing', 'Overdue'],
+    labels: ['Scheduled', 'In Progress', 'Overdue','Completed'],
     datasets: [
       {
         label: 'Task Statuses',
@@ -78,29 +60,249 @@ const Overview = () => {
           taskStatusCounts['Not Started'],
           taskStatusCounts['In Progress'],
           taskStatusCounts['Overdue'],
+          taskStatusCounts['Completed'],
         ],
-        backgroundColor: ['#FF6384', '#36A2EB', '#4BC0C0'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#4BC0C0'],
+        backgroundColor: ['#4759c9', '#be9533', '#e24e4e', '#0fa878'],
+        hoverBackgroundColor: ['#172894', '#8e6b1a', '#8b2b2b', '#2c765e'],
       },
     ],
   };
-  const totalTasks = taskStatusCounts['Not Started'] + taskStatusCounts['In Progress'] + taskStatusCounts['Overdue'];
+
+  const barData = {
+    labels: tasks.map((task) => task.title.slice(0, 10)),
+    datasets: [
+      {
+        label: 'Task Progress',
+        data: tasks.map((task) => task.progress),
+        backgroundColor: '#1779bb',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const barOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
 
   if (loading) return <Loader />;
-  /*if (error) return (
-    <div className='xsx:ml-[265px] min-h-screen bg-white flex flex-col'>
-      <img src={NoTasks} alt='' className='scale-[0.2]' />
-      <p className="text-center text-blue-500 bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
-    </div>
-  );*/
+
+  if (error)
+    return (
+      <div className='xsx:ml-[265px] text-[#172894] min-h-screen bg-white flex flex-col'>
+        <img src={NoTasks} alt='' className='scale-[0.2]' />
+        <p className="text-center text-blue-500 bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+      </div>
+    );
 
   return (
     <div className='xsx:ml-[265px] bg-gray-50 flex flex-col p-5'>
-      <h2 className="text-2xl font-semibold mb-4">Overview</h2>
+      <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+        <div className="flex items-center space-x-2">
+          <GiProgression className="text-2xl text-gray-600" />
+          <h2 className="text-[24px] text-gray-600 font-bold">Progress Overview</h2>
+        </div>
+      </div>
+      <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
+        View statistics and visual overview of all your progress made at one place.
+      </p>
 
-      <h3 className="text-xl font-semibold mb-2">Task Status Breakdown</h3>
-      <div className='bg-white overflow-x-hidden rounded-lg mb-[15px] shadow-md  grid md:grid-cols-2 grid-cols-1'>
+      <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
+
+      <div className='grid overflow-hidden grid-cols-1 mb-[20px] bg-white p-4 rounded-[15px] space-y-[15px] border place-items-center gap-x-2 lg:grid-cols-3'>
+
         <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full  flex flex-row xsx:w-[90%]'>
+          <SiMyspace className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>My Projects:</p>
+            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.adminProjectsCount}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <MdOutlineJoinInner className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Joined Projects:</p>
+            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{projectsCount.joinedProjectsCount}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <MdManageAccounts className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Managing projects:</p>
+            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.managerProjectCount}</p>
+          </div>
+        </motion.div>
+
+
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-cyan-600 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Not Started:</p>
+            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Not Started']}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Ongoing:</p>
+            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{taskStatusCounts['In Progress']}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
+            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Overdue']}</p>
+          </div>
+        </motion.div>
+      </div>
+
+      <h3 className="text-[16px] font-semibold mb-2">Task Status Breakdown</h3>
+
+      <div className='grid gap-[15px] grid-cols-1 lg:grid-cols-2'>
+      <div className='flex flex-col py-[12px] bg-white rounded-lg border'>
+          <div className='mx-auto p-[12px] w-full h-full'>
+            <Bar data={barData} options={barOptions} />
+          </div>
+        </div>
+        <div className='flex flex-col py-[12px] bg-white rounded-lg border'>
+          <div className="w-[250px] h-[250px] lg:w-[300px] mx-auto lg:h-[300px]">
+            <Pie data={pieData} />
+          </div>
+        </div>     
+      </div>
+    </div>
+  );
+};
+
+export default Overview;
+
+
+/*
+  <div className='grid grid-cols-1 mb-[20px] bg-white p-4 rounded-[15px] space-y-[15px] border place-items-center gap-x-2 lg:grid-cols-3'>
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full  flex flex-row xsx:w-[90%]'>
+          <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>My Projects:</p>
+            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.adminProjectsCount}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Joined Projects:</p>
+            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{projectsCount.joinedProjectsCount}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
+            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.managerProjectCount}</p>
+          </div>
+        </motion.div>
+
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Not Started:</p>
+            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Not Started']}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Ongoing:</p>
+            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{taskStatusCounts['In Progress']}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+        initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
+          <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
+            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Overdue']}</p>
+          </div>
+        </motion.div>
+      </div>
+*/
+
+/*
+
+      <div className='bg-white overflow-x-hidden rounded-lg mb-[15px] shadow-md  grid md:grid-cols-2 grid-cols-1'>
+        {/* <motion.div
           className="ml-[25px] mt-[15px]"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -136,59 +338,10 @@ const Overview = () => {
             </span>
           </div>
         </motion.div>
+
         <div className="mb-8 md:scale-[1]  scale-[0.78] mx-auto xl:mt-[25px] w-[350px] h-[300px]">
           <Pie data={pieData} />
         </div>
-      </div>
-
-      <div>
-        <h3 className="text-xl font-semibold mb-4">Your Projects</h3>
-        {error ?
-          <div className='mt-[-138px]'>
-            <img src={NoTasks} alt='' className='scale-[0.50] mx-auto mix-blend-multiply' />
-            <p className="text-blue-600 text-[14px] text-center mt-[-88px] font-[600]">No Joined Project Found.</p>
-          </div> :
-          <>
-            {projects.length === 0 ? (
-              <p>No projects available</p>
-            ) : (
-              <div className="grid gap-4">
-                {projects.map((project) => (
-                  <div
-                    key={project._id}
-                    className='border-b-[3px] border-[#dedede] hover:bg-gray-100 transition-colors cursor-pointer'
-                    onClick={() => handleProjectClick(project._id)}
-                  >
-                    <div className="py-3 pl-[15px] flex items-center">
-                      {/* Random color for first letter */}
-                      <div className={`w-[40px] h-[40px] text-[22px] text-center pt-[3px] text-white font-bold rounded-full ${project.color}`}>
-                        {project.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p
-                          className="ml-6 font-[600] text-[28px] cursor-pointer hover:underline"
-                          onClick={() => handleProjectClick(project._id)}
-                        >
-                          {project.name}
-                        </p>
-                        <p
-                          className="ml-6 text-[14px] font-[700] text-[#999999] cursor-pointer hover:underline"
-                          onClick={() => handleProjectClick(project._id)}
-                        >
-                          {project.team.length} - {project.team.length <= 1 ? <>Collaborator</> : <>Collaborators</>}
-                        </p>
-                      </div>
-                    </div>
-
-                  </div>
-                ))}
-              </div>
-            )}
-          </>}
-
-      </div>
-    </div>
-  );
-};
-
-export default Overview;
+        
+        </div>
+*/

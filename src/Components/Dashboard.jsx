@@ -48,23 +48,24 @@ const Dashboard = () => {
         const { name } = profileResponse.data;*/
         setUserName("asdasd");
 
-        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
+        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const fetchedTasks = tasksResponse.data.tasks;
+        //console.log(fetchedTasks)
         setTasks(fetchedTasks);
         setFilteredTasks(fetchedTasks);
 
         const colorMapping = {};
 
         fetchedTasks.forEach(project => {
-          const projectId = project._id;
+          const projectId = project.projectId;
           if (!colorMapping[projectId]) {
             colorMapping[projectId] = getRandomColor();
           }
         });
-
+console.log(colorMapping)
         setProjectColors(colorMapping);
       }
       catch (err) {
@@ -125,7 +126,7 @@ const Dashboard = () => {
 
         <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
           <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
-            asd
+          Bazil
           </p>
         </div>
       </section>
@@ -230,7 +231,7 @@ const Dashboard = () => {
                   <div className='h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]'></div>
                   <div className='py-[12px] hover:bg-gray-100 flex justify-between items-center'>
                     <div className='flex items-center'>
-                      <p className={`text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task._id]}`}>
+                      <p className={`text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task.projectId]}`}>
                         {task.projectName}
                       </p>
                       <p

@@ -10,6 +10,7 @@ import Loader from '../../Assets/Loader';
 import decodeJWT from '../../decodeJWT';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { FaPeopleRoof } from 'react-icons/fa6';
+import { GrStatusInfo } from 'react-icons/gr';
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
@@ -26,7 +27,7 @@ const TaskCard = ({ task, usersId }) => {
       onClick={() => {
         navigate(`/task/${usersId}/${task._id}`);
       }}
-      className="px-4 py-[10px] flex flex-col bg-gray-50 border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6"
+      className="px-4 py-[10px] cursor-pointer flex flex-col bg-gray-50 border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6"
     >
       <div className="flex xsx:flex-row flex-col xsx:items-center xsx:justify-between">
         <h3 className="text-[17px] xsx:text-[19px] flex items-center font-[600]">
@@ -88,15 +89,15 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white py-8 px-4 rounded-[18px] shadow-lg">
-        <h2 className="text-[18px] font-[500] mb-8">Are you sure you want to update the tasks' status?</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[999]">
+      <div className="bg-white py-8 px-4 w-[325px] sm:w-[440px] lg:w-[520px] rounded-[18px] shadow-lg">
+        <h2 className="text-[17px] font-[600] flex sm:flex-row flex-col sm:items-center mb-8">   <GrStatusInfo className='mr-[8px] sm:mb-0 mb-[12px] text-[20px]' />Are you sure you want to update the tasks' status?</h2>
         <div className="flex justify-end">
-          <button className="bg-red-800 flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-red-600" onClick={onClose}>
+          <button className="bg-red-800 flex items-center text-[14px] text-white mr-[8px] px-[15px] py-[4px]  duration-150 rounded-lg hover:bg-red-600" onClick={onClose}>
             Cancel
           </button>
           <button onClick={onConfirm}
-            className="bg-[#275ca2] flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+            className="bg-blue-600 flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded-lg hover:bg-blue-800 duration-150" >
             <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
             Confirm
           </button>
@@ -125,7 +126,7 @@ const Workflow = () => {
         const userId = decodeJWT(token);
         setUsersId(userId);
         const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`,
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -190,16 +191,16 @@ const Workflow = () => {
   return (
     <DndProvider backend={backend}>
       <div className="min-h-screen xsx:pl-[280px] pl-[15px] py-6 bg-gray-50">
-         <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
-                <div className="flex items-center space-x-2">
-                  <FaPeopleRoof className="text-2xl text-gray-600" />
-                  <h2 className="text-[24px] text-gray-600 font-bold">Task Workflow Manager</h2>
-                </div>
-              </div>
-              <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
-                Manage Statuses of all your tasks across all projects at one place.
-              </p> 
-<div className='w-full h-[3px] rounded-lg bg-gray-300 mb-[10px]'></div>
+        <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+          <div className="flex items-center space-x-2">
+            <FaPeopleRoof className="text-2xl text-gray-600" />
+            <h2 className="text-[24px] text-gray-600 font-bold">Task Workflow Manager</h2>
+          </div>
+        </div>
+        <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
+          Manage Statuses of all your tasks across all projects at one place.
+        </p>
+        <div className='w-full h-[3px] rounded-lg bg-gray-300 mb-[10px]'></div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {STATUS_TYPES.map((status) => (
             <Column key={status} usersId={usersId} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
@@ -208,10 +209,10 @@ const Workflow = () => {
         <button
           onClick={handleUpdate}
           disabled={Object.keys(updatedTasks).length === 0}
-            className="bg-blue-600 mt-[25px] flex items-center duration-150 cursor-pointer text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
-            <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
-            Update Tasks
-          </button> 
+          className="bg-blue-600 mt-[25px] flex items-center duration-150 cursor-pointer text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+          <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
+          Update Tasks
+        </button>
 
         <ConfirmationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} onConfirm={confirmUpdate} />
       </div>
