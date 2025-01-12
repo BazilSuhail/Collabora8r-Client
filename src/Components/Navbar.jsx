@@ -16,6 +16,7 @@ import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import NotificationsModal from './Profile/Notifications';
+import { LuCopyMinus } from 'react-icons/lu';
 
 const colors = [
     'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -151,7 +152,7 @@ const Navbar = () => {
                         </NavLink>
 
                         <NavLink to="/associated-projects" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">My Projects</p>
+                            <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">My Projects</p>
                         </NavLink>
                         
 

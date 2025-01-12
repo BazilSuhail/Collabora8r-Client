@@ -74,7 +74,7 @@ const JoinedProjects = () => {
                   <img src={`/Themes/${project.theme}.jpg`} alt="" className="h-[140px] w-full object-cover" />
                 </div>
 
-                <div className="absolute h-[135px] inset-0 w-full flex items-center justify-between px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
+                <div className="absolute h-[140px] inset-0 w-full flex items-center justify-between px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
 
                   <Link to={`/joinedprojects/${project._id}`}>
                     <p className="font-[600] ml-[8px] text-[15px] md:text-[20px] text-white">
@@ -99,13 +99,13 @@ const JoinedProjects = () => {
                   <div className='flex items-center space-x-2'>
                     <GrTask className='text-blue-800 mt-[2px]' />
                     <p className='text-[13px] font-[600] text-gray-500'>Team:</p>
-                    <p className='font-[600] text-[14px] text-blue-700'>{project.teamCount} <span className='text-[12px]'>{project.teamCount === 1 ?'member':'members'}</span></p>
+                    <p className='font-[600] text-[14px] text-blue-700'>{project.teamCount} <span className='text-[12px]'>{project.teamCount === 1 ? 'member' : 'members'}</span></p>
                   </div>
 
                   <div className='flex items-center mt-[5px] space-x-2'>
                     <RiTeamLine className='text-blue-800 mt-[2px]' />
                     <p className='text-[13px] font-[600] text-gray-500'>Tasks:</p>
-                    <p className='font-[600] text-[14px] text-blue-800'>{project.taskCount}  <span className='text-[12px]'>{project.teamCount === 1 ?'task':'tasks'}</span></p>
+                    <p className='font-[600] text-[14px] text-blue-800'>{project.taskCount}  <span className='text-[12px]'>{project.teamCount === 1 ? 'task' : 'tasks'}</span></p>
                   </div>
 
                   <div className='flex items-center mt-[5px] space-x-2'>
@@ -113,12 +113,11 @@ const JoinedProjects = () => {
                     <p className='text-[13px] font-[600] text-gray-500'>
                       {project.projectManager.status === 'Pending' && 'Requested'} Manager:
                     </p>
-                    <p className='font-[600] text-[11px] pb-[1px] bg-blue-100 px-[15px] rounded-lg  text-blue-500'>
-                      {project.projectManager.status === 'Pending' ?  'No manager assigned' :
-                        <span className='text-[11px] font-[700] text-yellow-600 underline'>
-                          {project.projectManager.email}
-                        </span> 
-                       }
+                    <p className='font-[600] text-[11px] text-blue-500'>
+                      {project.projectManager.status === 'Pending' ?
+                        <span className=' pb-[1px] bg-blue-100 px-[15px] rounded-lg'>No manager assigned</span> :
+                        <span className='text-[11px] font-[700] text-yellow-600 underline'>{project.projectManager.email}</span>
+                      }
                     </p>
                   </div>
                 </div>

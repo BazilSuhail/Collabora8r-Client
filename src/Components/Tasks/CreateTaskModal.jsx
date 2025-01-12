@@ -1,6 +1,5 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 import { FaUserFriends } from 'react-icons/fa';
-import { GiProgression } from 'react-icons/gi';
 import { GrStatusInfo } from 'react-icons/gr';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { MdLowPriority, MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';
@@ -9,8 +8,16 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto p-6 relative">
+    <div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+      className="bg-white rounded-lg shadow-lg w-full max-w-md mx-auto p-6 relative">
         <button
           onClick={onClose}
           className="absolute text-[28px] top-2 right-[22px] text-gray-400 hover:text-gray-700"
@@ -126,7 +133,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
             {editingTaskId ? 'Update Task' : 'Create Task'}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

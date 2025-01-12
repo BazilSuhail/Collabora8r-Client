@@ -117,13 +117,13 @@ const Dashboard = () => {
   */
   return (
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
- 
+
       <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
         <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
           <img src={`/Themes/1.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
         </div>
 
-        <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10"> 
+        <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
           <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
             asd
           </p>

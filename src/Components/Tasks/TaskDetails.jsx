@@ -3,37 +3,30 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BsPeopleFill } from 'react-icons/bs';
 import { FaClipboardList, FaRegEdit, FaSnowboarding, FaTrashAlt, FaUserEdit } from 'react-icons/fa';
-import { IoPersonSharp } from 'react-icons/io5';
+import { IoCheckmarkDoneCircleOutline, IoPersonSharp } from 'react-icons/io5';
 import { LuSendHorizonal } from 'react-icons/lu';
 import { IoMdDoneAll } from 'react-icons/io';
 import Loader from '../../Assets/Loader';
 import { CgUiKit } from 'react-icons/cg';
-
-function decodeJWT(token) {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      throw new Error('Invalid token format');
-    }
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.id;
-  } catch (err) {
-    console.error('Failed to decode JWT:', err);
-    throw err;
-  }
-}
+import decodeJWT from '../../decodeJWT';
+import { RxCross2 } from 'react-icons/rx';
+import { MdOutlineSubtitles } from 'react-icons/md';
+import { GrStatusInfo } from 'react-icons/gr';
+import { motion } from 'framer-motion';
 
 const TaskDetails = () => {
   const { taskId, creatorId } = useParams();
   const [task, setTask] = useState(null);
+  const [taskProgress, setTaskProgress] = useState(1);
+  const [status, setStatus] = useState("Not Started");
   const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState('');
   const [error, setError] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentContent, setEditCommentContent] = useState('');
-
   const [creatorName, setCreatorName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTaskDetails = async () => {
@@ -46,6 +39,8 @@ const TaskDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTask(response.data);
+        setTaskProgress(response.data.progress);
+        setStatus(response.data.status)
 
         const commentsResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -69,6 +64,30 @@ const TaskDetails = () => {
     fetchCreatorName();
     fetchTaskDetails();
   }, [taskId, creatorId]);
+
+  const toggleModal = () => setIsModalOpen((prev) => !prev);
+
+  const handleSaveChanges = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projecttasks/update-task-progress/${taskId}`,
+        { progress: taskProgress, status },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTask((prev) => ({
+        ...prev,
+        progress: taskProgress,
+        status,
+      }));
+      toggleModal();
+    } catch (err) {
+      console.error(err);
+      setError("Failed to update task details.");
+    }
+  };
 
   const handleAddComment = async () => {
     try {
@@ -139,6 +158,14 @@ const TaskDetails = () => {
     }
   };
 
+
+  const clampedProgress = Math.min(Math.max(taskProgress, 0), 100);
+
+  // Calculate the stroke dash offset
+  const radius = 50; // Radius of the circle
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (clampedProgress / 100) * circumference;
+
   const handleStartEditing = (comment) => {
     setEditCommentId(comment._id);
     setEditCommentContent(comment.content);
@@ -148,6 +175,7 @@ const TaskDetails = () => {
     setEditCommentId(null);
     setEditCommentContent('');
   };
+
 
   if (error) {
     return <p className="pl-[287px] bg-white min-h-screen p-6">{error}</p>;
@@ -161,9 +189,9 @@ const TaskDetails = () => {
     <main className="xsx:pl-[287px] grid xl:grid-cols-7 grid-cols-1 pt-[35px] bg-gray-50 min-h-screen px-6">
 
       <section className='lg:col-span-5 xl:pr-[20px]'>
-         
+
         <div className='bg-white p-[12px] xl:p-[25px] border rounded-[18px] '>
-          
+
           <div className="text-[18px] md:text-[24px] flex md:flex-row flex-col md:items-center font-[600]">
             <p className='bg-blue-200 w-[50px] mr-[12px] h-[50px] rounded-full flex items-center justify-center text-[28px] text-blue-600  md:mb-0 mb-[15px] '>
               <FaClipboardList />
@@ -280,18 +308,50 @@ const TaskDetails = () => {
               Task Status
             </span>
           </div>
-          <div
-            className={`rounded-[5px] text-center py-[4px] font-[600] ${task.priority === 'High'
-              ? 'text-red-100 bg-red-800'
-              : task.priority === 'Medium'
-                ? 'bg-yellow-100 border border-red-500 text-yellow-800'
-                : 'bg-green-100  border-[2px] border-green-400 text-green-800'
-              }`}
-          >
-            {task.priority}
+          <p className='bg-[#1eb720] '></p>
+          <div className="flex justify-center items-center">
+            <svg
+              className="w-25 h-28 transform rotate-[-90deg]"
+              viewBox="0 0 120 120"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Background circle */}
+              <circle
+                cx="60"
+                cy="60"
+                r={radius}
+                stroke="#e5e7eb"
+                strokeWidth="10"
+                fill="none"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r={radius}
+                stroke="#1eb720"
+                strokeWidth="10"
+                fill="none"
+                strokeDasharray={circumference}
+                strokeDashoffset={offset}
+                className="transition-all rounded-[25px] duration-300"
+              />
+            </svg>
+            <div className="absolute text-center">
+              <p className="text-2xl font-bold text-green-700">{clampedProgress}%</p>
+            </div>
           </div>
-          <button className="mt-[15px] text-[15px] text-white bg-blue-600 w-full rounded-md text-center py-[8px] font-semibold">
-            Update Status
+
+          <div className={`rounded-[5px] mt-[10px] text-center py-[4px] font-[600] ${task.status === 'Not Started'
+            ? 'text-blue-100 bg-blue-800'
+            : task.status === 'In Progress'
+              ? 'bg-yellow-100 border border-red-500 text-yellow-800'
+              : 'bg-green-100  border-[2px] border-green-400 text-green-800'
+            }`}
+          >
+            {task.status}
+          </div>
+          <button onClick={toggleModal} className="mt-[15px] text-[15px] text-white bg-blue-600 w-full rounded-md text-center py-[8px] font-semibold">
+            Update Task
           </button>
           <p className='text-gray-600 mt-[10px] italic fotn-[600] text-[13px] text-center'>Task Status Cannot be Updated After the Due Date</p>
         </div>
@@ -314,6 +374,65 @@ const TaskDetails = () => {
           </button>
         </div>
       </section>
+      
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="bg-white flex flex-col rounded-lg py-4 px-6 w-[315px] sm:w-[400px]">
+
+            <RxCross2 onClick={toggleModal} className="font-[700] text-[20px] ml-auto text-gray-600 hover:text-gray-800" />
+            <h3 className="text-lg font-[600] mt-[-8px] text-center text-gray-700 ">
+              Edit Task
+            </h3>
+            <div className='w-full rounded-xl bg-gray-300 h-[2px] mt-[10px] mb-[15px]'></div>
+            <div className="mb-4">
+              <div className='flex items-center justify-between'>
+                <div className='flex text-[17px] items-center'>
+                  <MdOutlineSubtitles />
+                  <p className="ml-[5px] mb-[2px] text-[15px] font-[600] text-gray-700">Progress</p>
+                </div>
+                <p className="text-center text-[17px] font-[600] text-green-700">{taskProgress}%</p>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={taskProgress}
+                onChange={(e) => setTaskProgress(Number(e.target.value))}
+                className="w-full text-green-800"
+              />
+
+            </div>
+            <div className="mb-4">
+              <div className='flex text-[15px] items-center'>
+                <GrStatusInfo />
+                <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Status</p>
+              </div>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full border p-2 rounded"
+              >
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Paused">Paused</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <div className="flex justify-end space-x-3">
+
+              <button onClick={handleSaveChanges} className="bg-[#275ca2] flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+                <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
+                Save
+              </button>
+
+            </div>
+          </motion.div>
+        </div>
+      )}
     </main>
   );
 };

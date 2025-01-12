@@ -97,11 +97,11 @@ const AdminProjectList = () => {
             <div key={project._id} className="w-full xlx:w-[380px] mt-[15px] h-[300px] bg-white overflow-hidden border rounded-[15px]">
 
               <div className='flex px-4 pt-3 bg-blue-900 items-center md:mb-0 mb-[15px] space-x-2 pb-[8px] border-b-[2px] border-blue-700 '>
-                <div className={`w-[32px] h-[32px] md:w-[38px] md:h-[38px] rounded-full flex items-center justify-center text-[20px] ${project.color} text-blue-50`}>
+                <div className={`w-[32px] h-[32px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center text-[18px] ${project.color} text-blue-50`}>
                   <span className='mt-[-4px]'>{project.name.charAt(0)}</span>
                 </div>
                 <div className='flex w-[85%] pb-[4px] justify-between items-center'>
-                  <div className='font-[600] text-[15px] md:text-[20px] text-blue-50'><p>{project.name}</p></div>
+                  <div className='font-[600] text-[15px] md:text-[16px] text-blue-50'><p>{project.name}</p></div>
                   <p className='bg-green-800 text-green-300  px-[12px] py-[2px] rounded-[15px] mr-[5px] text-[12px] hover:text-blue-300 '>
                     Active
                   </p>

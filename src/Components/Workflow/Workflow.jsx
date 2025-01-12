@@ -8,10 +8,12 @@ import { FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
 import decodeJWT from '../../decodeJWT';
+import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
+import { FaPeopleRoof } from 'react-icons/fa6';
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
-const TaskCard = ({ task,usersId }) => {
+const TaskCard = ({ task, usersId }) => {
   const navigate = useNavigate();
   const [, drag] = useDrag({
     type: 'TASK',
@@ -24,38 +26,36 @@ const TaskCard = ({ task,usersId }) => {
       onClick={() => {
         navigate(`/task/${usersId}/${task._id}`);
       }}
-      className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6 shadow-lg"
+      className="px-4 py-[10px] flex flex-col bg-gray-50 border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6"
     >
       <div className="flex xsx:flex-row flex-col xsx:items-center xsx:justify-between">
         <h3 className="text-[17px] xsx:text-[19px] flex items-center font-[600]">
           <span className="bg-gray-400 p-[5px] xsx:p-[8px] rounded-full">
             <MdTask className="text-white text-[17px] xsx:text-[20px]" />
           </span>
-          <span className="ml-[8px] mt-[-3px]">{task.title.slice(0,30) || 'Untitled Task'}{task.title.length > 30 && "..."}</span>
+          <span className="ml-[8px] text-[16px] mt-[-3px]">{task.title.slice(0, 17) || 'Untitled Task'}{task.title.length > 15 && "..."}</span>
         </h3>
+        <div className='flex flex-col items-end'>
+          <p className="text-[15px] ml-[35px] xsx:ml-[45px]">
+            <span className="text-red-500 font-[600] text-[12px] mr-[5px]">Due:</span>
+            <span className="text-red-700 underline  text-[13px]  font-[600] rounded-xl">
+              {task.dueDate ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString() : 'N/A'}
+            </span>
+          </p>
+          <div className=' inline-block'>
+            <p className='text-[10px]  inline-block text-center px-[12px] rounded-xl py-[3px] text-white font-[600]  bg-blue-800'>
+              {task.projectName}
+            </p>
+          </div>
+        </div>
       </div>
 
-      <p className="text-[15px] ml-[35px] xsx:ml-[45px]">
-        <span className="text-red-500 mr-[5px]">Due:</span>
-        <span className="text-red-700 underline font-[600] rounded-xl">
-          {task.dueDate ? new Date(task.dueDate.$date || task.dueDate).toLocaleDateString() : 'N/A'}
-        </span>
-      </p>
-
-      <div className="h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]"></div>
-
-      <div className='py-[12px] flex justify-between items-center'>
-        <p className='text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600]  bg-blue-800'>
-          {task.projectName}
-        </p>
-        <FaArrowRight className="text-[22px] text-gray-400 xsx:text-[25px]" />
-      </div>
     </div>
 
   );
 };
 
-const Column = ({ status, tasks,usersId, moveTask }) => {
+const Column = ({ status, tasks, usersId, moveTask }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: 'TASK',
     drop: (item) => moveTask(item.id, status),
@@ -67,7 +67,7 @@ const Column = ({ status, tasks,usersId, moveTask }) => {
   });
 
   return (
-    <div ref={drop} className={`w-full py-4 pr-[15px] border-r-[3px] ${isOver && canDrop ? 'bg-green-200' : ''}`}>
+    <div ref={drop} className={`w-full py-4 min-h-[500px] px-[12px] border  shadow-md  rounded-xl ${isOver && canDrop ? 'bg-green-200 z-[999]' : ''}`}>
       <h2 className={`text-[14px] md:text-[15px] rounded-[25px] py-[2px] font-semibold mb-4
        ${status === 'Not Started'
           ? 'bg-blue-100 text-blue-600 w-[110px] md:w-[120px] text-center'
@@ -92,10 +92,12 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
       <div className="bg-white py-8 px-4 rounded-[18px] shadow-lg">
         <h2 className="text-[18px] font-[500] mb-8">Are you sure you want to update the tasks' status?</h2>
         <div className="flex justify-end">
-          <button className="bg-red-500 mr-[8px] text-white px-4 py-2 rounded-xl" onClick={onClose}>
+          <button className="bg-red-800 flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-red-600" onClick={onClose}>
             Cancel
           </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-xl" onClick={onConfirm}>
+          <button onClick={onConfirm}
+            className="bg-[#275ca2] flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+            <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
             Confirm
           </button>
         </div>
@@ -111,7 +113,7 @@ const Workflow = () => {
   const [updatedTasks, setUpdatedTasks] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
 
-  
+
   const [usersId, setUsersId] = useState('');
 
   useEffect(() => {
@@ -179,30 +181,37 @@ const Workflow = () => {
       setModalOpen(false);
     }
   };
-  
-  if (loading) return  <Loader/>;
+
+  if (loading) return <Loader />;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   const backend = window.matchMedia('(pointer: coarse)').matches ? TouchBackend : HTML5Backend;
 
   return (
     <DndProvider backend={backend}>
-      <div className="min-h-screen xsx:pl-[280px] pl-[15px] xl:pl-[287px] py-6 bg-white">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Task Workflow Manager</h1>
-
+      <div className="min-h-screen xsx:pl-[280px] pl-[15px] py-6 bg-gray-50">
+         <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+                <div className="flex items-center space-x-2">
+                  <FaPeopleRoof className="text-2xl text-gray-600" />
+                  <h2 className="text-[24px] text-gray-600 font-bold">Task Workflow Manager</h2>
+                </div>
+              </div>
+              <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
+                Manage Statuses of all your tasks across all projects at one place.
+              </p> 
+<div className='w-full h-[3px] rounded-lg bg-gray-300 mb-[10px]'></div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {STATUS_TYPES.map((status) => (
             <Column key={status} usersId={usersId} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
           ))}
         </div>
-
         <button
           onClick={handleUpdate}
-          className="mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
           disabled={Object.keys(updatedTasks).length === 0}
-        >
-          Update Tasks
-        </button>
+            className="bg-blue-600 mt-[25px] flex items-center duration-150 cursor-pointer text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+            <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
+            Update Tasks
+          </button> 
 
         <ConfirmationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} onConfirm={confirmUpdate} />
       </div>

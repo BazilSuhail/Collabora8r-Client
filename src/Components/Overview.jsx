@@ -10,25 +10,7 @@ import Loader from '../Assets/Loader';
 import NoTasks from "../Assets/NoOverView.webp";
 
 
-function decodeJWT(token) {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      throw new Error('Invalid token format');
-    }
-
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return payload.id;
-  } catch (err) {
-    console.error('Failed to decode JWT:', err);
-    throw err;
-  }
-}
-
-// Register the chart elements
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-// Define color options and function to get a random color
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
 ];
@@ -51,10 +33,9 @@ const Overview = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('token');
-        const userId = decodeJWT(token);
+        const token = localStorage.getItem('token'); 
 
-        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks/${userId}`, {
+        const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

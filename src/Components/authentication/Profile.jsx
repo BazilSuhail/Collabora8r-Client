@@ -72,24 +72,30 @@ const Profile = () => {
     <div className='xsx:ml-[265px] bg-white flex flex-col'>
       <div className='bg-white border border-gray-300 shadow-lg rounded-lg p-6'>
         {/* Greeting Section */}
-        <div className="mb-[15px] bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-100 border-2 border-blue-300 p-6 rounded-xl shadow-md">
-          <div className="flex items-end space-x-4">
-            <img
-              src={`/Assets/${profile.avatar}.jpg`}
-              alt="Profile Avatar"
-              className="w-20 h-20 lg:w-24 lg:h-24 rounded-full border border-gray-300 shadow-md"
-            />
-            <div className="flex lg:flex-row flex-col lg:items-end text-[25px] lg:text-[35px] font-extrabold text-blue-700">
-              Hello,
-              <p className="lg:ml-[15px] text-[30px]  lg:text-[45px] text-blue-900">{profile.name}</p>
-            </div>
-          </div>
-        </div>
+
 
         {!isEditing ? (
           <div>
-            <div className=' mb-4'>
 
+            <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
+              <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
+                <img src={`/Themes/3.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+              </div>
+ 
+              <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 pl-[28px] w-full bg-black bg-opacity-30 z-10">
+               <div className='flex mt-[20px] lg:mt-[42px] w-full'>
+               <img
+                  src={`/Assets/${profile.avatar}.jpg`}
+                  alt="Profile Avatar"
+                  className="w-[68px] h-[68px] lg:w-24 lg:h-24 rounded-full border border-gray-300 shadow-md"
+                />
+                <div className="flex lg:flex-row flex-col lg:items-end ml-[15px] text-[20px] lg:text-[30px] font-extrabold text-blue-200">
+                  Hello, <p className="lg:ml-[15px] text-[25px]  lg:text-[40px] text-white">{profile.name}</p>
+                </div>
+               </div>
+              </div>
+            </section>
+            <div className=' mb-4'>
               <div className="flex-1 space-y-8">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
