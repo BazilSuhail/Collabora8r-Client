@@ -98,8 +98,8 @@ const Profile = () => {
             <div className=' mb-4'>
               <div className="flex-1 space-y-8">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                  <div className="flex items-center space-x-4 bg-gray-100 border p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-blue-600 text-white rounded-full">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-8 h-8">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0-4.28-3.455-5-5-5h-1c-1.545 0-5 .72-5 5v3c0 1.38 1.12 2.5 2.5 2.5H5c1.38 0 2.5 1.12 2.5 2.5v2c0 1.38 1.12 2.5 2.5 2.5h2c1.38 0 2.5-1.12 2.5-2.5v-2c0-1.38 1.12-2.5 2.5-2.5h.5C19.88 16.5 21 15.38 21 14v-3c0-4.28-3.455-5-5-5h-1c-1.545 0-5 .72-5 5z" />
@@ -111,7 +111,7 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                  <div className="flex items-center space-x-4 bg-gray-100 border p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-blue-600 text-white rounded-full">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12l-4-4m0 0l-4 4m4-4v12" />
@@ -124,7 +124,7 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                  <div className="flex items-center space-x-4 bg-gray-100 border p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-green-600 text-white rounded-full">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h2l1 2m4 0l1-2h5a2 2 0 012 2v6a2 2 0 01-2 2h-6a2 2 0 01-2-2v-2m-2 0H3m0 0V9m0 0a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3V9a3 3 0 00-3-3h-2a3 3 0 00-3 3v1H6" />
@@ -136,7 +136,7 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                  <div className="flex items-center space-x-4 bg-gray-100 border p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-pink-600 text-white rounded-full">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 7a4 4 0 014-4h3m-7 0a4 4 0 00-4 4v4m0 0l4 4m-4-4l4-4" />
@@ -148,7 +148,7 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                  <div className="flex items-center space-x-4 bg-gray-100 border p-4 rounded-lg shadow-sm">
                     <div className="p-3 bg-yellow-600 text-white rounded-full">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 0v4m-4 12a4 4 0 100-8 4 4 0 000 8zm-4 1h8a2 2 0 012 2v1H6v-1a2 2 0 012-2z" />

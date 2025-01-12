@@ -22,6 +22,7 @@ import ProjectInvitationDetails from "./Components/Profile/MemberAccept";
 import ProjectManagerInvitation from "./Components/Profile/ManagerAccept"
 ;
 import ManagerProjects from "./Components/JoinedProjects/ManagerProjects";
+import SearchProject from "./Components/Profile/SearchProject";
 const AppContent = () => {
   const location = useLocation();
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
@@ -44,6 +45,7 @@ const AppContent = () => {
         <Route path="/associated-projects" element={<AdminProjectList />} />
 
         <Route path="/createproject" element={<CreateProject />} />
+        <Route path="/search-project" element={<SearchProject />} />
 
 
         <Route path="/task/:creatorId/:taskId" element={<TaskDetails />} />

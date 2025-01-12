@@ -21,7 +21,6 @@ module.exports = {
       },
       fontSize: {
         'custom-sz': '25px',
-
         'custom-size': '20px',
       },
       boxShadow: {
@@ -38,5 +37,19 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.no-scrollbar': {
+          '-webkit-overflow-scrolling': 'touch',
+          'scrollbar-width': 'none',
+          '-ms-overflow-style': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      };
+      addUtilities(newUtilities, ['responsive']);
+    },
+  ],
 }

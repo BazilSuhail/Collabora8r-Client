@@ -65,7 +65,7 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
                     initial={{ x: 900 }}
                     animate={{ x: tempModal ? 0 : 900 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="bg-white w-[340px] overflow-y-auto md:w-[500px] p-6 rounded-l-[15px] shadow-lg relative">
+                    className="bg-white w-[340px] overflow-y-auto no-scrollbar md:w-[500px] p-6 rounded-l-[15px] shadow-lg relative">
                     {/* Close button */}
                     <button onClick={handleClose} className="absolute top-2 left-2 flex items-center text-gray-400 hover:text-gray-700">
                         <MdKeyboardDoubleArrowRight className='text-[28px]' />

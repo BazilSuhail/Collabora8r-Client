@@ -3,13 +3,15 @@ import axios from 'axios';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 
-import { motion } from 'framer-motion';
-import { FaTasks, FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
-import Loader from '../Assets/Loader';
-import NoTasks from "../Assets/NoOverView.webp";
 import { GiProgression } from 'react-icons/gi';
 import { SiMyspace } from 'react-icons/si';
+import { FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
 import { MdManageAccounts, MdOutlineJoinInner } from 'react-icons/md';
+import { motion } from 'framer-motion';
+
+import Loader from '../Assets/Loader';
+import NoTasks from "../Assets/NoOverView.webp";
+import { BsListTask } from 'react-icons/bs';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -52,7 +54,7 @@ const Overview = () => {
   };
 
   const pieData = {
-    labels: ['Scheduled', 'In Progress', 'Overdue','Completed'],
+    labels: ['Scheduled', 'In Progress', 'Overdue', 'Completed'],
     datasets: [
       {
         label: 'Task Statuses',
@@ -104,10 +106,11 @@ const Overview = () => {
 
   if (error)
     return (
-      <div className='xsx:ml-[265px] text-[#172894] min-h-screen bg-white flex flex-col'>
-        <img src={NoTasks} alt='' className='scale-[0.2]' />
-        <p className="text-center text-blue-500 bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+      <div className='flex xsx:ml-[265px] flex-col items-center '>
+        <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]' />
+        <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
       </div>
+
     );
 
   return (
@@ -124,29 +127,28 @@ const Overview = () => {
 
       <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
 
-      <div className='grid overflow-hidden grid-cols-1 mb-[20px] bg-white p-4 rounded-[15px] space-y-[15px] border place-items-center gap-x-2 lg:grid-cols-3'>
+      <div className='grid overflow-hidden grid-cols-2 mb-[20px] bg-white p-4 rounded-[15px] border place-items-center gap-2 lg:grid-cols-3'>
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full  flex flex-row xsx:w-[90%]'>
+          <SiMyspace className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <div className='ml-[15px]'>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>My Projects:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'>{projectsCount.adminProjectsCount}</p>
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full  flex flex-row xsx:w-[90%]'>
-          <SiMyspace className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <MdOutlineJoinInner className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>My Projects:</p>
-            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.adminProjectsCount}</p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
-          <MdOutlineJoinInner className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
-          <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Joined Projects:</p>
-            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{projectsCount.joinedProjectsCount}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Joined Projects:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'>{projectsCount.joinedProjectsCount}</p>
           </div>
         </motion.div>
 
@@ -155,10 +157,10 @@ const Overview = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
-          <MdManageAccounts className='mr-[5px] text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
+          <MdManageAccounts className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-blue-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Managing projects:</p>
-            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.managerProjectCount}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Projects Control:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'>{projectsCount.managerProjectCount}</p>
           </div>
         </motion.div>
 
@@ -168,10 +170,10 @@ const Overview = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
-          <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-cyan-600 p-[9px] rounded-full' />
+          <FaCalendar className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-cyan-600 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Not Started:</p>
-            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Not Started']}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Scheduled Tasks:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'> {taskStatusCounts['Not Started']}</p>
           </div>
         </motion.div>
 
@@ -180,10 +182,10 @@ const Overview = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
-          <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
+          <FaRunning className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Ongoing:</p>
-            <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{taskStatusCounts['In Progress']}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Ongoing Tasks:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px] xl:text-[22px]'>{taskStatusCounts['In Progress']}</p>
           </div>
         </motion.div>
 
@@ -192,18 +194,18 @@ const Overview = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
-          <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
+          <FaExclamationTriangle className='mr-[5px] text-[38px] md:text-[44px] text-gray-100 bg-cyan-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
-            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Overdue']}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Overdue Tasks:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'> {taskStatusCounts['Overdue']}</p>
           </div>
         </motion.div>
       </div>
 
-      <h3 className="text-[16px] font-semibold mb-2">Task Status Breakdown</h3>
+      <h3 className="text-[16px] flex items-center font-semibold mb-[18px]"><BsListTask className='mr-[8px] text-[20px] mt-[5px]'/> Task Status Breakdown</h3>
 
       <div className='grid gap-[15px] grid-cols-1 lg:grid-cols-2'>
-      <div className='flex flex-col py-[12px] bg-white rounded-lg border'>
+        <div className='flex flex-col py-[12px] bg-white rounded-lg border'>
           <div className='mx-auto p-[12px] w-full h-full'>
             <Bar data={barData} options={barOptions} />
           </div>
@@ -212,7 +214,7 @@ const Overview = () => {
           <div className="w-[250px] h-[250px] lg:w-[300px] mx-auto lg:h-[300px]">
             <Pie data={pieData} />
           </div>
-        </div>     
+        </div>
       </div>
     </div>
   );
@@ -231,8 +233,8 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full  flex flex-row xsx:w-[90%]'>
           <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>My Projects:</p>
-            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.adminProjectsCount}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>My Projects:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'>{projectsCount.adminProjectsCount}</p>
           </div>
         </motion.div>
 
@@ -243,7 +245,7 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
           <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Joined Projects:</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Joined Projects:</p>
             <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{projectsCount.joinedProjectsCount}</p>
           </div>
         </motion.div>
@@ -255,8 +257,8 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
           <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
-            <p className='font-medium text-gray-600 text-[22px]'>{projectsCount.managerProjectCount}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Overdue:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'>{projectsCount.managerProjectCount}</p>
           </div>
         </motion.div>
 
@@ -268,8 +270,8 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
           <FaCalendar className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Not Started:</p>
-            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Not Started']}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Not Started:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'> {taskStatusCounts['Not Started']}</p>
           </div>
         </motion.div>
 
@@ -280,7 +282,7 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
           <FaRunning className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Ongoing:</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Ongoing:</p>
             <p className='font-medium text-gray-600 lg:text-[15px] text-[22px] xl:text-[22px]'>{taskStatusCounts['In Progress']}</p>
           </div>
         </motion.div>
@@ -292,8 +294,8 @@ export default Overview;
         className='bg-gray-100 border rounded-2xl text-white p-[15px] w-full flex flex-row xsx:w-[90%]'>
           <FaExclamationTriangle className='mr-[5px] text-[44px] text-gray-100 bg-gray-500 p-[9px] rounded-full' />
           <div className='ml-[15px]'>
-            <p className='font-bold text-gray-400 text-[12px]'>Overdue:</p>
-            <p className='font-medium text-gray-600 text-[22px]'> {taskStatusCounts['Overdue']}</p>
+            <p className='font-bold text-gray-400 text-[10px] md:text-[12px]'>Overdue:</p>
+            <p className='font-medium text-gray-600 text-[18px] md:text-[22px]'> {taskStatusCounts['Overdue']}</p>
           </div>
         </motion.div>
       </div>

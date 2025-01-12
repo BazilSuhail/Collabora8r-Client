@@ -65,7 +65,6 @@ const Dashboard = () => {
             colorMapping[projectId] = getRandomColor();
           }
         });
-console.log(colorMapping)
         setProjectColors(colorMapping);
       }
       catch (err) {
@@ -117,7 +116,7 @@ console.log(colorMapping)
   }
   */
   return (
-    <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white p-6">
+    <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white py-6 px-3 sm:p-6">
 
       <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
         <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
@@ -126,14 +125,14 @@ console.log(colorMapping)
 
         <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
           <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
-          Bazil
+            Bazil
           </p>
         </div>
       </section>
 
       <section className='grid grid-cols-1 xl:grid-cols-7  xsx:grid-rows-1'>
         <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
-          <div className='flex mb-[15px] xsx:pl-[8px]'>
+          <div className='flex mb-[15px] space-x-3 xsx:pl-[8px]'>
             <button
               className={`text-[15px] border border-gray-300 flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'
                 }`}
@@ -212,7 +211,13 @@ console.log(colorMapping)
                   className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"
                 >
                   <div className='flex xsx:flex-row flex-col xsx:items-center xsx:justify-between'>
-                    <h1 className="text-[17px] xsx:text-[19px] flex items-center font-[600]"><span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'><FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' /></span><span className='ml-[8px] mt-[-3px]'>{task.title}</span></h1>
+                    <h1 className="text-[17px] xsx:text-[19px] flex items-center font-[600]">
+                      <span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'>
+                        <FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' />
+                      </span>
+                      <span className='ml-[8px] text-[14px] sm:text-[17px] mt-[-3px]'>{task.title.slice(0,48)} {task.title.lenth > 29 && '...'}</span>
+                    </h1>
+
                     <p
                       className={`text-[15px] w-[120px] text-center xsx:block hidden font-[600] px-[15px] py-1 rounded-[15px] ${task.status === 'Not Started'
                         ? 'text-blue-600 bg-blue-100'
@@ -224,14 +229,15 @@ console.log(colorMapping)
                       {task.status}
                     </p>
                   </div>
-                  <p className="text-[15px] mt-[8px]  ml-[35px] xsx:ml-[45px] ">
+                  <p className="smLscale-[1] scale-[0.8] text-[15px] mt-[8px]  sm:ml-[35px] xsx:ml-[45px] ">
                     <span className='text-red-500 mr-[5px]'>Due:</span> <span className='text-red-700 underline font-[600] rounded-xl '>{new Date(task.dueDate).toLocaleDateString()}</span>
                   </p>
 
                   <div className='h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]'></div>
+
                   <div className='py-[12px] hover:bg-gray-100 flex justify-between items-center'>
-                    <div className='flex items-center'>
-                      <p className={`text-[12px] xsx:ml-[45px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task.projectId]}`}>
+                    <div className='flex scale-[0.82] sm:scale-[1]  xsx:ml-[45px] ml-[-15px] items-center'>
+                      <p className={`text-[12px] text-center px-[12px] rounded-xl py-[3px] text-white font-[600] ${projectColors[task.projectId]}`}>
                         {task.projectName}
                       </p>
                       <p
@@ -245,7 +251,7 @@ console.log(colorMapping)
                         {task.status}
                       </p>
                     </div>
-                    <FaArrowRight className='text-[22px] text-gray-400 xsx:text-[25px]' />
+                    <FaArrowRight className='text-[18px] text-gray-400 xsx:text-[25px]' />
                   </div>
 
                 </div>

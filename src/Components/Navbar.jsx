@@ -17,6 +17,7 @@ import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import NotificationsModal from './Profile/Notifications';
 import { LuCopyMinus } from 'react-icons/lu';
+import SearchProject from './Profile/SearchProject';
 
 const colors = [
     'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -33,12 +34,20 @@ const Navbar = () => {
     const [projects, setProjects] = useState([]);
 
     const [loading, setLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const hadnelModalToggle = () => {
+    const [isNotificationsModalOpen, setIsModalOpen] = useState(false);
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+    
+    const handleNotificationModal = () => {
         setIsModalOpen(!isMenuOpen);
     };
 
+    const handleSearchModal = () => {
+        setIsSearchModalOpen(!isSearchModalOpen);
+    };
+    
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -100,15 +109,16 @@ const Navbar = () => {
 
     return (
         <nav>
-            {isModalOpen && <NotificationsModal isModalOpen={isModalOpen} setModalOpen={setIsModalOpen} />}
-            <div className="hidden bg-[#ffffff] fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
+            {isNotificationsModalOpen && <NotificationsModal isNotificationsModalOpen={isNotificationsModalOpen} setIsNotificationsModalOpen={setIsModalOpen} />}
+            {isSearchModalOpen && <SearchProject isNotificationsModalOpen={isNotificationsModalOpen} setIsSearchModalOpen={setIsSearchModalOpen} />}
+            <div className="hidden bg-[#ffffff] overflow-y-auto no-scrollbar fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">
                         <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
-                        <div  onClick={hadnelModalToggle}><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></div>
+                        <div  onClick={handleNotificationModal}><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></div>
                     </div>
 
-                    <div className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
+                    <div onClick={handleSearchModal} className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
                         <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
                         <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                     </div>

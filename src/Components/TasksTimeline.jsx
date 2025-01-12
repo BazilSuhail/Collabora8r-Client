@@ -88,12 +88,12 @@ const TasksTimeline = ({ projectId }) => {
             name: 'Tasks Timeline',
             data: data.map(task => ({
                 x: task.title,
-                y: [task.start, task.end],  
+                y: [task.start, task.end],
             })),
         }],
         options: {
             chart: {
-                type: 'rangeBar',  
+                type: 'rangeBar',
                 height: 400,
                 toolbar: {
                     show: true,
@@ -108,7 +108,7 @@ const TasksTimeline = ({ projectId }) => {
                 type: 'datetime',
                 labels: {
                     formatter: function (value) {
-                        return new Date(value).toLocaleDateString();  
+                        return new Date(value).toLocaleDateString();
                     }
                 },
                 title: {
