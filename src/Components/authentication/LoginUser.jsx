@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import collaboratorLogo from "../../logo.png";
-import { FaGoogle } from 'react-icons/fa';
-import ForgotPasswordModal from './ForgotPasswordModal';
-import Loader from '../../Assets/Loader';
+import collaboratorLogo from "../../logo.png"; 
+import ForgotPasswordModal from './ForgotPasswordModal'; 
+import SignInLoader from '../../Assets/SignInLoader';
 
 const LoginUser = () => {
   const [loading, setLoading] = useState(false);
@@ -42,14 +41,14 @@ const LoginUser = () => {
       setLoading(true);
       const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`, formData);
       localStorage.setItem('token', res.data.token);
-      navigate('/');
+      //navigate('/');
     } catch (error) {
       console.error(error.response.data.error);
     }
   };
 
   if (loading) {
-    return <Loader message={'Signing You In'}/>;
+    return <SignInLoader message={'Signing You In'}/>;
   }
 
   return (

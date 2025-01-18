@@ -8,9 +8,8 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [searchfilters, setSearchFilters] = useState({});
+  console.log("user is " + user)
   const [userNotifications, setUserNotifications] = useState([]);
-  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
   const [notifications, setNotifications] = useState([]);
@@ -58,14 +57,16 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/air-bnb/profile/user-info`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      };
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
       setUser(response.data);
-      setUserRole(response.data.role);
+      console.log("user is 1 " + response.data)
+
     } catch (error) {
       console.error("Error fetching user data:", error);
       handleLogout();
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
   const fetchUserNotifications = async (token) => {
     try {
       const response = await axios.get(
@@ -82,6 +84,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
       setUserNotifications(response.data);
+      console.log(userNotifications)
       //console.log(response.data) 
     }
     catch (error) {
@@ -149,7 +152,7 @@ export const AuthProvider = ({ children }) => {
     }
     toastTimeoutRef.current = setTimeout(() => {
       setToast({ message: "", visible: false });
-    }, 6000); 
+    }, 6000);
   };
 
   const closeToast = () => {
@@ -163,7 +166,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        userRole,
         loading,
         login,
         logout,
@@ -171,8 +173,6 @@ export const AuthProvider = ({ children }) => {
         notifications,
         notificationsCount,
         userNotifications,
-        setSearchFilters,
-        searchfilters,
         toast, showToast, closeToast,
       }}
     >

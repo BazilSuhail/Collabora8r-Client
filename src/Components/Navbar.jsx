@@ -18,6 +18,7 @@ import { RiLogoutBoxRLine } from 'react-icons/ri';
 import NotificationsModal from './Profile/Notifications';
 import { LuCopyMinus } from 'react-icons/lu';
 import SearchProject from './Profile/SearchProject';
+import { useAuthContext } from '../AuthProvider';
 
 const colors = [
     'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -29,7 +30,9 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const [profile, setProfile] = useState(null);
+    //const [user, setProfile] = useState(null);
+    const { user } = useAuthContext();
+    console.log(user)
     const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
 
@@ -61,7 +64,7 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        const fetchProfile = async () => {
+        /*const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('token');
                 const config = {
@@ -69,14 +72,14 @@ const Navbar = () => {
                         Authorization: `Bearer ${token}`
                     }
                 };
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth`, config);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/user`, config);
                 setProfile(response.data);
             } catch (err) {
                 console.error(err);
             } finally {
                 setLoading(false);
             }
-        };
+        };*/
 
         const fetchJoinedProjects = async () => {
             try {
@@ -98,7 +101,7 @@ const Navbar = () => {
             }
         };
 
-        fetchProfile();
+        //fetchProfile();
         fetchJoinedProjects();
     }, []);
 
@@ -139,18 +142,30 @@ const Navbar = () => {
                         <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
                     </div>
 
+                    {/*<NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
+                    {!user?.avatar ? (
+                            <p className='w-[34px] h-[34px] bg-gray-600 rounded-full'></p>
+                        ) : (
+                            <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                        )} 
+                            <div>
+                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
+                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
+                            </div>
+                    
+                    </NavLink>*/}
                     <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                        {loading || !profile?.avatar ? (
+                        {loading || !user?.avatar ? (
                             <p className='text-[#363636]'>Login To Continue</p>
                         ) : (
-                            <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                            <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                         )}
-                        {loading || !profile?.name ? (
+                        {loading || !user?.name ? (
                             <p className='text-white'>L</p>
                         ) : (
                             <div>
-                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
-                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
+                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
+                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
                             </div>
                         )}
                     </NavLink>
@@ -268,18 +283,18 @@ const Navbar = () => {
                                     <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
                                 </button>
 
-                                <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
-                                    {loading || !profile?.avatar ? (
+                                <NavLink onClick={handleMenuToggle} to="/user" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
+                                    {loading || !user?.avatar ? (
                                         <p className='text-[#363636]'>Login To Continue</p>
                                     ) : (
-                                        <img src={`/Assets/${profile.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                                        <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                                     )}
-                                    {loading || !profile?.name ? (
+                                    {loading || !user?.name ? (
                                         <p className='text-white'>L</p>
                                     ) : (
                                         <div>
-                                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
-                                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
+                                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
+                                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
                                         </div>
                                     )}
                                 </NavLink>
@@ -302,7 +317,7 @@ const Navbar = () => {
                                 <NavLink to="/joined-projects/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                                     <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Joined Projects</p>
                                 </NavLink>
-                                <NavLink to="/manager-projects"  onClick={handleMenuToggle}className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                                <NavLink to="/manager-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                                     <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Shared Workspaces</p>
                                 </NavLink>
 

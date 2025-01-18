@@ -6,9 +6,11 @@ import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
 import ProjectInvitationDetails from './MemberAccept';
 import ProjectManagerInvitation from './ManagerAccept';
+import { useAuthContext } from '../../AuthProvider';
 
 const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {
-    const [notifications, setNotifications] = useState([]);
+    //const [notifications, setNotifications] = useState([]);
+const {userNotifications}=useAuthContext()
     const [tempModal, setTempModal] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -21,7 +23,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
     const [showManagerModal, setShowManagerModal] = useState(false);
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchNotifications = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -45,7 +47,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
         if (isNotificationsModalOpen) {
             fetchNotifications();
         }
-    }, [isNotificationsModalOpen]);
+    }, [isNotificationsModalOpen]);*/
 
     const closeModal = () => {
         setIsNotificationsModalOpen(!isNotificationsModalOpen);
@@ -101,9 +103,9 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                         <p className="text-center text-gray-600">Loading...</p>
                     ) : error ? (
                         <p className="text-center text-red-500">{error}</p>
-                    ) : notifications.length > 0 ? (
+                    ) : userNotifications.length > 0 ? (
                         <div className="mt-[35px]  space-y-4">
-                            {notifications.slice().reverse().map((notification, index) => {
+                            {userNotifications.slice().reverse().map((notification, index) => {
                                 const { type, data } = notification;
                                 return (
                                     <div key={index}

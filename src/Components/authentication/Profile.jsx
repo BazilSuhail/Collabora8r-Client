@@ -21,7 +21,7 @@ const Profile = () => {
             Authorization: `Bearer ${token}`
           }
         };
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth`, config);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
         setProfile(response.data);
         setSelectedAvatar(response.data.avatar); // Initialize selectedAvatar with current avatar
       } catch (err) {

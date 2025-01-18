@@ -12,26 +12,31 @@ import AdminProjectList from "./Components/Projects/AdminProjectList";
 import ProjectDetail from "./Components/Projects/ProjectDetails";
 import JoinedProjectDetails from "./Components/JoinedProjects/JoinedProjectDetails";
 import JoinedProjects from "./Components/JoinedProjects/JoinedProjects";
-import ManageTasks from "./Components/Tasks/ManageTasks"; 
+import ManageTasks from "./Components/Tasks/ManageTasks";
 import Dashboard from "./Components/Dashboard";
 import Overview from "./Components/Overview";
 import Workflow from "./Components/Workflow/Workflow";
 import TaskDetails from "./Components/Tasks/TaskDetails";
-import TasksTimeline from "./Components/TasksTimeline"; 
+import TasksTimeline from "./Components/TasksTimeline";
 import ProjectInvitationDetails from "./Components/Profile/MemberAccept";
 import ProjectManagerInvitation from "./Components/Profile/ManagerAccept"
-;
+  ;
 import ManagerProjects from "./Components/JoinedProjects/ManagerProjects";
 import SearchProject from "./Components/Profile/SearchProject";
+import { useAuthContext } from "./AuthProvider";
 const AppContent = () => {
   const location = useLocation();
+  const { user } = useAuthContext()
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
 
   return (
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Dashboard />} /> 
+        <Route path="/" element={user === null ? <LoginUser /> : <Dashboard />} />
+        <Route path="/login" element={<LoginUser />} />
+
+
         <Route path="/overview" element={<Overview />} />
         <Route path="/workflow" element={<Workflow />} />
 
@@ -39,7 +44,7 @@ const AppContent = () => {
         <Route path="/manager-invitation/:projectId" element={<ProjectManagerInvitation />} />
 
 
-        
+
         <Route path="/projects/tasks-timeline/:projectId" element={<TasksTimeline />} />
 
         <Route path="/associated-projects" element={<AdminProjectList />} />
