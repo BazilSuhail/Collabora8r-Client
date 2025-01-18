@@ -71,12 +71,9 @@ const Profile = () => {
   return (
     <div className='xsx:ml-[265px] bg-white flex flex-col'>
       <div className='bg-white border border-gray-300 shadow-lg rounded-lg p-6'>
-        {/* Greeting Section */}
-
-
+        {/* Greeting Section */} 
         {!isEditing ? (
-          <div>
-
+          <div> 
             <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] md:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
               <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
                 <img src={`/Themes/3.jpg`} alt="" className="h-[120px] md:h-[180px] xl:h-[220px] w-full object-cover" />

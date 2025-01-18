@@ -31,7 +31,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     //const [user, setProfile] = useState(null);
-    const { user } = useAuthContext();
+    const { user, logout } = useAuthContext();
     console.log(user)
     const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
@@ -59,7 +59,9 @@ const Navbar = () => {
     const toggleOpen = () => setisArrowOpen(!isArrowOpen);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        //localStorage.removeItem('token');
+        logout();
+
         navigate('/login');
     };
 
@@ -155,12 +157,12 @@ const Navbar = () => {
                     
                     </NavLink>*/}
                     <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                        {loading || !user?.avatar ? (
+                        {!user?.avatar ? (
                             <p className='text-[#363636]'>Login To Continue</p>
                         ) : (
                             <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                         )}
-                        {loading || !user?.name ? (
+                        {!user?.name ? (
                             <p className='text-white'>L</p>
                         ) : (
                             <div>
@@ -284,12 +286,12 @@ const Navbar = () => {
                                 </button>
 
                                 <NavLink onClick={handleMenuToggle} to="/user" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
-                                    {loading || !user?.avatar ? (
+                                    {!user?.avatar ? (
                                         <p className='text-[#363636]'>Login To Continue</p>
                                     ) : (
                                         <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                                     )}
-                                    {loading || !user?.name ? (
+                                    {!user?.name ? (
                                         <p className='text-white'>L</p>
                                     ) : (
                                         <div>
