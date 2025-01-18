@@ -41,7 +41,7 @@ const LoginUser = () => {
       setLoading(true);
       const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`, formData);
       localStorage.setItem('token', res.data.token);
-      //navigate('/');
+      navigate('/');
     } catch (error) {
       console.error(error.response.data.error);
     }

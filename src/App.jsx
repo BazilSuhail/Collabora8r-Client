@@ -26,14 +26,14 @@ import SearchProject from "./Components/Profile/SearchProject";
 import { useAuthContext } from "./AuthProvider";
 const AppContent = () => {
   const location = useLocation();
-  const { user } = useAuthContext()
+  const { userLoginStatus } = useAuthContext()
   const hideNavbar = ["/login", "/register"].includes(location.pathname);
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
+      {(!hideNavbar && userLoginStatus) && <Navbar />}
       <Routes>
-        <Route path="/" element={user === null ? <LoginUser /> : <Dashboard />} />
+        <Route path="/" element={userLoginStatus === false ? <LoginUser /> : <Dashboard />} />
         <Route path="/login" element={<LoginUser />} />
 
 

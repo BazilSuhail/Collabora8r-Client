@@ -125,12 +125,12 @@ const AdminProjectList = () => {
                   <div className='flex items-center mt-[5px] space-x-2'>
                     <MdOutlineManageAccounts className='text-blue-800 mt-[2px]' />
                     <p className='text-[13px] font-[600] text-gray-500 '> {project.projectManager.status === 'Pending' && 'Requested'} Manager:</p>
-                    <p className='font-[600] text-[14px] text-blue-800'>
+                    <div className='font-[600] text-[14px] text-blue-800'>
                       {project.projectManager.status === 'Pending' ? <p className='text-[11px] font-[700] text-yellow-600 underline'>
                         {project.projectManager.email}
                       </p> : <p>
                       </p>}
-                    </p>
+                    </div>
                   </div>
                 }
 

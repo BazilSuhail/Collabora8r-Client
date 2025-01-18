@@ -7,8 +7,19 @@ const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  console.log("user is " + user)
+  //const [user, setUser] = useState(null);
+  const [user, setUser] = useState( {
+      _id: '',
+      name: '',
+      gender: '',
+      phone: '',
+      email: '',
+      dob: '',
+      avatar: '1',
+    }
+  );
+  const [userLoginStatus, setUserLoginStatus] = useState(false);
+  
   const [userNotifications, setUserNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
@@ -21,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+console.log(token)
     if (token) {
       const isValid = validateToken(token);
       if (isValid) {
@@ -56,8 +67,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const fetchUserData = async (token) => {
-    try {
-
+    try { 
       const config = {
         headers: {
           Authorization: `Bearer ${token}`
@@ -65,7 +75,9 @@ export const AuthProvider = ({ children }) => {
       };
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
       setUser(response.data);
-      console.log("user is 1 " + response.data)
+      setUserLoginStatus(true)
+      //console.log("user is 1 ")
+      //console.log(response.data)
 
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -166,6 +178,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        userLoginStatus,
         loading,
         login,
         logout,
