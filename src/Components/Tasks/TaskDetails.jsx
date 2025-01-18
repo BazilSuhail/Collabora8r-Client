@@ -39,6 +39,7 @@ const TaskDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTask(response.data);
+        console.log(response.data)
         setTaskProgress(response.data.progress);
         setStatus(response.data.status)
 

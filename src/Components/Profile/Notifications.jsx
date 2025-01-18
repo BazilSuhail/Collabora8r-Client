@@ -4,13 +4,22 @@ import axios from 'axios';
 import { AnimatePresence, motion } from "framer-motion"
 import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
+import ProjectInvitationDetails from './MemberAccept';
+import ProjectManagerInvitation from './ManagerAccept';
 
 const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {
     const [notifications, setNotifications] = useState([]);
     const [tempModal, setTempModal] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [memberModal, setMemberModal] = useState({ projectId: '', from: '' });
+    const [managerModal, setManagerModal] = useState('');
     const navigate = useNavigate();
+
+    //lmmodal
+    const [showMemberModal, setShowMemberModal] = useState(false);
+    const [showManagerModal, setShowManagerModal] = useState(false);
+
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -40,28 +49,42 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
 
     const closeModal = () => {
         setIsNotificationsModalOpen(!isNotificationsModalOpen);
-        
     };
 
     const handleClose = () => {
         setTempModal(false)
+
         //closeModal()
         setTimeout(closeModal, 500);
     };
 
     const handleUserNotificationClick = (projectId, from) => {
         handleClose();
-        navigate(`/project-details/${projectId}/${from}`);
+        setShowMemberModal(true);
+        //navigate(`/project-details/${projectId}/${from}`);
+        setMemberModal(projectId, from);
+
     };
 
 
     const handleManagerNotificationClick = (projectId) => {
-        handleClose();
-        navigate(`/manager-invitation/${projectId}`);
+        setShowManagerModal(true);
+        //handleClose();
+
+        console.log("sd  "+projectId)
+        console.log("sd  "+managerModal)
+        setManagerModal(projectId);
+        console.log("sd  "+managerModal)
+
+        //navigate(`/manager-invitation/${projectId}`);
+
     };
 
     return (
         <div className="fixed inset-0 flex  justify-end bg-black bg-opacity-20 z-[999]">
+       
+        {showMemberModal &&  <ProjectInvitationDetails/>}
+        {showManagerModal && <ProjectManagerInvitation projectId={managerModal} />}
             <AnimatePresence>
                 <motion.div
                     initial={{ x: 900 }}
@@ -86,7 +109,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                     <div key={index}
                                         className="px-4 py-[14px] bg-gra border-[2px] rounded-[8px] border-gray-200 cursor-pointer">
                                         {type === 'projectManager' && (
-                                            <div  onClick={() => handleManagerNotificationClick(data.projectId)}>
+                                            <div onClick={() => handleManagerNotificationClick(data.projectId)}>
                                                 <div className='flex items-center'>
                                                     <div className='bg-bluepx] rounded-full'>
                                                         <MdManageAccounts className='text-blue-800 text-[25px]' />

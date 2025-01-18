@@ -36,7 +36,7 @@ const Navbar = () => {
     const [loading, setLoading] = useState(true);
     const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-    
+
     const handleNotificationModal = () => {
         setIsNotificationsModalOpen(!isMenuOpen);
     };
@@ -44,10 +44,10 @@ const Navbar = () => {
     const handleSearchModal = () => {
         setIsSearchModalOpen(!isSearchModalOpen);
     };
-    
+
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -113,12 +113,23 @@ const Navbar = () => {
             {isSearchModalOpen && <SearchProject isSearchModalOpen={isSearchModalOpen} setIsSearchModalOpen={setIsSearchModalOpen} />}
             <div className="hidden bg-[#ffffff] overflow-y-auto no-scrollbar fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
-                    <div className="flex justify-between">
-                        <div className="text-[22px] font-bold text-[#363636]">Collabora8r</div>
-                        <div  onClick={handleNotificationModal}><FaBell className="mt-[10px] text-[#363636] text-[20px]" /></div>
+                    <div className="flex items-center mt-[10px] justify-between">
+                        <div className="flex items-center">
+                            <motion.div
+                                initial={{ opacity: 1 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <img src={collaboratorLogo} alt="Conneciton Errir ... :/" className="md:w-[28px] md:h-[28px]" />
+                            </motion.div>
+                            <div className="text-[28px] font-bold" >
+                                <div className="text-[#575757] ml-[8px] md:text-[19px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
+                            </div>
+                        </div>
+                        <div onClick={handleNotificationModal}><FaBell className=" text-[#363636] cursor-pointer text-[20px]" /></div>
                     </div>
 
-                    <div onClick={handleSearchModal} className="flex items-center px-[8px] py-[5px] mt-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
+                    <div onClick={handleSearchModal} className="flex cursor-pointer items-center px-[8px] py-[5px] mt-[15px] border-[2px] bg-gray-50 border-[#dedddd] rounded-lg">
                         <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
                         <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                     </div>
@@ -164,7 +175,7 @@ const Navbar = () => {
                         <NavLink to="/associated-projects" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                             <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">My Projects</p>
                         </NavLink>
-                        
+
 
                         <div className="pl-[8px]  my-[5px]">
                             <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
@@ -206,7 +217,7 @@ const Navbar = () => {
             </div>
 
             <div className="relative text-white xsx:hidden">
-                <div className="flex items-center h-[70px]  justify-between bg-white border-b-2 border-[#a4a4a4] px-4 py-3 z-50 relative">
+                <div className="flex items-center h-[70px]  justify-between bg-white border-b-2 border-[#dedddd] px-4 py-3 z-[999] relative">
                     <div className="flex items-center">
                         <motion.div
                             initial={{ opacity: 1 }}
@@ -243,7 +254,7 @@ const Navbar = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
-                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-30"
+                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-[995]"
                         >
                             <div className='my-[25px]'></div>
                             <motion.div
@@ -267,13 +278,13 @@ const Navbar = () => {
                                         <p className='text-white'>L</p>
                                     ) : (
                                         <div>
-                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
-                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
-                            </div>
+                                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{profile.name.slice(0, 20)}</div>
+                                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{profile.email}</div>
+                                        </div>
                                     )}
                                 </NavLink>
 
-                                <button onClick={handleMenuToggle} className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] border-[#8c8c8c] rounded-lg">
+                                <button onClick={handleMenuToggle} className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
                                     <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
                                     <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                                 </button>
@@ -287,11 +298,16 @@ const Navbar = () => {
                                 <NavLink to="/workflow" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                                     <BsGraphUp className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Workflow</p>
                                 </NavLink>
-                                <NavLink to="/joinedprojects/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <FaCubes className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Snacks</p>
+
+                                <NavLink to="/joined-projects/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                                    <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Joined Projects</p>
                                 </NavLink>
+                                <NavLink to="/manager-projects"  onClick={handleMenuToggle}className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
+                                    <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Shared Workspaces</p>
+                                </NavLink>
+
                                 <NavLink to="/associated-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <GoPeople className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Associated Projects</p>
+                                    <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">My Projects</p>
                                 </NavLink>
 
                                 <div className="pl-[8px]  my-[5px]">
@@ -316,7 +332,7 @@ const Navbar = () => {
                                     >
                                         <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
                                             {projects.map((project) => (
-                                                <div key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-full border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
+                                                <div key={project._id} onClick={handleMenuToggle} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-full border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
                                                     <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
                                                         {project.name.charAt(0)}
                                                     </div>

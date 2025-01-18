@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';
+
 const ProjectInvite = ({ project, createdBy, onClose }) => {
   const [isAccepted, setIsAccepted] = useState(false);
   const [error, setError] = useState('');
@@ -43,7 +44,7 @@ const ProjectInvite = ({ project, createdBy, onClose }) => {
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 relative">
+      className="bg-white xl:w-[580px] min-h-[250px] rounded-lg shadow-lg w-full p-6 relative">
       {/* Close Button */}
       {onClose && (
         <button

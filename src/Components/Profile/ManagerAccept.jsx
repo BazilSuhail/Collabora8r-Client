@@ -45,7 +45,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="bg-white rounded-lg md::w-[450px] shadow-lg w-full p-6 relative">
+      className="bg-white flex flex-col rounded-lg md::w-[450px] xl:w-[580px] min-h-[320px] shadow-lg w-full p-6 relative">
       {/* Close Button */}
       {onClose && (
         <button
@@ -58,7 +58,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
       )}
       <div className="flex mt-[15px] text-[28px] items-center">
         <MdOutlineSubtitles />
-        <h3 className="ml-[8px] mb-[2px] text-[18px] font-[600] text-gray-700"> Invitation to Collaborate on {project.name}</h3>
+        <h3 className="ml-[8px] mb-[2px] text-[18px] font-[600] text-gray-700">Invitation to Manage Project <span className='font-[700]'>{project.name}</span></h3>
       </div>
       <p className="text-gray-600 mt-[10px] text-sm mb-6">
         Invited by: <span className="font-semibold">{createdBy.name}</span> (<a className="text-blue-500" href={`mailto:${createdBy.email}`}>{createdBy.email}</a>)
@@ -81,7 +81,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
           You have successfully joined the project!
         </p>
       ) : (
-        <div className='flex items-center space-x-3'>
+        <div className='flex items-center mt-auto space-x-3'>
           <button onClick={() => handleAcceptDecline('Accept')}
             className="bg-green-700 flex items-center text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-green-700"
           >
@@ -101,9 +101,10 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
 };
 
 
-const ProjectManagerInvitation = () => {
+const ProjectManagerInvitation = ({projectId}) => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  //const { projectId } = useParams();
+console.log(projectId)
   const [projectData, setProjectData] = useState(null);
   const [createdBy, setCreatedBy] = useState(null);
   const [showModal, setShowModal] = useState(true);

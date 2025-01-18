@@ -94,7 +94,7 @@ const JoinedProjects = () => {
               </div>
 
               <Link to={`/joinedprojects/${project._id}`} className='flex flex-col'>
-                <div className='ml-auto mr-[45px] xl:mr-[56px] mt-[-45px] xl:mt-[-40px] mb-[-20px] z-[990] rounded-full overflow-hidden'>
+                <div className='ml-auto mr-[45px] xl:mr-[56px] mt-[-45px] xl:mt-[-40px] mb-[-20px] z-[500] rounded-full overflow-hidden'>
                   <img src={`/Assets/${project.createdBy.avatar}.jpg`} alt="" className="h-[95px] w-[95px] xl:h-[80px] xl:w-[80px]" />
                 </div>
                 <div className='pl-[25px] md:mt-[15px]'>
