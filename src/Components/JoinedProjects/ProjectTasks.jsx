@@ -21,14 +21,14 @@ const MyTask = ({ task, user, creator }) => {
 
             <p className='ml-[10px] mb-[3px] font-[600]' >{task.title}</p>
             <p
-              className={`text-[13px] scale-[0.8] px-[25px] text-center xsx:block hidden font-[600] pt-[1px] pb-[3px] rounded-[15px] ${task.status === 'Not Started'
+              className={`text-[13px] scale-[0.8] w-[105px] text-center xsx:block hidden font-[600] pt-[1px] pb-[3px] rounded-[15px] ${task.status === 'Not Started'
                 ? 'text-blue-600 bg-blue-100'
                 : task.status === 'Completed'
                   ? 'text-green-600 border border-green-400 bg-green-100'
                   : 'text-yellow-600 bg-yellow-100'
                 }`}
             >
-              {task.priority}
+              {task.status}
             </p>
           </div>
         </h1>

@@ -34,11 +34,11 @@ const Navbar = () => {
     const [projects, setProjects] = useState([]);
 
     const [loading, setLoading] = useState(true);
-    const [isNotificationsModalOpen, setIsModalOpen] = useState(false);
+    const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
     
     const handleNotificationModal = () => {
-        setIsModalOpen(!isMenuOpen);
+        setIsNotificationsModalOpen(!isMenuOpen);
     };
 
     const handleSearchModal = () => {
@@ -109,8 +109,8 @@ const Navbar = () => {
 
     return (
         <nav>
-            {isNotificationsModalOpen && <NotificationsModal isNotificationsModalOpen={isNotificationsModalOpen} setIsNotificationsModalOpen={setIsModalOpen} />}
-            {isSearchModalOpen && <SearchProject isNotificationsModalOpen={isNotificationsModalOpen} setIsSearchModalOpen={setIsSearchModalOpen} />}
+            {isNotificationsModalOpen && <NotificationsModal isNotificationsModalOpen={isNotificationsModalOpen} setIsNotificationsModalOpen={setIsNotificationsModalOpen} />}
+            {isSearchModalOpen && <SearchProject isSearchModalOpen={isSearchModalOpen} setIsSearchModalOpen={setIsSearchModalOpen} />}
             <div className="hidden bg-[#ffffff] overflow-y-auto no-scrollbar fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
                 <div className="flex text-red-50 flex-col w-[95%]">
                     <div className="flex justify-between">

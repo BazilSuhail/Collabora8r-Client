@@ -123,8 +123,8 @@ const Workflow = () => {
         const token = localStorage.getItem('token');
         if (!token) throw new Error('No token found, please sign in again.');
 
-        const userId = decodeJWT(token);
-        setUsersId(userId);
+        /*const userId = decodeJWT(token);
+        setUsersId(userId);*/
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`,
           { headers: { Authorization: `Bearer ${token}` } }

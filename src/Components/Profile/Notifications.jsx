@@ -5,12 +5,12 @@ import { AnimatePresence, motion } from "framer-motion"
 import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
 
-const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
+const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {
     const [notifications, setNotifications] = useState([]);
     const [tempModal, setTempModal] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -33,17 +33,19 @@ const NotificationsModal = ({ isModalOpen, setModalOpen }) => {
             }
         };
 
-        if (isModalOpen) {
+        if (isNotificationsModalOpen) {
             fetchNotifications();
         }
-    }, [isModalOpen]);
+    }, [isNotificationsModalOpen]);
 
     const closeModal = () => {
-        setModalOpen(false);
+        setIsNotificationsModalOpen(!isNotificationsModalOpen);
+        
     };
 
     const handleClose = () => {
         setTempModal(false)
+        //closeModal()
         setTimeout(closeModal, 500);
     };
 

@@ -65,26 +65,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 # Live Demo
 ## Check out the latest demo of Project [Texleath](https://collabor8r.netlify.app). 
-
-## In case this doesnt work, follow these steps as an alternative and Install required Dependancies
-At first create a React App using following command:
-
-```bash
-   npx create-react-app myproject
-```
- Clone the project using following command
-```bash
-  git clone  https://github.com/BazilSuhail/Ecommerce-Client.git
-```
-Go to the project directory
-```bash
-cd my-project
-```
-Just for convenience copy all contents in the cloned repository and paste them into the directory where You have 
-created your **React App**.
- 
-Afterwards simply run this command to install all required dependancies and packages at once.
-```bash
-npm i react-redux react-icons react-router-dom axios framer-motion jwt-decode
-``` 
-  
