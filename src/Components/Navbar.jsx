@@ -30,6 +30,7 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 const Navbar = () => {
     const navigate = useNavigate();
     const { user, logout } = useAuthContext();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
 
@@ -42,9 +43,9 @@ const Navbar = () => {
 
     const handleSearchModal = () => {
         setIsSearchModalOpen(!isSearchModalOpen);
+        setIsMenuOpen(true);
     };
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -219,17 +220,19 @@ const Navbar = () => {
                             <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
                         </motion.div>
                     </div>
-                    <motion.div
-                        className="cursor-pointer text-gray-500"
-                        onClick={handleMenuToggle}
-                    >
-
-                        {isMenuOpen ? (
-                            <IoClose size={35} />
-                        ) : (
-                            <IoMenu size={35} />
-                        )}
-                    </motion.div>
+                    <div className='flex items-center'>
+                        <div onClick={handleNotificationModal}><FaBell className=" text-[#6e6d6d] mr-[10px] cursor-pointer text-[26px] mt-[2px]" /></div>
+                        <div
+                            className="cursor-pointer text-gray-500"
+                            onClick={handleMenuToggle}
+                        >
+                            {isMenuOpen ? (
+                                <IoClose size={35} />
+                            ) : (
+                                <IoMenu size={35} />
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <AnimatePresence>
@@ -238,7 +241,7 @@ const Navbar = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100vw", transition: { duration: 0.5 } }}
                             exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
-                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-[995]"
+                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-[800]"
                         >
                             <div className='my-[25px]'></div>
                             <motion.div
@@ -268,7 +271,10 @@ const Navbar = () => {
                                     )}
                                 </NavLink>
 
-                                <button onClick={handleMenuToggle} className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
+                                <button onClick={() => {
+                                    handleMenuToggle
+                                    setIsSearchModalOpen(!isSearchModalOpen)
+                                }} className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
                                     <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
                                     <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                                 </button>

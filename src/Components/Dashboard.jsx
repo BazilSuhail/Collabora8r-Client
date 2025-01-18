@@ -107,7 +107,7 @@ const Dashboard = () => {
 
       <section className="relative mb-[18px] xl:mb-[25px] w-full h-[100px] lg:h-[180px] xl:h-[150px] rounded-xl overflow-hidden bg-gray-300">
         <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
-          <img src={`/Themes/1.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+          <img src={`/Themes/3.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[150px] w-full object-cover" />
         </div>
 
         <div className="absolute h-[100px] flex flex-col justify-center lg:h-[180px] xl:h-[150px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
