@@ -10,44 +10,17 @@ import { useAuthContext } from '../../AuthProvider';
 
 const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {
     //const [notifications, setNotifications] = useState([]);
-    const { userNotifications } = useAuthContext();
+    const { userNotifications,notifications } = useAuthContext();
     //console.log(userNotifications)
     const [tempModal, setTempModal] = useState(true);
-    const [error, setError] = useState('');
     const [memberModal, setMemberModal] = useState({ projectId: '1', from: '2' });
     const [managerModal, setManagerModal] = useState('');
-    const navigate = useNavigate();
 
     //lmmodal
     const [showMemberModal, setShowMemberModal] = useState(false);
     const [showManagerModal, setShowManagerModal] = useState(false);
 
 
-    /*useEffect(() => {
-        const fetchNotifications = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                };
-                const response = await axios.get(
-                    `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/get-notifications`,
-                    config
-                );
-                setNotifications(response.data);
-            } catch (err) {
-                setError('Failed to fetch notifications');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (isNotificationsModalOpen) {
-            fetchNotifications();
-        }
-    }, [isNotificationsModalOpen]);*/
 
     const closeModal = () => {
         setIsNotificationsModalOpen(!isNotificationsModalOpen);
@@ -55,37 +28,23 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
 
     const handleClose = () => {
         setTempModal(false)
-
-        //closeModal()
         setTimeout(closeModal, 500);
     };
 
     const handleUserNotificationClick = (projectId, from) => {
-        //handleClose();
         setShowMemberModal(true);
-        console.log(memberModal.projectId)
-
-        //console.log("sd  " + projectId)
-        //navigate(`/project-details/${projectId}/${from}`);
         setMemberModal((prevState) => ({
-            ...prevState, // Keep other properties if needed
+            ...prevState,
             projectId: projectId,
             from: from,
         }));
-        console.log(memberModal.projectId)
-
+        //console.log(memberModal.projectId) 
     };
 
 
     const handleManagerNotificationClick = (projectId) => {
         setShowManagerModal(true);
-        //handleClose();
-
-        console.log("sd  " + projectId)
         setManagerModal(projectId);
-
-        //navigate(`/manager-invitation/${projectId}`);
-
     };
 
     return (
@@ -105,10 +64,64 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                         <MdKeyboardDoubleArrowRight className='text-[28px]' />
                         <h1 className="text-[16px] ml-[5px] font-[600]">Notifications</h1>
                     </button>
+                    <div className='w-full bg-yellow-100'>
+                    {notifications.length > 0 ? (
+                        <div className="mt-[35px]  space-y-4">
+                            {notifications.slice().reverse().map((notification, index) => {
+                                const { type, data } = notification;
+                                return (
+                                    <div key={index}
+                                        className="px-4 py-[14px] bg-gra border-[2px] rounded-[8px] border-gray-200 cursor-pointer">
+                                        {type === 'projectManager' && (
+                                            <div onClick={() => handleManagerNotificationClick(data.projectId)}>
+                                                <div className='flex items-center'>
+                                                    <div className='bg-bluepx] rounded-full'>
+                                                        <MdManageAccounts className='text-blue-800 text-[25px]' />
+                                                    </div>
+                                                    <p className="text-blue-600 font-[600] ml-[8px] text-[14px] sm:text-[17px]">
+                                                        Invitation for Product Manager
+                                                    </p>
+                                                </div >
+                                                <div className='ml-[35px] flex flex-col mt-[8px]'>
+                                                    <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        {data.description}
+                                                    </p>
+                                                    <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
+                                                        {new Date(data.createdAt).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
 
-                    {error ? (
-                        <p className="text-center text-red-500">{error}</p>
-                    ) : userNotifications.length > 0 ? (
+                                        {type === 'teamMember' && (
+                                            <div onClick={() => handleUserNotificationClick(data.projectId, data.from)}>
+                                                <div className='flex items-center'>
+                                                    <div className='bg-blue-800 p-[6px] rounded-full'>
+                                                        <VscProject className='text-white text-[15px]' />
+                                                    </div>
+                                                    <p className="text-blue-700 font-[500] ml-[8px] text-[14px] sm:text-[17px]">
+                                                        {data.title}
+                                                    </p>
+                                                </div >
+                                                <div className='ml-[40px] flex flex-col mt-[8px]'>
+                                                    <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        {data.description}
+                                                    </p>
+                                                    <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
+                                                        {new Date(data.createdAt).toLocaleString()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <p className="text-gray-600">No notifications available.</p>
+                    )}
+                    </div>
+                    {userNotifications.length > 0 ? (
                         <div className="mt-[35px]  space-y-4">
                             {userNotifications.slice().reverse().map((notification, index) => {
                                 const { type, data } = notification;

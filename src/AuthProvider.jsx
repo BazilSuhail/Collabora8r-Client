@@ -84,11 +84,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    //console.log('User notifications updated:', userNotifications);
-  }, [userNotifications]); // Listen for changes to userNotifications
-
+ 
   const fetchUserNotifications = async (token) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/get-notifications`, {
@@ -121,7 +117,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     newSocket.on("notification", (data) => {
-      //console.log(`Notification received:`, data);
+      console.log(`Notification received:`, data);
       setNotifications((prev) => [...prev, data]);
       //console.log(data.message)
       showToast(data.message);
