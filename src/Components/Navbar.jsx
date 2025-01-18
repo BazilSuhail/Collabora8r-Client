@@ -29,14 +29,10 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const Navbar = () => {
     const navigate = useNavigate();
-
-    //const [user, setProfile] = useState(null);
     const { user, logout } = useAuthContext();
-    console.log(user)
     const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
 
-    const [loading, setLoading] = useState(true);
     const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
@@ -48,9 +44,7 @@ const Navbar = () => {
         setIsSearchModalOpen(!isSearchModalOpen);
     };
 
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -59,29 +53,11 @@ const Navbar = () => {
     const toggleOpen = () => setisArrowOpen(!isArrowOpen);
 
     const handleLogout = () => {
-        //localStorage.removeItem('token');
         logout();
-
         navigate('/login');
     };
 
     useEffect(() => {
-        /*const fetchProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                };
-                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/user`, config);
-                setProfile(response.data);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };*/
 
         const fetchJoinedProjects = async () => {
             try {
@@ -103,7 +79,6 @@ const Navbar = () => {
             }
         };
 
-        //fetchProfile();
         fetchJoinedProjects();
     }, []);
 
@@ -157,19 +132,11 @@ const Navbar = () => {
                     
                     </NavLink>*/}
                     <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                        {!user?.avatar ? (
-                            <p className='text-[#363636]'>Login To Continue</p>
-                        ) : (
-                            <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
-                        )}
-                        {!user?.name ? (
-                            <p className='text-white'>L</p>
-                        ) : (
-                            <div>
-                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
-                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
-                            </div>
-                        )}
+                        <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                        <div>
+                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
+                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
+                        </div>
                     </NavLink>
 
                     <div className="border-t-2 mt-[20px] pl-[4px] pt-[15px] border-gray-300 ">
@@ -234,7 +201,7 @@ const Navbar = () => {
             </div>
 
             <div className="relative text-white xsx:hidden">
-                <div className="flex items-center h-[70px]  justify-between bg-white border-b-2 border-[#dedddd] px-4 py-3 z-[999] relative">
+                <div className="flex items-center h-[70px]  justify-between bg-white border-b-2 border-[#dedddd] px-4 py-3 z-[900] relative">
                     <div className="flex items-center">
                         <motion.div
                             initial={{ opacity: 1 }}

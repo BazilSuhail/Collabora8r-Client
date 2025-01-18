@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';
 
-const ProjectInvite = ({ project, createdBy, onClose }) => {
+const TeamInvite = ({ project, createdBy, onClose, setShowMemberModal }) => {
   const [isAccepted, setIsAccepted] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,7 +24,8 @@ const ProjectInvite = ({ project, createdBy, onClose }) => {
       );
 
       setIsAccepted(true);
-      onClose()
+      onClose();
+      setShowMemberModal(false)
     } catch (err) {
       console.error(err);
       setError('Failed to accept the invitation.');
@@ -44,11 +45,11 @@ const ProjectInvite = ({ project, createdBy, onClose }) => {
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="bg-white xl:w-[580px] min-h-[250px] rounded-lg shadow-lg w-full p-6 relative">
+      className="bg-white w-[90vw] md:w-[580px] pt-[35px] min-h-[250px] rounded-lg shadow-lg p-6 relative">
       {/* Close Button */}
       {onClose && (
         <button
-          onClick={onClose}
+          onClick={() => setShowMemberModal(false)}
           className="absolute font-[700] top-3 right-4 text-gray-600 hover:text-gray-800"
           aria-label="Close modal"
         >
@@ -93,9 +94,10 @@ const ProjectInvite = ({ project, createdBy, onClose }) => {
 };
 
 
-const ProjectInvitationDetails = () => {
+const TeamMemberInvitation = ({ projectId, from, setShowMemberModal }) => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  //const { projectId } = useParams();
+
   const [projectData, setProjectData] = useState(null);
   const [createdBy, setCreatedBy] = useState(null);
   const [showModal, setShowModal] = useState(true);
@@ -126,10 +128,11 @@ const ProjectInvitationDetails = () => {
   }
 
   return (
-    <main className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <main className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50">
       <div>
         {showModal && projectData && createdBy ? (
-          <ProjectInvite
+          <TeamInvite
+            setShowMemberModal={setShowMemberModal}
             project={projectData}
             createdBy={createdBy}
             onClose={onClose}
@@ -145,4 +148,4 @@ const ProjectInvitationDetails = () => {
 };
 
 
-export default ProjectInvitationDetails;
+export default TeamMemberInvitation;

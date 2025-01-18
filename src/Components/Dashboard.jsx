@@ -5,9 +5,9 @@ import { ImCross } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 
 import NoTasks from "../Assets/NoTasks.webp";
-
-import decodeJWT from '../decodeJWT';
+ 
 import Loader from '../Assets/Loader';
+import { useAuthContext } from '../AuthProvider';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'
@@ -17,15 +17,14 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const {user}=useAuthContext();
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('All');
   const [dateFilter, setDateFilter] = useState('All');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [userName, setUserName] = useState('');
-
-  const [usersId, setUsersId] = useState('');
+  const [error, setError] = useState(null); 
+ 
   const [projectColors, setProjectColors] = useState({});
 
   useEffect(() => {
@@ -35,19 +34,7 @@ const Dashboard = () => {
 
         if (!token) {
           throw new Error('No token found, please sign in again.');
-        }
-
-        const userId = decodeJWT(token);
-        setUsersId(userId);
-
-        // Fetch user profile
-        /*const profileResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const { name } = profileResponse.data;*/
-        setUserName("asdasd");
-
+        } 
         const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -118,14 +105,14 @@ const Dashboard = () => {
   return (
     <main className="ml-auto xsx:ml-[265px] min-h-screen bg-white py-6 px-3 sm:p-6">
 
-      <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
+      <section className="relative mb-[18px] xl:mb-[25px] w-full h-[100px] lg:h-[180px] xl:h-[150px] rounded-xl overflow-hidden bg-gray-300">
         <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
           <img src={`/Themes/1.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
         </div>
 
-        <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
-          <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
-            Bazil
+        <div className="absolute h-[100px] flex flex-col justify-center lg:h-[180px] xl:h-[150px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
+          <p className="ml-[8px] xl:ml-[120px] xl:scale-[1.2] font-[700]  text-white">
+           <span className='text-gray-300 text-[21px] sm:text-[28px]'>Hello,</span><span className='ml-[8px] text-[34px] md:text-[44px]'>{user.name.split(" ")[0]}</span>
           </p>
         </div>
       </section>
@@ -205,7 +192,7 @@ const Dashboard = () => {
               filteredTasks.map((task) => (
                 <div
                   onClick={() => {
-                    navigate(`/task/${usersId}/${task._id}`);
+                    navigate(`/task/${user._id}/${task._id}`);
                   }}
                   key={task._id}
                   className="px-4 pt-4 pb-[-12px] bg-white border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01]"

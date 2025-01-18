@@ -4,17 +4,17 @@ import axios from 'axios';
 import { AnimatePresence, motion } from "framer-motion"
 import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
-import ProjectInvitationDetails from './MemberAccept';
+import TeamMemberInvitation from './MemberAccept';
 import ProjectManagerInvitation from './ManagerAccept';
 import { useAuthContext } from '../../AuthProvider';
 
 const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {
     //const [notifications, setNotifications] = useState([]);
-const {userNotifications}=useAuthContext()
+    const { userNotifications } = useAuthContext();
+    //console.log(userNotifications)
     const [tempModal, setTempModal] = useState(true);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [memberModal, setMemberModal] = useState({ projectId: '', from: '' });
+    const [memberModal, setMemberModal] = useState({ projectId: '1', from: '2' });
     const [managerModal, setManagerModal] = useState('');
     const navigate = useNavigate();
 
@@ -61,10 +61,18 @@ const {userNotifications}=useAuthContext()
     };
 
     const handleUserNotificationClick = (projectId, from) => {
-        handleClose();
+        //handleClose();
         setShowMemberModal(true);
+        console.log(memberModal.projectId)
+
+        //console.log("sd  " + projectId)
         //navigate(`/project-details/${projectId}/${from}`);
-        setMemberModal(projectId, from);
+        setMemberModal((prevState) => ({
+            ...prevState, // Keep other properties if needed
+            projectId: projectId,
+            from: from,
+        }));
+        console.log(memberModal.projectId)
 
     };
 
@@ -73,10 +81,8 @@ const {userNotifications}=useAuthContext()
         setShowManagerModal(true);
         //handleClose();
 
-        console.log("sd  "+projectId)
-        console.log("sd  "+managerModal)
+        console.log("sd  " + projectId)
         setManagerModal(projectId);
-        console.log("sd  "+managerModal)
 
         //navigate(`/manager-invitation/${projectId}`);
 
@@ -84,9 +90,10 @@ const {userNotifications}=useAuthContext()
 
     return (
         <div className="fixed inset-0 flex  justify-end bg-black bg-opacity-20 z-[999]">
-       
-        {showMemberModal &&  <ProjectInvitationDetails/>}
-        {showManagerModal && <ProjectManagerInvitation projectId={managerModal} />}
+
+            {showMemberModal && <TeamMemberInvitation projectId={memberModal.projectId} from={memberModal.from} setShowMemberModal={setShowMemberModal} />}
+            {showManagerModal && <ProjectManagerInvitation projectId={managerModal} setShowManagerModal={setShowManagerModal} />}
+
             <AnimatePresence>
                 <motion.div
                     initial={{ x: 900 }}
@@ -99,9 +106,7 @@ const {userNotifications}=useAuthContext()
                         <h1 className="text-[16px] ml-[5px] font-[600]">Notifications</h1>
                     </button>
 
-                    {loading ? (
-                        <p className="text-center text-gray-600">Loading...</p>
-                    ) : error ? (
+                    {error ? (
                         <p className="text-center text-red-500">{error}</p>
                     ) : userNotifications.length > 0 ? (
                         <div className="mt-[35px]  space-y-4">

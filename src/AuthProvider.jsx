@@ -8,6 +8,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   //const [user, setUser] = useState(null);
+  const [socket, setSocket] = useState(null);
   const [user, setUser] = useState({
     _id: '',
     name: '',
@@ -18,21 +19,20 @@ export const AuthProvider = ({ children }) => {
     avatar: '1',
   }
   );
-  const [userLoginStatus, setUserLoginStatus] = useState(false);
-
-  const [userNotifications, setUserNotifications] = useState([]);
+  const [userLoginStatus, setUserLoginStatus] = useState(false); 
   const [loading, setLoading] = useState(true);
-  const [socket, setSocket] = useState(null);
+
+  // notifications
+  const [userNotifications, setUserNotifications] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [notificationsCount, setNotificationsCount] = useState(0);
-  // toadt
-  const [toast, setToast] = useState({ message: "", visible: false });
-  const toastTimeoutRef = useRef(null);
 
+  // toasts
+  const [toast, setToast] = useState({ message: "", visible: false });
+  const toastTimeoutRef = useRef(null); 
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    //console.log(token)
+    const token = localStorage.getItem("token"); 
     if (token) {
       const isValid = validateToken(token);
       if (isValid) {
@@ -85,17 +85,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    //console.log('User notifications updated:', userNotifications);
+  }, [userNotifications]); // Listen for changes to userNotifications
+
   const fetchUserNotifications = async (token) => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/get-notifications`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile/get-notifications`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }
       );
-      setUserNotifications(response.data);
-      console.log(userNotifications)
+      setUserNotifications(response.data); 
       //console.log(response.data) 
+
     }
     catch (error) {
       console.error("Error fetching user data:", error);
@@ -121,7 +123,7 @@ export const AuthProvider = ({ children }) => {
     newSocket.on("notification", (data) => {
       //console.log(`Notification received:`, data);
       setNotifications((prev) => [...prev, data]);
-      console.log(data.message)
+      //console.log(data.message)
       showToast(data.message);
       //setNotificationsCount(notificationsCount + 1);
       setNotificationsCount((prev) => prev + 1);

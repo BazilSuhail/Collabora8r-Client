@@ -13,8 +13,10 @@ import { RxCross2 } from 'react-icons/rx';
 import { MdOutlineSubtitles } from 'react-icons/md';
 import { GrStatusInfo } from 'react-icons/gr';
 import { motion } from 'framer-motion';
+import { useAuthContext } from '../../AuthProvider';
 
 const TaskDetails = () => {
+  const { user } = useAuthContext();
   const { taskId, creatorId } = useParams();
   const [task, setTask] = useState(null);
   const [taskProgress, setTaskProgress] = useState(1);
@@ -39,7 +41,7 @@ const TaskDetails = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTask(response.data);
-        console.log(response.data)
+        //console.log(response.data)
         setTaskProgress(response.data.progress);
         setStatus(response.data.status)
 
@@ -351,9 +353,12 @@ const TaskDetails = () => {
           >
             {task.status}
           </div>
-          <button onClick={toggleModal} className="mt-[15px] text-[15px] text-white bg-blue-600 w-full rounded-md text-center py-[8px] font-semibold">
-            Update Task
-          </button>
+
+          {task.assignedTo === user._id &&
+            <button onClick={toggleModal} className="mt-[15px] text-[15px] text-white bg-blue-600 w-full rounded-md text-center py-[8px] font-semibold">
+              Update Task
+            </button>
+          }
           <p className='text-gray-600 mt-[10px] italic fotn-[600] text-[13px] text-center'>Task Status Cannot be Updated After the Due Date</p>
         </div>
 
@@ -375,7 +380,7 @@ const TaskDetails = () => {
           </button>
         </div>
       </section>
-      
+
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <motion.div

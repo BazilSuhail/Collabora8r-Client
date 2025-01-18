@@ -5,12 +5,13 @@ import { motion } from 'framer-motion'
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';
 
-const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
+const ManagerInvite = ({ project, createdBy, onClose, projectId, setShowManagerModal }) => {
   const [isAccepted, setIsAccepted] = useState(false);
   const [error, setError] = useState('');
 
   const handleAcceptDecline = async (response) => {
-    console.log(response)
+    //console.log(response)
+    setShowManagerModal(false)
     try {
       const token = localStorage.getItem('token');
       const config = {
@@ -25,6 +26,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
       );
 
       setIsAccepted(true);
+      setShowManagerModal(false)
       onClose()
     } catch (err) {
       console.error(err);
@@ -47,15 +49,15 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
       transition={{ duration: 0.2, ease: "easeInOut" }}
       className="bg-white flex flex-col rounded-lg md::w-[450px] xl:w-[580px] min-h-[320px] shadow-lg w-full p-6 relative">
       {/* Close Button */}
-      {onClose && (
-        <button
-          onClick={onClose}
-          className="absolute font-[700] top-3 right-4 text-gray-600 hover:text-gray-800"
-          aria-label="Close modal"
-        >
-          ✕
-        </button>
-      )}
+
+      <button
+        onClick={() => setShowManagerModal(false)}
+        className="absolute font-[700] top-3 right-4 text-gray-600 hover:text-gray-800"
+        aria-label="Close modal"
+      >
+        ✕
+      </button>
+
       <div className="flex mt-[15px] text-[28px] items-center">
         <MdOutlineSubtitles />
         <h3 className="ml-[8px] mb-[2px] text-[18px] font-[600] text-gray-700">Invitation to Manage Project <span className='font-[700]'>{project.name}</span></h3>
@@ -101,10 +103,10 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId }) => {
 };
 
 
-const ProjectManagerInvitation = ({projectId}) => {
+const ProjectManagerInvitation = ({ projectId, setShowManagerModal }) => {
   const navigate = useNavigate();
   //const { projectId } = useParams();
-console.log(projectId)
+  console.log(projectId)
   const [projectData, setProjectData] = useState(null);
   const [createdBy, setCreatedBy] = useState(null);
   const [showModal, setShowModal] = useState(true);
@@ -121,7 +123,7 @@ console.log(projectId)
         console.log(response.data)
         setProjectData(response.data.project);
         setCreatedBy(response.data.createdBy);
-      } 
+      }
       catch (error) {
         console.error('Error fetching project details:', error);
       }
@@ -140,7 +142,8 @@ console.log(projectId)
       <div>
         {showModal && projectData && createdBy ? (
           <ManagerInvite
-          projectId={projectId}
+            setShowManagerModal={setShowManagerModal}
+            projectId={projectId}
             project={projectData}
             createdBy={createdBy}
             onClose={onClose}
