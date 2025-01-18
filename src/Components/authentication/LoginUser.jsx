@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import collaboratorLogo from "../../logo.png"; 
-import ForgotPasswordModal from './ForgotPasswordModal'; 
+import collaboratorLogo from "../../logo.png";
+import ForgotPasswordModal from './ForgotPasswordModal';
 import SignInLoader from '../../Assets/SignInLoader';
+import { useAuthContext } from '../../AuthProvider';
 
 const LoginUser = () => {
+  const { login } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -40,15 +42,19 @@ const LoginUser = () => {
     try {
       setLoading(true);
       const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`, formData);
-      localStorage.setItem('token', res.data.token);
-      navigate('/');
-    } catch (error) {
+      //localStorage.setItem('token', res.data.token);
+      login(res.data.token)
+      navigate('/dashboard');
+      setLoading(false);
+
+    }
+    catch (error) {
       console.error(error.response.data.error);
     }
   };
 
   if (loading) {
-    return <SignInLoader message={'Signing You In'}/>;
+    return <SignInLoader message={'Signing You In'} />;
   }
 
   return (
@@ -120,7 +126,7 @@ const LoginUser = () => {
             <div className='w-[47%] h-[2px] bg-[#c5c5c5]'></div>
           </div>
 
-           {/*<div className='border-[2px] mt-[15px] py-[12px]  mx-[12px] md:mx-[19px] flex justify-center items-center border-gray-400 rounded-[8px]'>
+          {/*<div className='border-[2px] mt-[15px] py-[12px]  mx-[12px] md:mx-[19px] flex justify-center items-center border-gray-400 rounded-[8px]'>
         
             <div className='pl-[4px] flex justify-center items-center'>
               <FaGoogle size={24} className='text-blue-500' />

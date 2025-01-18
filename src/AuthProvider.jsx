@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-console.log(token)
+//console.log(token)
     if (token) {
       const isValid = validateToken(token);
       if (isValid) {
@@ -75,9 +75,7 @@ console.log(token)
       };
       const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/profile`, config);
       setUser(response.data);
-      setUserLoginStatus(true)
-      //console.log("user is 1 ")
-      //console.log(response.data)
+      setUserLoginStatus(true) 
 
     } catch (error) {
       console.error("Error fetching user data:", error);

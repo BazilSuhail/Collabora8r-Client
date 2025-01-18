@@ -34,6 +34,8 @@ const AppContent = () => {
       {(!hideNavbar && userLoginStatus) && <Navbar />}
       <Routes>
         <Route path="/" element={userLoginStatus === false ? <LoginUser /> : <Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
         <Route path="/login" element={<LoginUser />} />
 
 
