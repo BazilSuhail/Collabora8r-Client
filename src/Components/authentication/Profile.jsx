@@ -77,13 +77,13 @@ const Profile = () => {
         {!isEditing ? (
           <div>
 
-            <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[180px] rounded-xl overflow-hidden bg-yellow-300">
+            <section className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] md:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
               <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
-                <img src={`/Themes/3.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+                <img src={`/Themes/3.jpg`} alt="" className="h-[120px] md:h-[180px] xl:h-[220px] w-full object-cover" />
               </div>
  
-              <div className="absolute h-[120px] lg:h-[180px] xl:h-[180px] inset-0 pl-[28px] w-full bg-black bg-opacity-30 z-10">
-               <div className='flex mt-[20px] lg:mt-[42px] w-full'>
+              <div className="absolute xl:scale-[1.2] xl:pl-[125px] xl:pt-[10px] h-[120px] md:h-[180px] xl:h-[220px] inset-0 pl-[28px] w-full bg-black bg-opacity-30 z-10">
+               <div className='flex mt-[20px] md:mt-[52px] w-full'>
                <img
                   src={`/Assets/${profile.avatar}.jpg`}
                   alt="Profile Avatar"
