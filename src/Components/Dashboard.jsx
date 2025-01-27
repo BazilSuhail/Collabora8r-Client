@@ -4,9 +4,11 @@ import axios from 'axios';
 import { ImCross } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 
-import NoTasks from "../Assets/NoTasks.webp";
- 
+//import NoTasks from "../Assets/NoTasks.webp"; 
+
+import NoTasks from "/Resources/1.png";
 import Loader from '../Assets/Loader';
+
 import { useAuthContext } from '../AuthProvider';
 
 const colors = [
@@ -17,14 +19,14 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const {user}=useAuthContext();
+  const { user } = useAuthContext();
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('All');
   const [dateFilter, setDateFilter] = useState('All');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
- 
+  const [error, setError] = useState(null);
+
   const [projectColors, setProjectColors] = useState({});
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const Dashboard = () => {
 
         if (!token) {
           throw new Error('No token found, please sign in again.');
-        } 
+        }
         const tasksResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -112,31 +114,33 @@ const Dashboard = () => {
 
         <div className="absolute h-[100px] flex flex-col justify-center lg:h-[180px] xl:h-[150px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
           <p className="ml-[8px] xl:ml-[120px] xl:scale-[1.2] font-[700]  text-white">
-           <span className='text-gray-300 text-[21px] sm:text-[28px]'>Hello,</span><span className='ml-[8px] text-[34px] md:text-[44px]'>{user.name.split(" ")[0]}</span>
+            <span className='text-gray-300 text-[21px] sm:text-[28px]'>Hello,</span><span className='ml-[8px] text-[34px] md:text-[44px]'>{user.name.split(" ")[0]}</span>
           </p>
         </div>
       </section>
 
       <section className='grid grid-cols-1 xl:grid-cols-7  xsx:grid-rows-1'>
         <div className='col-span-1 xl:col-span-2 mb-[15px] xsx:mx-[8px]'>
-          <div className='flex mb-[15px] space-x-3 xsx:pl-[8px]'>
-            <button
-              className={`text-[15px] border border-gray-300 flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'
-                }`}
-              onClick={() => setDateFilter('All')}
-            >
-              <FaFilter className="mr-2" />
-              All Dates
-            </button>
-            <button
-              className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700'
-                }`}
-              onClick={() => setDateFilter('Missed')}
-            >
-              <FaTimesCircle className="mr-2" />
-              Missed
-            </button>
-          </div>
+          {filteredTasks.length > 0 &&
+            <div className='flex mb-[15px] space-x-3 xsx:pl-[8px]'>
+              <button
+                className={`text-[15px] border border-gray-300 flex whitespace-nowrap md:mr-[12px] items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'All' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'
+                  }`}
+                onClick={() => setDateFilter('All')}
+              >
+                <FaFilter className="mr-2" />
+                All Dates
+              </button>
+              <button
+                className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-4 py-[3px] rounded-lg shadow-md transition-colors duration-200 ${dateFilter === 'Missed' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700'
+                  }`}
+                onClick={() => setDateFilter('Missed')}
+              >
+                <FaTimesCircle className="mr-2" />
+                Missed
+              </button>
+            </div>
+          }
 
           <div className='xsx:mx-[5px] border-[2px] pl-[15px] py-[20px] w-full rounded-xl bg-white'>
             <div className="mb-[12px]  flex items-center text-gray-700 lg:text-[18px]">
@@ -164,28 +168,31 @@ const Dashboard = () => {
         </div>
 
         <div className='col-span-3 xsx:mx-[8px] xl:col-span-5 xl:px-[25px]'>
-          <div className="flex overflow-x-auto space-x-[4px space-x-[8px] hide-scrollbar">
-            <button
-              className={`flex text-[15px] border border-gray-300 whitespace-nowrap items-center px-3 py-[2px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}
-              onClick={() => setStatusFilter('All')}
-            >
-              <FaRedo className="mr-2" />
-              All Tasks
-            </button>
-            {['Not Started', 'In Progress', 'Completed'].map((status) => (
+          {filteredTasks.length > 0 &&
+            <div className="flex overflow-x-auto space-x-[4px space-x-[8px] hide-scrollbar">
               <button
-                key={status}
-                className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-3 py-[3px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'
-                  }`}
-                onClick={() => setStatusFilter(status)}
+                className={`flex text-[15px] border border-gray-300 whitespace-nowrap items-center px-3 py-[2px] rounded-lg transition-colors duration-200 ${statusFilter === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+                onClick={() => setStatusFilter('All')}
               >
-                {status === 'Not Started' && <FaHourglassHalf className="mr-2" />}
-                {status === 'In Progress' && <FaCheckCircle className="mr-2" />}
-                {status === 'Completed' && <FaTimesCircle className="mr-2" />}
-                {status}
+                <FaRedo className="mr-2" />
+                All Tasks
               </button>
-            ))}
-          </div>
+              {['Not Started', 'In Progress', 'Completed'].map((status) => (
+                <button
+                  key={status}
+                  className={`flex whitespace-nowrap text-[15px] border border-gray-300 items-center px-3 py-[3px] rounded-lg transition-colors duration-200 ${statusFilter === status ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'
+                    }`}
+                  onClick={() => setStatusFilter(status)}
+                >
+                  {status === 'Not Started' && <FaHourglassHalf className="mr-2" />}
+                  {status === 'In Progress' && <FaCheckCircle className="mr-2" />}
+                  {status === 'Completed' && <FaTimesCircle className="mr-2" />}
+                  {status}
+                </button>
+              ))}
+            </div>
+          }
+
           {/* Task List */}
           <div className="grid gap-4 mt-[20px]">
             {filteredTasks.length > 0 ? (
@@ -202,7 +209,7 @@ const Dashboard = () => {
                       <span className='bg-gray-400 p-[5px] xsx:p-[8px] rounded-full'>
                         <FaClipboardList className='text-white  text-[17px] xsx:text-[20px]' />
                       </span>
-                      <span className='ml-[8px] text-[14px] sm:text-[17px] mt-[-3px]'>{task.title.slice(0,48)} {task.title.lenth > 29 && '...'}</span>
+                      <span className='ml-[8px] text-[14px] sm:text-[17px] mt-[-3px]'>{task.title.slice(0, 48)} {task.title.lenth > 29 && '...'}</span>
                     </h1>
 
                     <p
@@ -244,9 +251,9 @@ const Dashboard = () => {
                 </div>
               ))
             ) : (
-              <div className='flex  flex-col items-center '>
-                <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]' />
-                <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+              <div className='flex flex-col items-center '>
+                <img src={NoTasks} alt='Connection Error' className='scale9] mt-[95px] lg:mt-[105px]' />
+                <p className="text-center text-gray-600 text-[14px] font-[600] mt-[10px]">Your Tasks Will appear here.</p>
               </div>
             )}
           </div>

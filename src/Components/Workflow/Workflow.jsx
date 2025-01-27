@@ -4,17 +4,18 @@ import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { MdTask } from 'react-icons/md';
-import { FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../Assets/Loader';
-import decodeJWT from '../../decodeJWT';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { FaPeopleRoof } from 'react-icons/fa6';
 import { GrStatusInfo } from 'react-icons/gr';
+import { useAuthContext } from '../../AuthProvider';
+import { motion } from "framer-motion";
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];
 
-const TaskCard = ({ task, usersId }) => {
+const TaskCard = ({ task }) => {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
   const [, drag] = useDrag({
     type: 'TASK',
@@ -25,7 +26,7 @@ const TaskCard = ({ task, usersId }) => {
     <div
       ref={drag}
       onClick={() => {
-        navigate(`/task/${usersId}/${task._id}`);
+        navigate(`/task/${user._id}/${task._id}`);
       }}
       className="px-4 py-[10px] cursor-pointer flex flex-col bg-gray-50 border-[2px] rounded-lg transform transition duration-300 hover:scale-[1.01] mb-6"
     >
@@ -56,7 +57,7 @@ const TaskCard = ({ task, usersId }) => {
   );
 };
 
-const Column = ({ status, tasks, usersId, moveTask }) => {
+const Column = ({ status, tasks, moveTask }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: 'TASK',
     drop: (item) => moveTask(item.id, status),
@@ -79,7 +80,7 @@ const Column = ({ status, tasks, usersId, moveTask }) => {
         {status}
       </h2>
       {tasks.map((task) => (
-        <TaskCard key={task._id} usersId={usersId} task={task} moveTask={moveTask} />
+        <TaskCard key={task._id} task={task} moveTask={moveTask} />
       ))}
     </div>
   );
@@ -89,9 +90,18 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[999]">
-      <div className="bg-white py-8 px-4 w-[325px] sm:w-[440px] lg:w-[520px] rounded-[18px] shadow-lg">
-        <h2 className="text-[17px] font-[600] flex sm:flex-row flex-col sm:items-center mb-8">   <GrStatusInfo className='mr-[8px] sm:mb-0 mb-[12px] text-[20px]' />Are you sure you want to update the tasks' status?</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-[999]">
+      <motion.div
+        initial={{ scale: 0.7, opacity: 1, y: -500 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.5,
+          ease: [0.2, 0.8, 0.2, 1],
+        }}
+        className="bg-white pt-8 pb-6 px-4 w-[325px] sm:w-[440px] lg:w-[520px] rounded-[8px] shadow-lg">
+
+        <h2 className="text-[17px] font-[600] flex sm:flex-row flex-col sm:items-center mb-8">
+          <GrStatusInfo className='mr-[8px] sm:mb-0 mb-[12px] text-[20px]' />Are you sure you want to update the tasks' status?</h2>
         <div className="flex justify-end">
           <button className="bg-red-800 flex items-center text-[14px] text-white mr-[8px] px-[15px] py-[4px]  duration-150 rounded-lg hover:bg-red-600" onClick={onClose}>
             Cancel
@@ -102,7 +112,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
             Confirm
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
@@ -114,19 +124,13 @@ const Workflow = () => {
   const [updatedTasks, setUpdatedTasks] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
 
-
-  const [usersId, setUsersId] = useState('');
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) throw new Error('No token found, please sign in again.');
 
-        /*const userId = decodeJWT(token);
-        setUsersId(userId);*/
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`,
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/overview/assigned-tasks`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -136,6 +140,7 @@ const Workflow = () => {
         }, {});
 
         setTasks(initialTasks);
+        console.log(initialTasks)
       } catch (err) {
         setError(err.message || 'Error fetching tasks');
       } finally {
@@ -190,29 +195,45 @@ const Workflow = () => {
 
   return (
     <DndProvider backend={backend}>
-      <div className="min-h-screen xsx:pl-[280px] pl-[15px] py-6 bg-gray-50">
+      <div className="min-h-screen xsx:pl-[280px] p-6 bg-gray-50">
         <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
           <div className="flex items-center space-x-2">
             <FaPeopleRoof className="text-2xl text-gray-600" />
             <h2 className="text-[24px] text-gray-600 font-bold">Task Workflow Manager</h2>
           </div>
         </div>
-        <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
+        <p className='mt-[2px] text-[12px] sm:text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
           Manage Statuses of all your tasks across all projects at one place.
         </p>
         <div className='w-full h-[3px] rounded-lg bg-gray-300 mb-[10px]'></div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {STATUS_TYPES.map((status) => (
-            <Column key={status} usersId={usersId} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
-          ))}
-        </div>
-        <button
-          onClick={handleUpdate}
-          disabled={Object.keys(updatedTasks).length === 0}
-          className="bg-blue-600 mt-[25px] flex items-center duration-150 cursor-pointer text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
-          <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
-          Update Tasks
-        </button>
+        {/* */}
+        {Object.values(tasks).every((taskArray) => taskArray.length === 0) ?
+          <div>
+            <div className='flex flex-col mx-auto'>
+              <div className='mx-auto'>
+              <img src="/Resources/4.png" alt='Connection Error' className='scale-[0.8] mix-blend-multiply md:scale-[0.9] mt-[135px]' />
+              </div>
+              <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[15px]">You have no tasks yet</p>
+              <p className="text-center text-gray-400 font-[700] text-[11px] md:text-[13px]">This is where you will manage your .</p>
+              <p className="text-center text-gray-400 font-[700] text-[11px] md:text-[13px]">tasks status across all projects.</p>
+            </div>
+          </div>
+          :
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {STATUS_TYPES.map((status) => (
+                <Column key={status} status={status} tasks={tasks[status] || []} moveTask={moveTask} />
+              ))}
+            </div>
+            <button
+              onClick={handleUpdate}
+              disabled={Object.keys(updatedTasks).length === 0}
+              className="bg-blue-600 mt-[25px] flex items-center duration-150 cursor-pointer text-[14px] text-white pr-[15px] py-[4px] rounded hover:bg-[#396fb6]" >
+              <IoCheckmarkDoneCircleOutline className='ml-[10px] mr-[5px] text-[18px]' />
+              Update Tasks
+            </button>
+          </>
+        }
 
         <ConfirmationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} onConfirm={confirmUpdate} />
       </div>

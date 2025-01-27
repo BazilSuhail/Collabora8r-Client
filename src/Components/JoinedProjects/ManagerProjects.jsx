@@ -46,14 +46,25 @@ const ManagerProjects = () => {
             <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
                 <div className="flex items-center space-x-2">
                     <FaPeopleRoof className="text-2xl text-gray-600" />
-                    <h2 className="text-[24px] text-gray-600 font-bold">Joined Projects</h2>
+                    <h2 className="text-[24px] text-gray-600 font-bold">Projects to Manage</h2>
                 </div>
             </div>
             <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
                 View all of the projects associated with your account
             </p>
 
-            {(error && !projects.length) ? (
+            <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
+
+
+            {projects.length === 0 &&
+                <div className='flex flex-col mx-auto'>
+                    <img src="/Resources/6.png" alt='Connection Error' className='scale-[1] md:scale-[1.1] mix-blend-multiply mt-[215px] md:mt-[145px]' />
+                    <p className="text-center md:mt-[25px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't been invited</p>
+                    <p className="text-center text-gray-500 font-[600] text-[11px] md:text-[14px]">in Any Projects Yet.</p>
+                </div>
+            }
+
+            {error ? (
                 <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
                     {error} No projects found.
                 </div>

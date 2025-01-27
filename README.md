@@ -1,7 +1,12 @@
-# Collabor8r (Project Management Tool)
-Application `Collabor8r` is an intuitive and robust project management tool designed to streamline team collaboration, task management, and project tracking. With a focus on enhancing productivity, Collabor8r provides advanced features and interactive elements to ensure efficient project execution.
+## Collabora8r (Project Management Tool)
+A project collaboration tool built using MERN stack aimed to enhance team collaboration, streamline task management, and track project progress efficiently, ensuring a seamless workflow and improved productivity.
 
-## 🤖 Tech Stack 
+<br/>
+
+#### Project Description
+Application `Collabor8r` is an intuitive and robust project management tool designed to streamline team collaboration, task management, and project tracking. Built using MERN stack (MongoDB, Express, React, and Node.js) this application ensures smooth and productive project workflows for teams of all sizes. Whether you're managing tasks, tracking progress, or collaborating with colleagues, Collabor8r provides a seamless experience to keep everything on track. With a focus on enhancing productivity, Collabor8r provides advanced features and interactive elements to ensure efficient project execution.
+
+### 🤖 Tech Stack 
  <a href="#"> 
   <img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>  
   <img alt="React" src="https://img.shields.io/badge/React-%2361DAFB.svg?&style=for-the-badge&logo=react&logoColor=white"/> 
@@ -12,9 +17,11 @@ Application `Collabor8r` is an intuitive and robust project management tool desi
 <img alt="MongoDB" src ="https://img.shields.io/badge/MongoDB-%234ea94b.svg?&style=for-the-badge&logo=mongodb&logoColor=white"/> 
  </a>
 
-#### Check out the latest demo of Project [Collabor8r-Site](https://collabora8r.vercel.app/). 
-#### Find the Server Repository of this Project Here [Collabor8r-Server](https://github.com/BazilSuhail/Collabor8r-Server). 
-## Run Locally
+##### Check out the latest demo of Project [Collabor8r-Site](https://collabora8r.vercel.app/). 
+
+##### Find the Server Repository of this Project Here [Collabor8r-Server](https://github.com/BazilSuhail/Collabor8r-Server). 
+
+### Run Locally
 Clone the project using the following command:
 ```bash
    git clone https://github.com/BazilSuhail/Collabor8r.git
@@ -31,24 +38,23 @@ In the project directory, you can run:
 ```bash
    npm start
 ``` 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-## Features
+Runs the app in the development mode.
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
+## Features
 ### Task Management
 - **Task Creation**: Create tasks with detailed descriptions, deadlines, and priority levels.
 - **Task Assignment**: Assign tasks to specific team members, track progress, and set due dates.
 - **Task Status Updates**: Real-time updates on task status (e.g., In Progress, Completed) with visual indicators.
 
 ### Team Collaboration
-- **Discussion Boards**: Engage in team discussions for each project, share ideas, and resolve issues.
-- **File Sharing**: Upload and share files related to tasks and projects within the team.
-- **Real-time Notifications**: Receive real-time notifications for task updates, new comments, and project milestones.
+- **Discussion Boards**: Engage in team discussions for each project, share ideas, and resolve issues via comments in a particular task. 
+- **Real-time Notifications**: Receive real-time notifications for team/ project invitation or a Project Manager Role.
 
 ### Project Timelines
 - **Gantt Charts**: Visualize project timelines with interactive Gantt charts.
-- **Milestone Tracking**: Set and track milestones to ensure projects stay on schedule.
-- **Progress Reporting**: Generate and view progress reports for individual tasks and overall projects.
+- **Milestone Tracking**: Set and track progress to ensure projects stay on schedule.
+- **Progress Reporting**: View progress against individual tasks.
 
 ### User Profile Management
 - **View and Edit Profile**: Users can view and update their profile information, including full name, email, and role within the team.
@@ -63,5 +69,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - **Data Encryption**: All sensitive data is encrypted to protect against unauthorized access.
 
 
-# Live Demo
-## Check out the latest demo of Project [Texleath](https://collabor8r.netlify.app). 
+### Live Demo
+Check out the latest demo of Project [Collabora8r](https://collabor8r.netlify.app). 

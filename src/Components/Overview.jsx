@@ -10,7 +10,7 @@ import { MdManageAccounts, MdOutlineJoinInner } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
 import Loader from '../Assets/Loader';
-import NoTasks from "../Assets/NoOverView.webp";
+import NoTasks from "/Resources/2.png";
 import { BsListTask } from 'react-icons/bs';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -104,11 +104,26 @@ const Overview = () => {
 
   if (loading) return <Loader />;
 
-  if (error)
+  if (!error)
     return (
-      <div className='flex xsx:ml-[265px] flex-col items-center '>
-        <img src={NoTasks} alt='' className='scale-[0.75] mt-[55px] md:mt-[-80px]' />
-        <p className="text-center text-blue-500 mt-[-45px] md:mt-[-105px] bg-blue-100 rounded-lg px-[35px] py-2">No tasks found.</p>
+      <div className='xsx:ml-[265px] min-h-screen p-5 flex flex-col overflow-hidden'>
+        <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
+          <div className="flex items-center space-x-2">
+            <GiProgression className="text-2xl text-gray-600" />
+            <h2 className="text-[24px] text-gray-600 font-bold">Progress Overview</h2>
+          </div>
+        </div>
+        <p className='mt-[2px] text-[12px] sm:text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500'>
+          View statistics and visual overview of all your progress at one place.
+        </p>
+
+        <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
+
+        <div className='flex flex-col mx-auto'>
+          <img src={NoTasks} alt='Connection Error' className='scale-[0.8] md:scale-[0.9] mt-[155px]' />
+          <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">This is where you will track your progress,</p>
+          <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">projects and tasks statistical analyzsis.</p>
+        </div>
       </div>
 
     );
@@ -202,7 +217,7 @@ const Overview = () => {
         </motion.div>
       </div>
 
-      <h3 className="text-[16px] flex items-center font-semibold mb-[18px]"><BsListTask className='mr-[8px] text-[20px] mt-[5px]'/> Task Status Breakdown</h3>
+      <h3 className="text-[16px] flex items-center font-semibold mb-[18px]"><BsListTask className='mr-[8px] text-[20px] mt-[5px]' /> Task Status Breakdown</h3>
 
       <div className='grid gap-[15px] grid-cols-1 lg:grid-cols-2'>
         <div className='flex flex-col py-[12px] bg-white rounded-lg border'>
