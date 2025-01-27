@@ -1,9 +1,9 @@
 ## Collabora8r (Project Management Tool)
-A project collaboration tool built using MERN stack aimed to enhance team collaboration, streamline task management, and track project progress efficiently, ensuring a seamless workflow and improved productivity.
+A project collaboration tool built using MERN stack aimed to enhance team collaboration, streamline task management and assignment, and track project progress efficiently, ensuring a seamless communication, workflow and improved productivity.
 
 <br/>
 
-#### Project Description
+### Project Description
 Application `Collabor8r` is an intuitive and robust project management tool designed to streamline team collaboration, task management, and project tracking. Built using MERN stack (MongoDB, Express, React, and Node.js) this application ensures smooth and productive project workflows for teams of all sizes. Whether you're managing tasks, tracking progress, or collaborating with colleagues, Collabor8r provides a seamless experience to keep everything on track. With a focus on enhancing productivity, Collabor8r provides advanced features and interactive elements to ensure efficient project execution.
 
 ### 🤖 Tech Stack 

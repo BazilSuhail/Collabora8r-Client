@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import collaboratorLogo from "../../logo.png";
+import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'; 
 import ForgotPasswordModal from './ForgotPasswordModal';
 import SignInLoader from '../../Assets/SignInLoader';
 import { useAuthContext } from '../../AuthProvider';
@@ -63,7 +62,7 @@ const LoginUser = () => {
       <div className='flex flex-col sm:w-[530px] xsmall:w-[355px] w-[330px]'>
 
         <div className="scale-[1.2] flex mx-auto">
-          <img src={collaboratorLogo} alt="Connection Failed" className="w-[34px] h-[34px]" />
+          <img src="/logo.svg" alt="Connection Failed" className="w-[34px] h-[34px]" />
           <div className="text-[#575757] ml-[4px] md:text-[25px] text-[25px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
         </div>
         <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 font-[400]'>Simplify Teamwork, Streamline Success</p>

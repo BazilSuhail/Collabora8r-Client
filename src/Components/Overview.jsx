@@ -9,8 +9,7 @@ import { FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
 import { MdManageAccounts, MdOutlineJoinInner } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
-import Loader from '../Assets/Loader';
-import NoTasks from "/Resources/2.png";
+import Loader from '../Assets/Loader'; 
 import { BsListTask } from 'react-icons/bs';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -120,7 +119,7 @@ const Overview = () => {
         <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
 
         <div className='flex flex-col mx-auto'>
-          <img src={NoTasks} alt='Connection Error' className='scale-[0.8] md:scale-[0.9] mt-[155px]' />
+          <img src="/Resources/2.png" alt='Connection Error' className='scale-[0.8] md:scale-[0.9] mt-[155px]' />
           <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">This is where you will track your progress,</p>
           <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">projects and tasks statistical analyzsis.</p>
         </div>

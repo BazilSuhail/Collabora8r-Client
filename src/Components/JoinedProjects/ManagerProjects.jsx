@@ -60,7 +60,7 @@ const ManagerProjects = () => {
                 <div className='flex flex-col mx-auto'>
                     <img src="/Resources/6.png" alt='Connection Error' className='scale-[1] md:scale-[1.1] mix-blend-multiply mt-[215px] md:mt-[145px]' />
                     <p className="text-center md:mt-[25px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't been invited</p>
-                    <p className="text-center text-gray-500 font-[600] text-[11px] md:text-[14px]">in Any Projects Yet.</p>
+                    <p className="text-center text-gray-500 font-[600] text-[11px] md:text-[14px]">in any Projects Yet.</p>
                 </div>
             }
 

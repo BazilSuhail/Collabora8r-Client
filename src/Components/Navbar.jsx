@@ -10,7 +10,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaBell, FaCubes } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 
-import collaboratorLogo from "../logo.png";
 import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
@@ -25,7 +24,6 @@ const colors = [
 ];
 
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -101,7 +99,7 @@ const Navbar = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <img src={collaboratorLogo} alt="Conneciton Errir ... :/" className="md:w-[28px] md:h-[28px]" />
+                                <img src="/logo.svg" alt="Conneciton Errir ... :/" className="md:w-[28px] md:h-[28px]" />
                             </motion.div>
                             <div className="text-[28px] font-bold" >
                                 <div className="text-[#575757] ml-[8px] md:text-[19px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
@@ -162,42 +160,43 @@ const Navbar = () => {
                         </NavLink>
 
 
-                        <div className="pl-[8px]  my-[5px]">
-                            <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
-                                <div className="flex items-center">
-                                    <GoProjectRoadmap className="text-[22px] mt-[4px] mr-[12px]" />
-                                    <p className="font-[500] text-[16px]">Projects</p>
+                        {projects.length > 0 &&
+                            <div className="pl-[8px]  my-[5px]">
+                                <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
+                                    <div className="flex items-center">
+                                        <GoProjectRoadmap className="text-[22px] mt-[4px] mr-[12px]" />
+                                        <p className="font-[500] text-[16px]">Projects</p>
+                                    </div>
+                                    {isArrowOpen ? (
+                                        <MdKeyboardArrowDown className="ml-2" />
+                                    ) : (
+                                        <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
+                                    )}
                                 </div>
-                                {isArrowOpen ? (
-                                    <MdKeyboardArrowDown className="ml-2" />
-                                ) : (
-                                    <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
-                                )}
-                            </div>
 
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                            >
-                                <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
-                                    {projects.map((project) => (
-                                        <div onClick={() => handleProjectClick(project._id)} key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl hover:cursor-pointer px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
-                                            <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
-                                                {project.name.charAt(0)}
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="overflow-hidden"
+                                >
+                                    <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
+                                        {projects.map((project) => (
+                                            <div onClick={() => handleProjectClick(project._id)} key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl hover:cursor-pointer px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
+                                                <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
+                                                    {project.name.charAt(0)}
+                                                </div>
+                                                <p className='ml-[8px] font-[600]' >
+                                                    {project.name}
+                                                </p>
                                             </div>
-                                            <p className='ml-[8px] font-[600]' >
-                                                {project.name}
-                                            </p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        </div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            </div>
+                        }
                     </div>
-
                 </div>
             </div>
 
@@ -209,7 +208,7 @@ const Navbar = () => {
                             animate={{ opacity: isMenuOpen ? 0 : 1 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <img src={collaboratorLogo} alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
+                            <img src="/logo.svg" alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
                         </motion.div>
                         <motion.div
                             className="text-[28px] font-bold"
@@ -299,6 +298,7 @@ const Navbar = () => {
                                 <NavLink to="/associated-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
                                     <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">My Projects</p>
                                 </NavLink>
+
 
                                 <div className="pl-[8px]  my-[5px]">
                                     <div className="text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>

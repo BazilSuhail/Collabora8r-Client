@@ -76,9 +76,17 @@ const AdminProjectList = () => {
       <p className='mt-[2px] text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500' >List of All projects Adminstrated By you</p>
       <div className='h-[2px] bg-gray-300 w-full rounded-2xl mb-[6px]'></div>
 
-      {(error && !projects.length) ? (
+      {error &&
         <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>
           {error} No projects found.
+        </div>
+      }
+
+      {projects.length <= 0 ? (
+        <div className='flex flex-col mx-auto'>
+          <img src="/Resources/3.png" alt='Connection Error' className='scale-[1] md:scale-[1.4] mix-blend-multiply mt-[215px] md:mt-[145px]' />
+          <p className="text-center md:mt-[25px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't been invited</p>
+          <p className="text-center text-gray-500 font-[600] text-[11px] md:text-[14px]">in any Projects Yet.</p>
         </div>
       ) : (
         <div className="w-full mb-[25px] grid grid-cols-1 lg:grid-cols-2 xlx:grid-cols-3 gap-x-3 gap-y-3">
@@ -146,7 +154,7 @@ const AdminProjectList = () => {
                 </button>
               </div>
 
-              
+
               {project.projectManager.status === 'Pending' ?
                 <div onClick={() => handleManagerAssignmentClick(project)}
                   className='flex cursor-pointer items-center mx-[25px] justify-center py-[8px] rounded-[7px] mt-[22px] bg-gray-50 border-[2px] border-gray-200'>

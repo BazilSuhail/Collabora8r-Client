@@ -5,9 +5,12 @@ import { FaUserPlus, FaSearch, FaClipboardList, FaUserAlt, FaUsers, FaEdit } fro
 import Loader from '../../Assets/Loader';
 import { CgUiKit } from 'react-icons/cg';
 import { IoMdDoneAll } from 'react-icons/io';
-import { MdMarkEmailUnread, MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { MdErrorOutline, MdMarkEmailUnread, MdOutlineAdminPanelSettings } from 'react-icons/md';
 import EditProject from './EditProject';
 import { GrChapterAdd } from 'react-icons/gr';
+import { IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
+
+import { motion } from 'framer-motion';
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -100,7 +103,7 @@ const ProjectDetail = () => {
   }
 
   return (
-    <main className="xsx:pl-[287px] grid xl:grid-cols-7 grid-cols-1 pt-[35px] bg-gray-50 min-h-screen px-6">
+    <main className="xsx:pl-[287px] grid xl:grid-cols-7 grid-cols-1 pt-[35px] bg-gray-50 min-h-screen pb-[15px] px-6">
 
       {showModal && <EditProject project={project} setShowModal={setShowModal} />}
       <section className='lg:col-span-5 xl:pr-[20px]'>
@@ -127,7 +130,7 @@ const ProjectDetail = () => {
           <p className="mt-2 font-[500] text-[14px] pl-[22px] text-gray-500">{project.description}</p>
         </div>
 
-        <div className='bg-white min-h-[450px] p-[12px] mt-[15px] xl:px-[35px] py-[15px] border rounded-[18px] '>
+        <div className='bg-white min-h-[450px] overflow-hidden p-[12px] mt-[15px] xl:px-[35px] py-[15px] border rounded-[18px] '>
           <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
             <MdMarkEmailUnread className="mr-2 text-[20px]" />
             <span className="font-medium  text-[15px]">
@@ -152,10 +155,28 @@ const ProjectDetail = () => {
             </button>
           </div>
 
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">{success}</p>}
+
           {isLoading && <Loader />}
-          {user && (
+          {error && <div className="text-red-600 border border-red-400 text-[16px] font-[600] mb-[25px] bg-red-50 px-[15px] rounded-md py-[5px] flex items-center">
+            <MdErrorOutline className='mr-[8px]' />
+            {error}
+          </div>
+          }
+          {success && 
+          <motion.div
+          initial={{ scale: 0.7, opacity: 1, x: -500 }}
+                animate={{ scale: 1, opacity: 1, x: 0 }}
+                transition={{
+                    duration: 0.5,
+                    ease: [0.2, 0.8, 0.2, 1],
+                }}
+          className="text-green-600 border border-green-400 text-[16px] font-[600] mb-[25px] bg-green-50 px-[15px] rounded-md py-[5px] flex items-center">
+            <IoCheckmarkDoneCircleSharp className='mr-[8px]' />
+            {success}
+          </motion.div>
+          }
+
+          {user ? (
             <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border">
               <div className="flex items-center space-x-4">
                 <img
@@ -176,7 +197,16 @@ const ProjectDetail = () => {
                 <span>Add User</span>
               </button>
             </div>
-          )}
+          ) :
+            <div className='mx-auto flex flex-col items-center'>
+              <div className='w-[240px] h-[240px]'>
+                <img src="/Resources/7.png" alt='Connection Error' className='w-full h-full' />
+              </div>
+              <div className="text-center pl-[28px] text-gray-500 bg-white mt-[-45px] py-[15px] font-[600] text-[14px] ">Add a Team Member Now</div>
+            </div>
+          }
+
+
 
         </div>
       </section>
@@ -190,7 +220,7 @@ const ProjectDetail = () => {
                 Project Manager Member
               </span>
             </div>
-         <div className='ml-[30px] text-[12px] bg-yellow-100 w-[214px] px-[15px] pt-[2px] pb-[4px] rounded-lg text-yellow-700 font-[600]'>Pending !! waiting for response ...</div>
+            <div className='ml-[30px] text-[12px] bg-yellow-100 w-[214px] px-[15px] pt-[2px] pb-[4px] rounded-lg text-yellow-700 font-[600]'>Pending !! waiting for response ...</div>
           </div>
           :
           <div className="px-[20px] py-[15px] mb-[25px] bg-white rounded-lg border-[2px]">
