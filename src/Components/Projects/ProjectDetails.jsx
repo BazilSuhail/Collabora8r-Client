@@ -162,18 +162,18 @@ const ProjectDetail = () => {
             {error}
           </div>
           }
-          {success && 
-          <motion.div
-          initial={{ scale: 0.7, opacity: 1, x: -500 }}
-                animate={{ scale: 1, opacity: 1, x: 0 }}
-                transition={{
-                    duration: 0.5,
-                    ease: [0.2, 0.8, 0.2, 1],
-                }}
-          className="text-green-600 border border-green-400 text-[16px] font-[600] mb-[25px] bg-green-50 px-[15px] rounded-md py-[5px] flex items-center">
-            <IoCheckmarkDoneCircleSharp className='mr-[8px]' />
-            {success}
-          </motion.div>
+          {success &&
+            <motion.div
+              initial={{ scale: 0.7, opacity: 1, x: -500 }}
+              animate={{ scale: 1, opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.5,
+                ease: [0.2, 0.8, 0.2, 1],
+              }}
+              className="text-green-600 border border-green-400 text-[16px] font-[600] mb-[25px] bg-green-50 px-[15px] rounded-md py-[5px] flex items-center">
+              <IoCheckmarkDoneCircleSharp className='mr-[8px]' />
+              {success}
+            </motion.div>
           }
 
           {user ? (
@@ -205,9 +205,6 @@ const ProjectDetail = () => {
               <div className="text-center pl-[28px] text-gray-500 bg-white mt-[-45px] py-[15px] font-[600] text-[14px] ">Add a Team Member Now</div>
             </div>
           }
-
-
-
         </div>
       </section>
 

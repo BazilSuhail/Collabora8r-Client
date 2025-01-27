@@ -85,8 +85,8 @@ const AdminProjectList = () => {
       {projects.length <= 0 ? (
         <div className='flex flex-col mx-auto'>
           <img src="/Resources/3.png" alt='Connection Error' className='scale-[1] md:scale-[1.4] mix-blend-multiply mt-[215px] md:mt-[145px]' />
-          <p className="text-center md:mt-[25px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't been invited</p>
-          <p className="text-center text-gray-500 font-[600] text-[11px] md:text-[14px]">in any Projects Yet.</p>
+          <p className="text-center md:mt-[25px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't created any Project</p>
+          <button onClick={() => setShowModal(true)} className="text-center text-blue-700 underline font-[700] text-[11px] md:text-[14px]">Create One Now.</button>
         </div>
       ) : (
         <div className="w-full mb-[25px] grid grid-cols-1 lg:grid-cols-2 xlx:grid-cols-3 gap-x-3 gap-y-3">
