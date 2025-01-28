@@ -103,7 +103,7 @@ const Overview = () => {
 
   if (loading) return <Loader />;
 
-  if (!error)
+  if (error)
     return (
       <div className='xsx:ml-[265px] min-h-screen p-5 flex flex-col overflow-hidden'>
         <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
@@ -124,7 +124,6 @@ const Overview = () => {
           <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">projects and tasks statistical analyzsis.</p>
         </div>
       </div>
-
     );
 
   return (
