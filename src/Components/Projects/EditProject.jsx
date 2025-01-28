@@ -134,23 +134,23 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className='bg-white p-[8px]'
+          className='bg-white xl:w-[60vw] xl:px-[25px] px-[8px] rounded-[8px] py-[8px] flex flex-col'
           >
           <button
             onClick={() => setShowThemeModal(false)}
-            className="mb-4 text-white px-4 py-2 bg-red-500 rounded"
+            className="mb-4 text-gray-700 scale-x-[1.3] ml-auto"
           >
             X
           </button>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-[25px]">
             {Array.from({ length: 6 }).map((_, index) => (
               <img
                 key={index}
                 src={`/Themes/${index + 1}.jpg`}
                 alt={`Theme ${index}`}
-                className="w-32 h-32 object-cover cursor-pointer"
+                className="w-full h-32 object-cover rounded-lg cursor-pointer"
                 onClick={() => {
-                  setTheme(index);
+                  setTheme(index+1);
                   setShowThemeModal(false);
                 }}
               />
