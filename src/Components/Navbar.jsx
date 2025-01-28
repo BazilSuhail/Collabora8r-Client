@@ -27,7 +27,7 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const { user, logout } = useAuthContext();
+    const { user, logout, notificationsCount } = useAuthContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [projectColors, setProjectColors] = useState({});
     const [projects, setProjects] = useState([]);
@@ -105,7 +105,10 @@ const Navbar = () => {
                                 <div className="text-[#575757] ml-[8px] md:text-[19px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
                             </div>
                         </div>
-                        <div onClick={handleNotificationModal}><FaBell className=" text-[#363636] cursor-pointer text-[20px]" /></div>
+                        <div onClick={handleNotificationModal} className='flex items-center'>
+                            <FaBell className=" text-[#363636] cursor-pointer text-[20px]" />
+                            {notificationsCount > 0 && <p className='text-white bg-red-700 px-[5px] text-[10px] border-white border-[2px] mt-[-22px] ml-[-12px] rounded-full text-center '>{notificationsCount}</p>}
+                        </div>
                     </div>
 
                     <div onClick={handleSearchModal} className="flex cursor-pointer items-center px-[8px] py-[5px] mt-[15px] border-[2px] bg-gray-50 border-[#dedddd] rounded-lg">
@@ -220,7 +223,11 @@ const Navbar = () => {
                         </motion.div>
                     </div>
                     <div className='flex items-center'>
-                        <div onClick={handleNotificationModal}><FaBell className=" text-[#6e6d6d] mr-[10px] cursor-pointer text-[26px] mt-[2px]" /></div>
+                        
+                        <div onClick={handleNotificationModal} className='flex items-center'>
+                            <FaBell className=" text-[#363636] cursor-pointer text-[24px]" />
+                            {notificationsCount > 0 && <p className='text-white bg-red-700 px-[5px] text-[12px] border-white border-[2px] mt-[-22px] ml-[-12px] rounded-full text-center '>{notificationsCount}</p>}
+                        </div>
                         <div
                             className="cursor-pointer text-gray-500"
                             onClick={handleMenuToggle}
@@ -254,7 +261,7 @@ const Navbar = () => {
                                     <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
                                 </button>
 
-                                <NavLink onClick={handleMenuToggle} to="/user" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
+                                <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
                                     {!user?.avatar ? (
                                         <p className='text-[#363636]'>Login To Continue</p>
                                     ) : (
@@ -273,7 +280,8 @@ const Navbar = () => {
                                 <button onClick={() => {
                                     handleMenuToggle
                                     setIsSearchModalOpen(!isSearchModalOpen)
-                                }} className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
+                                }} 
+                                className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
                                     <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
                                     <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
                                 </button>

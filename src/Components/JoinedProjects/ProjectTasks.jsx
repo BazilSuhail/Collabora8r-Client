@@ -32,19 +32,19 @@ const MyTask = ({ task, user, creator }) => {
             </p>
           </div>
         </h1>
-<div>
-  
-<div className='flex lg:mt-0 mt-[8px] lg:ml-auto items-center text-[15px]'>
-          <p className="text-[12px] font-[600] mr-[5px] text-red-600">Due:</p>
-          <p className='text-center'>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
+        <div>
+
+          <div className='flex lg:mt-0 mt-[8px] lg:ml-auto items-center text-[15px]'>
+            <p className="text-[12px] font-[600] mr-[5px] text-red-600">Due:</p>
+            <p className='text-center'>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</p>
+          </div>
+          <div className="flex items-center">
+            <div className="flex-shrink-0 text-blue-700 text-[12px] font-[600] mr-[5px]">Assigned to:</div>
+            <p className="text-[13px] xl:text-[13px] font-medium text-blue-900">{user.name}</p>
+          </div>
         </div>
-        <div className="flex items-center">
-          <div className="flex-shrink-0 text-blue-700 text-[12px] font-[600] mr-[5px]">Assigned to:</div>
-          <p className="text-[13px] xl:text-[13px] font-medium text-blue-900">{user.name}</p>
-        </div>
-</div>
       </div>
- 
+
       <div className='h-[2px] w-full bg-[#eeeeee] rounded-xl mt-[8px]'></div>
       <div className="flex items-center my-[15px] text-gray-600">
         <FaComments className="mr-2" />
@@ -61,7 +61,10 @@ const ProjectTasks = ({ creator, tasks }) => {
   return (
     <div className="min-h-screen pb-6">
       {tasks.length === 0 ? (
-        <p className="text-gray-500 text-center">No tasks found for this project.</p>
+        <div className='flex flex-col items-center '>
+          <img src="/Resources/3.png" alt='Connection Error' className='scale9] mt-[95px] lg:mt-[105px]' />
+          <p className="text-center text-gray-600 text-[14px] font-[600] mt-[10px]">No tasks fousnd for this project.</p>
+        </div>
       ) : (
         <div className="bg-white xsx:text-[18px] flex items-center mb-4">
           <div className="flex-shrink-0 text-gray-500 font-[600] mr-2"> Total Tasks:</div>

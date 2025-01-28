@@ -92,7 +92,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                         </p>
                                                     </div >
                                                     <div className='ml-[35px] flex flex-col mt-[8px]'>
-                                                        <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        <p className="text-gray-700 break-words text-[12px] sm:text-[14px]">
                                                             {data.description}
                                                         </p>
                                                         <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
@@ -113,7 +113,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                         </p>
                                                     </div >
                                                     <div className='ml-[40px] flex flex-col mt-[8px]'>
-                                                        <p className="text-gray-700 text-[12px] sm:text-[14px]">
+                                                        <p className="text-gray-700 text-[12px] break-words sm:text-[14px]">
                                                             {data.description}
                                                         </p>
                                                         <p className="text-[12px] font-[600] ml-auto mt-[5px] text-gray-500">
@@ -145,7 +145,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                     </p>
                                                 </div >
                                                 <div className='ml-[35px] flex flex-col mt-[8px]'>
-                                                    <p className="text-blue-400 text-[12px] sm:text-[14px]">
+                                                    <p className="text-blue-400 break-words text-[12px] sm:text-[14px]">
                                                         {data.description}
                                                     </p>
                                                     <p className="text-[12px] font-[700] ml-auto mt-[5px] text-blue-400">
@@ -166,7 +166,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                     </p>
                                                 </div >
                                                 <div className='ml-[40px] flex flex-col mt-[8px]'>
-                                                    <p className="text-blue-400 text-[12px] sm:text-[14px]">
+                                                    <p className="text-blue-400 break-words text-[12px] sm:text-[14px]">
                                                         {data.description}
                                                     </p>
                                                     <p className="text-[12px] font-[700] ml-auto mt-[5px] text-blue-400">

@@ -5,9 +5,10 @@ import TeamMembers from './TeamMembersModal'
 import ProjectTasks from './ProjectTasks'
 import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
 import { FaBorderAll } from 'react-icons/fa'
-import decodeJWT from "../../decodeJWT"
+import { useAuthContext } from '../../AuthProvider'
 
 const JoinedProjectDetails = () => {
+  const { user } = useAuthContext();
   const { projectId } = useParams();
   const [loggedUser, setloggedUser] = useState(null);
 
@@ -26,8 +27,10 @@ const JoinedProjectDetails = () => {
     const fetchProjectDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const DecodeUserId = decodeJWT(token);
-        setloggedUser(DecodeUserId);
+        //const DecodeUserId = decodeJWT(token);
+
+        //setloggedUser(DecodeUserId);
+        setloggedUser(user._id);
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -119,8 +122,8 @@ const JoinedProjectDetails = () => {
               </h1>
 
               <TeamMembers teamDetails={teamDetails} isOpen={isModalOpen} onClose={closeModal} />
-              {teamDetails.length > 0 ? (
-                teamDetails.filter((member) => member._id !== loggedUser).map((member) => (
+              
+              {teamDetails.filter((member) => member._id !== loggedUser).map((member) => (
                   <div key={member._id} className="xsx:flex hidden mt-[10px] bg-white items-center px-4 py-2 border border-gray-300 rounded-[8px]" >
                     <img
                       src={`/Assets/${member.avatar}.jpg`}
@@ -132,10 +135,7 @@ const JoinedProjectDetails = () => {
                       <p className="text-gray-500 text-[12px]">{member.email}</p>
                     </div>
                   </div>
-                ))
-              ) : (
-                <p className="col-span-full text-blue-500 underline text-center">No team members found.</p>
-              )}
+                ))}
             </div>
 
             <section className='col-span-5 xl:px-[15px]'>

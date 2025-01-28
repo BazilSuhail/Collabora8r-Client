@@ -7,8 +7,7 @@ import { IoCheckmarkDoneCircleOutline, IoPersonSharp } from 'react-icons/io5';
 import { LuSendHorizonal } from 'react-icons/lu';
 import { IoMdDoneAll } from 'react-icons/io';
 import Loader from '../../Assets/Loader';
-import { CgUiKit } from 'react-icons/cg';
-import decodeJWT from '../../decodeJWT';
+import { CgUiKit } from 'react-icons/cg'; 
 import { RxCross2 } from 'react-icons/rx';
 import { MdOutlineSubtitles } from 'react-icons/md';
 import { GrStatusInfo } from 'react-icons/gr';
@@ -95,7 +94,9 @@ const TaskDetails = () => {
   const handleAddComment = async () => {
     try {
       const token = localStorage.getItem('token');
-      const userId = decodeJWT(token);
+      //const userId = decodeJWT(token);
+      const userId = decodeJWT(user._id);
+
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`,
         { content: commentContent, userId },

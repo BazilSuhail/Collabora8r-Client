@@ -160,8 +160,6 @@ const AssignTasks = () => {
     }
   };
 
-
-
   const handleOpenModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
