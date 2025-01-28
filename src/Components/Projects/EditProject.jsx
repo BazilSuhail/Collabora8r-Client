@@ -129,12 +129,12 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
       </motion.div>
 
       {showThemeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 z-[1000] flex flex-col items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-55 z-[999] px-[15px] flex flex-col items-center justify-center">
           <motion.div
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className='bg-white xl:w-[60vw] xl:px-[25px] px-[8px] rounded-[8px] py-[8px] flex flex-col'
+          className='bg-white  xl:w-[60vw] xl:px-[25px] px-[8px] rounded-[8px] py-[8px] flex flex-col'
           >
           <button
             onClick={() => setShowThemeModal(false)}
@@ -142,7 +142,7 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
           >
             X
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-[25px]">
+          <div className="grid h-[60vh] md:h-auto overflow-y-auto no-scrollbar  grid-cols-1 md:grid-cols-2 gap-4 pb-[25px]">
             {Array.from({ length: 6 }).map((_, index) => (
               <img
                 key={index}
