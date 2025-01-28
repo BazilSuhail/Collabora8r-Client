@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./Components/Navbar";
-import LoginUser from "./Components/authentication/LoginUser";
-import Register from "./Components/authentication/RegisterUser";
+import SignIn from "./Components/authentication/SignIn";
+import SignUp from "./Components/authentication/SignUp";
 import Profile from "./Components/authentication/Profile";
 
 
@@ -33,10 +33,10 @@ const AppContent = () => {
     <>
       {(!hideNavbar && userLoginStatus) && <Navbar />}
       <Routes>
-        <Route path="/" element={userLoginStatus === false ? <LoginUser /> : <Dashboard />} />
+        <Route path="/" element={userLoginStatus === false ? <SignIn /> : <Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/login" element={<LoginUser />} />
+        <Route path="/login" element={<SignIn />} />
 
 
         <Route path="/overview" element={<Overview />} />
@@ -65,8 +65,8 @@ const AppContent = () => {
         <Route path="/manager-projects" element={<ManagerProjects />} />
         <Route path="/joinedprojects/:projectId" element={<JoinedProjectDetails />} />
 
-        <Route path="/login" element={<LoginUser />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/register" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
       {/* <Footer/> */}

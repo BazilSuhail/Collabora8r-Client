@@ -1,4 +1,5 @@
 import "./Loader.css"
+
 const SignInLoader = ({ message }) => {
     return (
         <div className="h-screen flex flex-col justify-center items-center spin  w-screen">

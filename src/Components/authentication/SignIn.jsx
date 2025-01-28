@@ -6,7 +6,7 @@ import ForgotPasswordModal from './ForgotPasswordModal';
 import SignInLoader from '../../Assets/SignInLoader';
 import { useAuthContext } from '../../AuthProvider';
 
-const LoginUser = () => {
+const SignIn = () => {
   const { login } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -115,7 +115,7 @@ const LoginUser = () => {
             <button type="submit" className="hover:text-blue-100 hover:bg-blue-950 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300">
               Sign In
             </button>
-            <p onClick={() => setIsModalOpen(true)} className='text-blue-600 underline mb-[8px] text-[15px] font-[600]'>Forgot Password</p>
+            <p onClick={() => setIsModalOpen(true)} className='text-blue-600 hover:cursor-pointer underline mb-[8px] text-[15px] font-[600]'>Forgot Password</p>
           </form>
 
 
@@ -133,7 +133,7 @@ const LoginUser = () => {
             <div className='text-gray-500 text-[13px] sm:text-[16px] ml-[10px]'>Register with Google</div>
           </div>
          */}
-          <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Dont Have An Account?<span onClick={() => navigate("/register")} className='text-blue-700 ml-[8px] underline'>Sign Up</span></p>
+          <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Dont Have An Account?<span onClick={() => navigate("/register")} className='text-blue-700 hover:cursor-pointer ml-[8px] underline'>Sign Up</span></p>
 
         </div>
 
@@ -142,4 +142,4 @@ const LoginUser = () => {
   );
 };
 
-export default LoginUser;
+export default SignIn;

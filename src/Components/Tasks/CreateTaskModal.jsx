@@ -12,7 +12,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      className="fixed inset-0 z-[999] flex items-center px-[15px] justify-center bg-black bg-opacity-50">
       <motion.div
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}

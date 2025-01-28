@@ -49,7 +49,7 @@ const StepProgress = ({ step }) => {
 
 
 
-const Register = () => {
+const SignUp = () => {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');  
@@ -110,10 +110,10 @@ const Register = () => {
             <div className='pl-[4px] flex justify-center items-center'>
               <FaGoogle size={24} className='text-blue-500' />
             </div>
-            <div className='text-gray-500 text-[13px] sm:text-[16px] ml-[10px]'>Register with Google</div>
+            <div className='text-gray-500 text-[13px] sm:text-[16px] ml-[10px]'>SignUp with Google</div>
           </div>
           */}
-          <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 ml-[8px] underline'>Sign In</span></p>
+          <p className='mx-auto mt-[18px] text-gray-500 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-blue-700 hover:cursor-pointer ml-[8px] underline'>Sign In</span></p>
 
         </div>
       </div>
@@ -121,4 +121,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

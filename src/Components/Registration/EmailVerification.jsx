@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from 'emailjs-com';
-import { AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai'; 
+import { AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } from 'react-icons/ai';
 import axios from 'axios';
+import { IoMdMailUnread } from 'react-icons/io';
 
 const EmailVerification = ({ onSuccess }) => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  //const [otp, setOtp] = useState('');
+  const [email, setEmail] = useState(''); 
+  const [otp, setOtp] = useState(new Array(6).fill(''));
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState('');
@@ -20,10 +21,17 @@ const EmailVerification = ({ onSuccess }) => {
 
   const handleSendOtp = async () => {
     try {
+      if (email === '') {
+        setError('Enter Valid Name and Email Address')
+        return;
+      }
+      if (name === '') {
+        setError('Enter Valid Name and Email Address')
+        return;
+      }
       // Check if email exists
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/check-email`, { email });
-      if (response.data.exists) {
-        console.log('Email already exists. Please use another email.')
+      if (response.data.exists) { 
         setError('Email already exists. Please use another email.');
         return;
       }
@@ -50,9 +58,11 @@ const EmailVerification = ({ onSuccess }) => {
 
       setOtpSent(true);
       setError('');
-    } catch (error) {
-      setError('Failed to send OTP. Please try again.');
-      console.error('Error sending OTP or checking email:', error);
+    }
+    catch (error) {
+      setError('Email already exists. Please use another email.');
+
+      //console.error('Error sending OTP or checking email:', error);
     }
   };
 
@@ -69,10 +79,9 @@ const EmailVerification = ({ onSuccess }) => {
       onSuccess({ name, email });
     } else {
       console.log(otpString);
-      setError('Invalid OTP. Please try again.');
+      setError('Invalid OTP. Please Enter your valid email.');
     }
   };
-
 
   const handleFocus = (field) => {
     setFocusField(field);
@@ -89,12 +98,11 @@ const EmailVerification = ({ onSuccess }) => {
         setTimer((prev) => prev - 1);
       }, 1000);
     } else {
-      setIsResendDisabled(false); // Enable resend button when timer reaches 0
+      setIsResendDisabled(false); 
     }
     return () => clearInterval(timerId);
   }, [timer]);
 
-  const [otp, setOtp] = useState(new Array(6).fill(''));
 
   const handleOtpChange = (element, index) => {
     const value = element.value.toUpperCase();
@@ -130,7 +138,7 @@ const EmailVerification = ({ onSuccess }) => {
   return (
     <div className='w-full mt-[25px]'>
       {!otpSent ? (
-        <div className='md:px-[18px]'> 
+        <div className='md:px-[18px]'>
           <div className="relative mb-4 flex items-center">
             <div className='bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]'><AiOutlineUser className="text-gray-50 text-[22px]" /></div>
             <div className="flex-1">
@@ -144,6 +152,7 @@ const EmailVerification = ({ onSuccess }) => {
               <input
                 type="text"
                 value={name}
+                required
                 onChange={(e) => setName(e.target.value)}
                 onFocus={() => handleFocus('name')}
                 onBlur={handleBlur}
@@ -164,6 +173,7 @@ const EmailVerification = ({ onSuccess }) => {
               <input
                 type="email"
                 value={email}
+                required
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => handleFocus('email')}
                 onBlur={handleBlur}
@@ -171,7 +181,9 @@ const EmailVerification = ({ onSuccess }) => {
               />
             </div>
           </div>
-          <div>{error && <p className='text-[12.5px] mb-[12px] py-[2px] pl-[45px] text-red-700 font-[500] rounded-xl'>* An account has already been registered with this Email, kindly use another one.</p>}</div>
+        
+          {error && <div className='mt-[8px] py-[6px] pl-[8px] rounded-lg'><p className="text-red-500 font-[500] text-[15px]"><span className='font-[700]'>*{" "}</span>{error}</p></div>}
+
           <button
             onClick={handleSendOtp}
             className="hover:text-blue-100 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300"
@@ -181,12 +193,12 @@ const EmailVerification = ({ onSuccess }) => {
         </div>
       ) : (
         <div className='mb-[25px]'>
-          <div className="relative mt-[40px] justify-center flex items-center">
+          <div className="relative mt-[20px] justify-center flex items-center">
             <div className="flex">
-              <label htmlFor="otp" className={`absolute  text-gray-700 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'}`}>
-                Enter OTP
+              <label htmlFor="otp" className={`absolute flex items-center text-blue-700 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'}`}>
+              <IoMdMailUnread size={20} className='mr-[5px]'/> Enter the OTP sent to your Entered Email.
               </label>
-              <div className="flex mt-[15px] space-x-2">
+              <div className="flex mt-[35px] justify-center space-x-2">
                 {otp.map((data, index) => (
                   <input
                     key={index}
@@ -197,7 +209,7 @@ const EmailVerification = ({ onSuccess }) => {
                     onChange={(e) => handleOtpChange(e.target, index)}
                     onKeyDown={(e) => handleOtpBackspace(e, index)}
                     onFocus={handleOtpFocus}
-                    className="w-12 h-16 text-center text-lg font-semibold bg-transparent text-gray-700 border-2 rounded-lg border-gray-600 focus:outline-none focus:border-blue-500"
+                    className="lg:w-[10%] w-1/6 sm:w-[15%] h-16 text-center text-lg font-semibold bg-transparent text-gray-700 border-2 rounded-lg border-gray-600 focus:outline-none focus:border-blue-500"
                   />
                 ))}
               </div>
@@ -208,11 +220,11 @@ const EmailVerification = ({ onSuccess }) => {
             {timer > 0 ? (
               <p>Resend OTP in <span className='text-[17px] font-[600] underline text-blue-600'>{timer} seconds</span></p>
             ) : (
-              <p>You can resend the OTP now!</p>
+              <p className='text-[14px] font-[600]'>You can resend the OTP now!</p>
             )}
           </div>
 
-          {error && <div className='bg-red-100 mb-[15px] mt-[8px] py-[6px] pl-[8px] rounded-lg'><p className="text-red-500 font-[500] text-[15px]">{error}</p></div>}
+          {error && <div className='mb-[15px] mt-[8px] py-[6px] pl-[8px] rounded-lg'><p className="text-red-500 font-[500] text-[15px]"><span className='font-[700]'>*{" "}</span>{error}</p></div>}
 
           <div className='w-full  px-[8px] flex justify-between gap-x-[6px]'>
             <button

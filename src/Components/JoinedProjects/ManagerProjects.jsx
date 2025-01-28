@@ -86,7 +86,7 @@ const ManagerProjects = () => {
                             </div>
 
                             <Link to={`/tasks/${project._id}`} className='flex flex-col'>
-                                <div className='mr-auto ml-[40px] mt-[-45px] xl:mt-[-30px] mb-[-20px] z-[990] rounded-full overflow-hidden'>
+                                <div className='mr-auto ml-[40px] mt-[-45px] xl:mt-[-30px] mb-[-20px] z-50 rounded-full overflow-hidden'>
                                     <img src={`/Assets/${project.createdBy.avatar}.jpg`} alt="" className="h-[85px] w-[85px]" />
                                 </div>
                                 <div className='ml-auto mt-[-12px] mr-[58px]'>

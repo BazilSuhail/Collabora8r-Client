@@ -77,7 +77,7 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
                     duration: 0.5,
                     ease: [0.2, 0.8, 0.2, 1],
                 }}
-                className="bg-white sm:w-[550px] w-[330px] lg:w-[750px]  p-6 rounded-lg">
+                className="bg-white sm:w-[80vw] w-[90vw] lg:w-[750px]  p-6 rounded-lg">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg flex items-center font-bold text-gray-700">
                         <MdScreenSearchDesktop className='text-[24px] mr-[8px]' />

@@ -5,6 +5,7 @@ import { AiOutlineCheck, AiOutlineUser, AiOutlineMail, AiOutlineClockCircle } fr
 import { IoSendSharp } from 'react-icons/io5';
 import axios from 'axios';
 import { ImCross } from 'react-icons/im';
+import { FaThinkPeaks } from 'react-icons/fa';
 
 const ForgotPasswordModal = ({ isOpen, onClose }) => {
     const [step, setStep] = useState(1);
@@ -132,22 +133,25 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
         <div className="fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-black bg-opacity-50">
 
             <div className='lg:w-[450px] w-[320px] sm:w-[300px] '>
-                
+
                 <motion.div
-                    initial={{ y: '-100vh', opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: '-100vh', opacity: 0 }}
-                    className="bg-white rounded-lg shadow-lg flex flex-col p-6"
+                    initial={{ scale: 0.7, opacity: 1, y: -500 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    transition={{
+                        duration: 0.5,
+                        ease: [0.2, 0.8, 0.2, 1],
+                    }}
+                    className="bg-white rounded-lg shadow-lg flex flex-col py-4 px-6"
                 >
                     <button onClick={onClose}
-                        className="ml-auto text-gray-500 hover:text-gray-700"
+                        className="ml-auto text-gray-700 text-[16px] scale-x-[1.4] font-[600] hover:text-gray-700"
                     >
-                        <ImCross size={16} />
+                        X
                     </button>
 
                     {step === 1 && (
                         <>
-                            <h2 className="text-2xl text-center text-gray-800 mb-6">Forgot Password</h2>
+                            <h2 className="text-[17px] flex items-center text-gray-800 mb-6"><FaThinkPeaks className='text-black text-[19px] mr-[5px] font-[700]' /> Forgot Password</h2>
                             <div className="relative mb-4 flex items-center">
                                 <div className="bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]">
                                     <AiOutlineMail className="text-gray-50 text-[22px]" />
