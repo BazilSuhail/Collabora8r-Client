@@ -42,13 +42,9 @@ const CreateProject = ({ setShowModal }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-[999] flex items-center justify-center">
       <motion.div
-        initial={{ x: -200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          type: 'spring',
-          stiffness: 120,
-          damping: 12,
-        }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
         className="bg-white flex flex-col p-6 rounded-lg xl:w-[35vw] w-96"
       >
         <button onClick={() => setShowModal(false)} className="cursor-pointer ml-auto text-[22px] mt-[-5px] text-gray-500">
@@ -88,7 +84,7 @@ const CreateProject = ({ setShowModal }) => {
                 onClick={() => setShowThemeModal(true)}
                 className="w-full mt-1 px-[5px] py-[5px] text-[14px] border border-gray-300 rounded focus:ring-2 focus:outline-none"
               >
-                {theme !== null ? `Theme ${theme + 1}` : 'Select Theme'}
+                {theme !== null ? `Theme ${theme}` : 'Select Theme'}
               </button>
             </div>
             <div className="w-[48%]">
@@ -129,27 +125,33 @@ const CreateProject = ({ setShowModal }) => {
 
       {showThemeModal && (
         <div className="fixed inset-0 bg-black bg-opacity-75 z-[1000] flex flex-col items-center justify-center">
-          <button
-            onClick={() => setShowThemeModal(false)}
-            className="mb-4  text-white px-4 py-2 bg-red-500 rounded"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className='bg-white xl:w-[60vw] xl:px-[25px] px-[8px] rounded-[8px] py-[8px] flex flex-col'
           >
-            Close
-          </button>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="xl:w-[350px] w-[158px] h-32 xl:h-36 overflow-hidden rounded-lg cursor-pointer">
+            <button
+              onClick={() => setShowThemeModal(false)}
+              className="mb-4 text-gray-700 scale-x-[1.3] ml-auto"
+            >
+              X
+            </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-[25px]">
+              {Array.from({ length: 6 }).map((_, index) => (
                 <img
+                  key={index}
                   src={`/Themes/${index + 1}.jpg`}
                   alt={`Theme ${index}`}
-                  className=" h-full w-[350px]"
+                  className="w-full h-32 object-cover rounded-lg cursor-pointer"
                   onClick={() => {
-                    setTheme(index);
+                    setTheme(index+1);
                     setShowThemeModal(false);
                   }}
                 />
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       )}
     </div>
