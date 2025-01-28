@@ -47,13 +47,9 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-[999] flex items-center justify-center">
       <motion.div
-        initial={{ x: -200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          type: 'spring',
-          stiffness: 120,
-          damping: 12,
-        }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
         className="bg-white flex flex-col p-6 rounded-lg xl:w-[35vw] w-96"
       >
         <button onClick={() => setShowModal(false)} className="cursor-pointer ml-auto text-[22px] mt-[-5px] text-gray-500">
@@ -134,11 +130,17 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
 
       {showThemeModal && (
         <div className="fixed inset-0 bg-black bg-opacity-75 z-[1000] flex flex-col items-center justify-center">
+          <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className='bg-white p-[8px]'
+          >
           <button
             onClick={() => setShowThemeModal(false)}
             className="mb-4 text-white px-4 py-2 bg-red-500 rounded"
           >
-            Close
+            X
           </button>
           <div className="grid grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, index) => (
@@ -154,6 +156,7 @@ const EditProject = ({ setShowModal, project, heading = "Edit Project" }) => {
               />
             ))}
           </div>
+            </motion.div>
         </div>
       )}
     </div>

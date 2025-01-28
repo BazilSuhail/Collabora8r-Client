@@ -79,7 +79,6 @@ const JoinedProjectDetails = () => {
     <main className="xsx:ml-[265px] min-h-screen bg-white p-5">
       {project ? (
         <section>
-
           {error.project && <p className="text-red-500">{error.project}</p>}
           <div className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
             <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">

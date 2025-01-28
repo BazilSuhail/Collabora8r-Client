@@ -61,14 +61,14 @@ const JoinedProjects = () => {
       </p>
 
       <div className='h-[3px] mb-[15px] w-full bg-gray-300 '></div>
-      
 
-{projects.length ===0 &&
-<div className='flex flex-col mx-auto'>
+
+      {projects.length === 0 &&
+        <div className='flex flex-col mx-auto'>
           <img src="/Resources/5.png" alt='Connection Error' className='scale-[1.1] md:scale-[1.5] mix-blend-multiply mt-[215px] md:mt-[145px]' />
-          <p className="text-center md:mt-[35px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't Joined Any Projects Yet.</p> 
+          <p className="text-center md:mt-[35px] text-gray-500 font-[600] text-[11px] md:text-[14px]">You haven't Joined Any Projects Yet.</p>
         </div>
-}
+      }
 
       {(error && projects.length) ? (
         <div className='p-4 bg-red-100 text-red-600 border border-red-300 rounded-md'>

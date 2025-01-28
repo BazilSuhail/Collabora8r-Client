@@ -42,13 +42,9 @@ const CreateProject = ({ setShowModal }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-[999] flex items-center justify-center">
       <motion.div
-        initial={{ x: -200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          type: 'spring',
-          stiffness: 120,
-          damping: 12,
-        }}
+       initial={{ opacity: 0, scale: 0.7 }}
+       animate={{ opacity: 1, scale: 1 }}
+       transition={{ duration: 0.2, ease: "easeInOut" }}
         className="bg-white flex flex-col p-6 rounded-lg xl:w-[35vw] w-96"
       >
         <button onClick={() => setShowModal(false)} className="cursor-pointer ml-auto text-[22px] mt-[-5px] text-gray-500">
