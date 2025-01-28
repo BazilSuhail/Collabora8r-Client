@@ -5,11 +5,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { MdTask } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import Loader from '../../Assets/Loader';
+import Loader from '../Assets/Loaders/Loader';
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { FaPeopleRoof } from 'react-icons/fa6';
 import { GrStatusInfo } from 'react-icons/gr';
-import { useAuthContext } from '../../AuthProvider';
+import { useAuthContext } from '../AuthProvider';
 import { motion } from "framer-motion";
 
 const STATUS_TYPES = ['Not Started', 'In Progress', 'Completed'];

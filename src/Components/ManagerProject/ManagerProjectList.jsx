@@ -12,7 +12,7 @@ const colors = [
 ];
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-const ManagerProjects = () => {
+const ManagerProjectList = () => {
     const [projects, setProjects] = useState([]);
     const [error, setError] = useState('');
 
@@ -87,7 +87,7 @@ const ManagerProjects = () => {
 
                             <Link to={`/tasks/${project._id}`} className='flex flex-col'>
                                 <div className='mr-auto ml-[40px] mt-[-45px] xl:mt-[-30px] mb-[-20px] z-50 rounded-full overflow-hidden'>
-                                    <img src={`/Assets/${project.createdBy.avatar}.jpg`} alt="" className="h-[85px] w-[85px]" />
+                                    <img src={`/Avatars/${project.createdBy.avatar}.jpg`} alt="" className="h-[85px] w-[85px]" />
                                 </div>
                                 <div className='ml-auto mt-[-12px] mr-[58px]'>
                                     <div className='flex items-center space-x-2'>
@@ -116,4 +116,4 @@ const ManagerProjects = () => {
         </div>
     )
 };
-export default ManagerProjects
+export default ManagerProjectList

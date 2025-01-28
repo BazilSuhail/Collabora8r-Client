@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
-import TeamMembers from './TeamMembersModal'
-import ProjectTasks from './ProjectTasks'
+import TeamMembers from '../../Assets/ProjectModals/TeamMembers'
+import ProjectTasks from './JoinedProjectTasks'
 import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
 import { FaBorderAll } from 'react-icons/fa'
 import { useAuthContext } from '../../AuthProvider'
@@ -125,7 +125,7 @@ const JoinedProjectDetails = () => {
               {teamDetails.filter((member) => member._id !== loggedUser).map((member) => (
                   <div key={member._id} className="xsx:flex hidden mt-[10px] bg-white items-center px-4 py-2 border border-gray-300 rounded-[8px]" >
                     <img
-                      src={`/Assets/${member.avatar}.jpg`}
+                      src={`/Avatars/${member.avatar}.jpg`}
                       alt={member.name}
                       className="w-[40px] h-[40px] rounded-full border-2 border-gray-300 mr-4"
                     />

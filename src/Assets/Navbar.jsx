@@ -14,9 +14,9 @@ import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
-import NotificationsModal from './Profile/Notifications';
+import NotificationsModal from '../Components/Profile/Notifications';
 import { LuCopyMinus } from 'react-icons/lu';
-import SearchProject from './Profile/SearchProject';
+import SearchProject from './ProfileModals/SearchProject';
 import { useAuthContext } from '../AuthProvider';
 
 const colors = [
@@ -125,7 +125,7 @@ const Navbar = () => {
                     {!user?.avatar ? (
                             <p className='w-[34px] h-[34px] bg-gray-600 rounded-full'></p>
                         ) : (
-                            <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                            <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                         )} 
                             <div>
                                 <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
@@ -134,7 +134,7 @@ const Navbar = () => {
                     
                     </NavLink>*/}
                     <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                        <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                        <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                         <div>
                             <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
                             <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
@@ -265,7 +265,7 @@ const Navbar = () => {
                                     {!user?.avatar ? (
                                         <p className='text-[#363636]'>Login To Continue</p>
                                     ) : (
-                                        <img src={`/Assets/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
+                                        <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
                                     )}
                                     {!user?.name ? (
                                         <p className='text-white'>L</p>

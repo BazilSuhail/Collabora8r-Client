@@ -56,7 +56,7 @@ const MyTask = ({ task, user, creator }) => {
   );
 };
 
-const ProjectTasks = ({ creator, tasks }) => {
+const JoinedProjectTasks = ({ creator, tasks }) => {
 
   return (
     <div className="min-h-screen pb-6">
@@ -83,4 +83,4 @@ const ProjectTasks = ({ creator, tasks }) => {
   );
 };
 
-export default ProjectTasks;
+export default JoinedProjectTasks;

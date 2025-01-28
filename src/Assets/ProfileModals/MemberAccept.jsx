@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { MdOutlineDescription, MdOutlineSubtitles } from 'react-icons/md';

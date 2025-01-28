@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Chart from 'react-apexcharts';
-import { useAuthContext } from '../AuthProvider';
+import { useAuthContext } from '../../AuthProvider';
 
 
 const TasksTimeline = ({ projectId }) => {
@@ -17,9 +17,10 @@ const TasksTimeline = ({ projectId }) => {
             try {
                 const token = localStorage.getItem('token');
                 //const DecodeUserId = decodeJWT(token);
-                const DecodeUserId = decodeJWT(user._id);
+                //const DecodeUserId = decodeJWT(user._id);
 
-                setLoggedUser(DecodeUserId);
+
+                setLoggedUser(user._id);
                 const response = await axios.get(
                     `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/joinedprojects/${projectId}`,
                     {

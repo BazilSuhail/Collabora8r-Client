@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { FaUserPlus, FaSearch, FaClipboardList, FaUserAlt, FaUsers, FaEdit } from 'react-icons/fa';
-import Loader from '../../Assets/Loader';
+import Loader from '../../Assets/Loaders/Loader';
 import { CgUiKit } from 'react-icons/cg';
 import { IoMdDoneAll } from 'react-icons/io';
 import { MdErrorOutline, MdMarkEmailUnread, MdOutlineAdminPanelSettings } from 'react-icons/md';
-import EditProject from './EditProject';
+import EditProject from '../../Assets/ProjectModals/EditProject';
 import { GrChapterAdd } from 'react-icons/gr';
 import { IoCheckmarkDoneCircleSharp } from 'react-icons/io5';
 
 import { motion } from 'framer-motion';
 
-const ProjectDetail = () => {
+const AdminProjectDetails = () => {
   const { projectId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState(null);
@@ -180,7 +180,7 @@ const ProjectDetail = () => {
             <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border">
               <div className="flex items-center space-x-4">
                 <img
-                  src={`/Assets/${user.avatar}.jpg`}
+                  src={`/Avatars/${user.avatar}.jpg`}
                   alt={user.name}
                   className="w-12 h-12 rounded-full"
                 />
@@ -231,7 +231,7 @@ const ProjectDetail = () => {
               className="flex items-center pl-3 border-b-[2px] border-gray-300 pb-[8px] rounded-lg"
             >
               <img
-                src={`/Assets/${project.projectManager.email}.jpg`}
+                src={`/Avatars/${project.projectManager.email}.jpg`}
                 alt={project.projectManager.name}
                 className="w-[35px] h-[35px] border border-gray-400 rounded-full mr-4"
               />
@@ -259,7 +259,7 @@ const ProjectDetail = () => {
                   className="flex items-center pl-3 border-b-[2px] border-gray-300 pb-[8px] rounded-lg"
                 >
                   <img
-                    src={`/Assets/${member.avatar}.jpg`}
+                    src={`/Avatars/${member.avatar}.jpg`}
                     alt={member.name}
                     className="w-[35px] h-[35px] border border-gray-400 rounded-full mr-4"
                   />
@@ -314,7 +314,7 @@ const ProjectDetail = () => {
   );
 };
 
-export default ProjectDetail;
+export default AdminProjectDetails;
 /*
 
  <div className="xsx:ml-[265px] h-screen bg-gray-100 flex flex-col p-5"> 

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { ImCross } from 'react-icons/im';
 import { FaThinkPeaks } from 'react-icons/fa';
 
-const ForgotPasswordModal = ({ isOpen, onClose }) => {
+const ForgotPassword = ({ isOpen, onClose }) => {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState('');
     const [generatedOtp, setGeneratedOtp] = useState('');
@@ -323,4 +323,4 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
     );
 };
 
-export default ForgotPasswordModal;
+export default ForgotPassword;

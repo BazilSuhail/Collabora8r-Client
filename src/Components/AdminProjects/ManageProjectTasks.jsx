@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import TaskModal from './CreateTaskModal';
+import TaskModal from '../../Assets/ProjectModals/ManageTask';
 import { GrChapterAdd } from 'react-icons/gr';
 import { FiFolder } from 'react-icons/fi';
 import { FaRegTrashAlt, FaUserEdit } from 'react-icons/fa';
 import { LuDoorOpen } from 'react-icons/lu';
 
-const AssignTasks = () => {
+const ManageProjectTasks = () => {
   const { projectId } = useParams();
   const [isModalOpen, setModalOpen] = useState(false);
   const [projectName, setProjectName] = useState('');
@@ -235,7 +235,7 @@ const AssignTasks = () => {
                     <td className="text-center">
                       <div className='flex justify-center sm:w-full w-[200px] items-center'>
                         <img
-                          src={`/Assets/${task.assignedTo.avatar}.jpg`}
+                          src={`/Avatars/${task.assignedTo.avatar}.jpg`}
                           alt={task.assignedTo.name}
                           className="w-[28px] h-[28px] rounded-full border-2 border-gray-300 mr-[6px]"
                         />
@@ -287,9 +287,8 @@ const AssignTasks = () => {
           />
         </>
       }
-
     </div >
   );
 };
 
-export default AssignTasks;
+export default ManageProjectTasks;

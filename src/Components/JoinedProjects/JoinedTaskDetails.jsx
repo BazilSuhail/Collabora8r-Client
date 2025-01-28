@@ -6,7 +6,7 @@ import { FaClipboardList, FaRegEdit, FaSnowboarding, FaTrashAlt, FaUserEdit } fr
 import { IoCheckmarkDoneCircleOutline, IoPersonSharp } from 'react-icons/io5';
 import { LuSendHorizonal } from 'react-icons/lu';
 import { IoMdDoneAll } from 'react-icons/io';
-import Loader from '../../Assets/Loader';
+import Loader from '../../Assets/Loaders/Loader';
 import { CgUiKit } from 'react-icons/cg'; 
 import { RxCross2 } from 'react-icons/rx';
 import { MdOutlineSubtitles } from 'react-icons/md';
@@ -14,7 +14,7 @@ import { GrStatusInfo } from 'react-icons/gr';
 import { motion } from 'framer-motion';
 import { useAuthContext } from '../../AuthProvider';
 
-const TaskDetails = () => {
+const JoinedTaskDetails = () => {
   const { user } = useAuthContext();
   const { taskId, creatorId } = useParams();
   const [task, setTask] = useState(null);
@@ -33,8 +33,9 @@ const TaskDetails = () => {
     const fetchTaskDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const userId = decodeJWT(token);
-        setCurrentUserId(userId);
+        //const userId = decodeJWT(token);
+        
+        setCurrentUserId(user._id);
 
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/project-tasks/${taskId}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -248,7 +249,7 @@ const TaskDetails = () => {
                     <div className="flex items-center">
                       {comment.user && (
                         <img
-                          src={`/Assets/${comment.user.avatar}.jpg`}
+                          src={`/Avatars/${comment.user.avatar}.jpg`}
                           alt={comment.user.name}
                           className="w-[32px] h-[32px] shadow-md rounded-full mr-3"
                         />
@@ -445,4 +446,4 @@ const TaskDetails = () => {
 };
 
 
-export default TaskDetails;
+export default JoinedTaskDetails;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaPeopleRoof } from 'react-icons/fa6';
 import { FaEye } from 'react-icons/fa';
-import TasksTimeline from '../TasksTimeline';
+import TasksTimeline from './TasksTimeline';
 
 import { GrChapterAdd, GrTask, } from 'react-icons/gr';
 import { RiTeamLine } from 'react-icons/ri';
@@ -14,7 +14,7 @@ const colors = [
 ];
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-const JoinedProjects = () => {
+const JoinedProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState('');
   const [selectedProjectId, setSelectedProjectId] = useState(null);
@@ -103,7 +103,7 @@ const JoinedProjects = () => {
 
               <Link to={`/joinedprojects/${project._id}`} className='flex flex-col'>
                 <div className='ml-auto mr-[45px] xl:mr-[56px] mt-[-45px] xl:mt-[-40px] mb-[-20px] z-[500] rounded-full overflow-hidden'>
-                  <img src={`/Assets/${project.createdBy.avatar}.jpg`} alt="" className="h-[95px] w-[95px] xl:h-[80px] xl:w-[80px]" />
+                  <img src={`/Avatars/${project.createdBy.avatar}.jpg`} alt="" className="h-[95px] w-[95px] xl:h-[80px] xl:w-[80px]" />
                 </div>
                 <div className='pl-[25px] md:mt-[15px]'>
                   <div className='flex items-center space-x-2'>
@@ -148,4 +148,4 @@ const JoinedProjects = () => {
     </div>
   )
 };
-export default JoinedProjects
+export default JoinedProjectList

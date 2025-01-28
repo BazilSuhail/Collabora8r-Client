@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaPeopleRoof } from 'react-icons/fa6';
+import axios from 'axios'; 
 import { FaSearch, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { MdScreenSearchDesktop } from 'react-icons/md';

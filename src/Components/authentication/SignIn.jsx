@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'; 
-import ForgotPasswordModal from './ForgotPasswordModal';
-import SignInLoader from '../../Assets/SignInLoader';
+import ForgotPassword from './ForgotPassword';
+import SignInLoader from '../../Assets/Loaders/SignInLoader';
 import { useAuthContext } from '../../AuthProvider';
 
 const SignIn = () => {
   const { login } = useAuthContext();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -48,7 +49,10 @@ const SignIn = () => {
 
     }
     catch (error) {
-      console.error(error.response.data.error);
+      setLoading(false);
+      //setError('Enter a Registered or Email Address ...')
+      setError(error.response.data.error)
+      //console.error(error.response.data.error);
     }
   };
 
@@ -58,7 +62,7 @@ const SignIn = () => {
 
   return (
     <main className='h-screen w-screen flex justify-center items-center bg-gray-100'>
-      <ForgotPasswordModal isOpen={isModalOpen} onClose={closeModal} />
+      <ForgotPassword isOpen={isModalOpen} onClose={closeModal} />
       <div className='flex flex-col sm:w-[530px] xsmall:w-[355px] w-[330px]'>
 
         <div className="scale-[1.2] flex mx-auto">
@@ -111,6 +115,9 @@ const SignIn = () => {
                 />
               </div>
             </div>
+
+            {error && <div className='mt-[8px] py-[6px]  rounded-lg'><p className="text-red-600 font-[500] text-[14px]"><span className='font-[700]'>*{" "}</span>{error}, Enter a Registered Email ...</p></div>}
+
 
             <button type="submit" className="hover:text-blue-100 hover:bg-blue-950 w-full my-[15px] bg-blue-600 rounded-lg text-white font-[500] py-[12px] transition duration-300">
               Sign In

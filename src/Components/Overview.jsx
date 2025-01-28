@@ -9,7 +9,7 @@ import { FaCalendar, FaRunning, FaExclamationTriangle } from 'react-icons/fa';
 import { MdManageAccounts, MdOutlineJoinInner } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
-import Loader from '../Assets/Loader'; 
+import Loader from '../Assets/Loaders/Loader'; 
 import { BsListTask } from 'react-icons/bs';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);

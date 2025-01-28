@@ -19,7 +19,7 @@ const TeamMembers = ({ teamDetails, isOpen, onClose }) => {
             teamDetails.map((member) => (
               <div key={member._id} className="flex items-center p-4 border bg-gray-50 rounded-md">
                 <img
-                  src={`/Assets/${member.avatar}.jpg`}
+                  src={`/Avatars/${member.avatar}.jpg`}
                   alt={member.name}
                   className="w-[38px] h-[38px] rounded-full border-2 border-gray-300 mr-4"
                 />

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import CreateProject from './CreateProject';
+import CreateProject from '../../Assets/ProjectModals/CreateProject';
 import { FiClipboard, FiFolder, FiSettings } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GrChapterAdd, GrTask, } from 'react-icons/gr';
 import { RiTeamLine } from 'react-icons/ri';
 import { PiGraphDuotone } from 'react-icons/pi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
-import EditProject from './EditProject';
+import EditProject from '../../Assets/ProjectModals/EditProject';
 
 const colors = [
   'bg-red-400', 'bg-blue-400', 'bg-green-700', 'bg-yellow-600', 'bg-indigo-400', 'bg-orange-400', 'bg-cyan-400', 'bg-violet-400'

@@ -4,8 +4,8 @@ import axios from 'axios';
 import { AnimatePresence, motion } from "framer-motion"
 import { MdKeyboardDoubleArrowRight, MdManageAccounts } from 'react-icons/md';
 import { VscProject } from 'react-icons/vsc';
-import TeamMemberInvitation from './MemberAccept';
-import ProjectManagerInvitation from './ManagerAccept';
+import TeamMemberInvitation from '../../Assets/ProfileModals/MemberAccept';
+import ProjectManagerInvitation from '../../Assets/ProfileModals/ManagerAccept';
 import { useAuthContext } from '../../AuthProvider';
 
 const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalOpen }) => {

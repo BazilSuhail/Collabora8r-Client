@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlinePhone, AiOutlineCalendar } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi'; // Icon for gender
-import Loader from '../../Assets/Loader';
+import Loader from '../../../Assets/Loaders/Loader';
 
 const UserDetails = ({ onSubmit, userEmail }) => {
     const [loading, setLoading] = useState(false);

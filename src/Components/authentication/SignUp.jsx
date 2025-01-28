@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import EmailVerification from '../Registration/EmailVerification';
-import PasswordInput from '../Registration/PasswordInput';
-import UserDetails from '../Registration/UserDetails';
+import EmailVerification from './Registration/EmailVerification';
+import PasswordInput from './Registration/PasswordInput';
+import UserDetails from './Registration/UserDetails';
 
 import { BiCheckCircle, BiCircle } from 'react-icons/bi';
   

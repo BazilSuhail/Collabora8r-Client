@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FiEdit, FiSave } from 'react-icons/fi';
-import Loader from '../../Assets/Loader';
+import Loader from '../../Assets/Loaders/Loader';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -82,7 +82,7 @@ const Profile = () => {
               <div className="absolute xl:scale-[1.2] xl:pl-[125px] xl:pt-[10px] h-[120px] md:h-[180px] xl:h-[220px] inset-0 pl-[28px] w-full bg-black bg-opacity-30 z-10">
                <div className='flex mt-[20px] md:mt-[52px] w-full'>
                <img
-                  src={`/Assets/${profile.avatar}.jpg`}
+                  src={`/Avatars/${profile.avatar}.jpg`}
                   alt="Profile Avatar"
                   className="w-[68px] h-[68px] lg:w-24 lg:h-24 rounded-full border border-gray-300 shadow-md"
                 />
@@ -172,7 +172,7 @@ const Profile = () => {
           <form onSubmit={handleUpdate} className='space-y-4'>
             <div className='flex items-end mb-4'>
               <img
-                src={`/Assets/${selectedAvatar}.jpg`}
+                src={`/Avatars/${selectedAvatar}.jpg`}
                 alt="Profile Avatar"
                 className="w-24 h-24 rounded-full border border-gray-300 shadow-md"
               />
@@ -265,7 +265,7 @@ const Profile = () => {
               {Array.from({ length: 12 }).map((_, index) => (
                 <img
                   key={index}
-                  src={`/Assets/${index + 1}.jpg`}
+                  src={`/Avatars/${index + 1}.jpg`}
                   alt={`Avatar ${index + 1}`}
                   className='w-24 h-24 rounded-full border border-gray-300 shadow-md cursor-pointer hover:opacity-75'
                   onClick={() => selectAvatar(index + 1)}

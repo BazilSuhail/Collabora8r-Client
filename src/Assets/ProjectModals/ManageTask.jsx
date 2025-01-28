@@ -113,7 +113,6 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
             </div>
           </div>
 
-
           <div className='flex text-[15px] items-center'>
             <MdOutlineDescription />
             <p className="ml-[5px] mb-[2px] text-[13px] font-[600] text-gray-700">Guidelines</p>
