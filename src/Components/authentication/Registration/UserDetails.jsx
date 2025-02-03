@@ -23,8 +23,22 @@ const UserDetails = ({ onSubmit, userEmail }) => {
     onSubmit(formData);
   };
 
-  if (loading) {
-    return <Loader message={'Signing Up ....'}/>;
+  if (!loading) {
+    return (
+    <div className="h-screen w-screen fixed top-0 right-0 bg-black/50 flex items-center justify-center">
+            <div className="scale-[0.45] ml-[45px]">
+                <div className="animate-custom-spin">
+                    <div className="container">
+                        <div className="ring"></div>
+                        <div className="ring"></div>
+                        <div className="ring"></div>
+                        <div className="ring"></div>
+                    </div>
+                </div>
+            </div>
+            <p className="mt-[145px] font-[600] text-red-200 text-[18px]">Creating  {" "}<span className="text-cyan-200">Account</span><span className="text-blue-200"></span></p>
+
+        </div>);
   }
   return (
     <form onSubmit={handleSubmit} className="w-full flex mb-[25px] flex-col items-center"> 
