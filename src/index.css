@@ -16,16 +16,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #686868;
-  /* Gradient colors */
+  background: #686868; 
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #939393;
 }
-
-/* Customize the scrollbar for Firefox */
+ 
 body {
   scrollbar-width: thin;
   scrollbar-color: #717171 #ffffff;
@@ -34,13 +32,10 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
+ 
 .hide-scrollbar {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 @keyframes spin {
