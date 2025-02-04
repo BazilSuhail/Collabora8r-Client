@@ -31,7 +31,7 @@ Application `Collabor8r` is an intuitive and robust project management tool desi
 
 
  ---
-- Check out the latest demo of Project [Collabor8r-Site](https://collabora8r-client.netlify.app/). 
+- Check out the latest demo of Project [Collabor8r-Site](https://collbora8r.netlify.app/). 
 - Find the Server's Repository of this Project Here [Collabor8r-Server](https://github.com/BazilSuhail/Collabora8r-Server). 
 ---
 
