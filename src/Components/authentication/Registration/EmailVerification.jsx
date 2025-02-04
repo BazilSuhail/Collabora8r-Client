@@ -72,9 +72,11 @@ const EmailVerification = ({ onSuccess }) => {
   };
 
   const handleVerifyOtp = () => {
-    const otpString = otp.join('');
+    const otpString = otp.join(''); 
+    //console.log(otpString);
+    //console.log(generatedOtp);
 
-    if (otpString === generatedOtp) {
+    if (otpString == generatedOtp) {
       setError('');
       onSuccess({ name, email });
     } else {

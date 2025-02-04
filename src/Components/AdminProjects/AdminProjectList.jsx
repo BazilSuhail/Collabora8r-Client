@@ -109,7 +109,7 @@ const AdminProjectList = () => {
                   <span className='mt-[-4px]'>{project.name.charAt(0)}</span>
                 </div>
                 <div className='flex w-[85%] pb-[4px] justify-between items-center'>
-                  <div className='font-[600] text-[15px] md:text-[16px] text-blue-50'><p>{project.name}</p></div>
+                  <div className='font-[600] text-[15px] md:text-[16px] text-blue-50'><p>{project.name.length > 22 ? project.name.slice(0,22)+" ..." : project.name}</p></div>
                   <p className='bg-green-800 text-green-300  px-[12px] py-[2px] rounded-[15px] mr-[5px] text-[12px] hover:text-blue-300 '>
                     Active
                   </p>

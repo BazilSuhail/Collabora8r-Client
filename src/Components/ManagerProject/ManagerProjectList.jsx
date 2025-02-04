@@ -78,10 +78,8 @@ const ManagerProjectList = () => {
                                     <img src={`/Themes/${project.theme}.jpg`} alt="" className="h-[100px] scale-x-[-1] w-full object-cover" />
                                 </div>
 
-                                <Link to={`/tasks/${project._id}`} className="absolute h-[75px] inset-0 w-full flex justify-end items-center pr-[58px] xl:pr-[185px] bg-black bg-opacity-30 z-10">
-                                    <p className="font-[600] ml-[8px] text-[15px] md:text-[20px] text-white">
-                                        {project.name}
-                                    </p>
+                                <Link to={`/tasks/${project._id}`} className="absolute h-[75px] pr-[12px] inset-0 w-full flex justify-end items-center text-[14px] md:text-[17px] text-white bg-black bg-opacity-30 z-10">
+                                {project.name.length > 20 ? project.name.slice(0,20)+" ..." : project.name}
                                 </Link>
                             </div>
 

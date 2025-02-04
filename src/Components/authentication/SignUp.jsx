@@ -69,7 +69,7 @@ const SignUp = () => {
 
   const handleUserDetailsSubmit = async (data) => {
     try {
-      console.log(data);
+      //console.log(data);
       const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`, {
         ...data,
         email,

@@ -115,7 +115,7 @@ const AdminProjectDetails = () => {
             </p>
             {project.name}
           </div>
-          <div onClick={() => setShowModal(true)} className='w-[170px] lg:mt-0 mt-[15px] py-[8px] flex items-center bg-gradient-to-r to-blue-950 from-cyan-800 rounded-[15px]'>
+          <div onClick={() => setShowModal(true)} className='w-[170px] hover:cursor-pointer lg:mt-0 mt-[15px] py-[8px] flex items-center bg-gradient-to-r to-blue-950 from-cyan-800 rounded-[15px]'>
             <FaEdit className="lg:scale-[1] scale-[0.8] ml-[15px] text-[18px] mt-[2px] text-blue-50" />
             <span className='text-[13px] ml-[8px] font-[600] mt-[px] text-blue-50'>Edit Project Details</span>
           </div>
@@ -224,14 +224,14 @@ const AdminProjectDetails = () => {
             <div className="flex items-center pb-[3px] text-blue-700 border-b-[2px] mb-[15px] mt-4">
               <FaUsers className="mr-2 text-[23px]" />
               <span className="font-medium  text-[17px]">
-                Team Member
+                Project Manager
               </span>
             </div>
             <div
               className="flex items-center pl-3 border-b-[2px] border-gray-300 pb-[8px] rounded-lg"
             >
               <img
-                src={`/Avatars/${project.projectManager.email}.jpg`}
+                src={`/Avatars/2.jpg`}
                 alt={project.projectManager.name}
                 className="w-[35px] h-[35px] border border-gray-400 rounded-full mr-4"
               />
