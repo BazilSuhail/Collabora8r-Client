@@ -8,7 +8,7 @@ const TeamMembers = ({ teamDetails, isOpen, onClose }) => {
       : 'grid-cols-1';
 
   return (
-    <div className="fixed inset-0 px-[25px] flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 px-[25px] flex items-center justify-center bg-black bg-opacity-50 z-[999]">
       <div className="bg-white shadow-lg rounded-lg p-5 w-full max-w-4xl relative overflow-auto max-h-screen"> 
         <button className="absolute top-3 right-3 text-gray-500 hover:text-gray-700" onClick={onClose} >
           <FaTimes size={18} />

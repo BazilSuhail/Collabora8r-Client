@@ -87,8 +87,8 @@ const JoinedProjectList = () => {
                 <div className="absolute h-[140px] inset-0 w-full flex items-center justify-between px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
 
                   <Link to={`/joinedprojects/${project._id}`}>
-                    <p className="font-[600] ml-[8px] text-[15px] md:text-[20px] text-white">
-                      {project.name}
+                    <p className="font-[600] ml-[8px] text-[15px] md:text-[20px] text-white">                      
+                      {project.name.length > 18 ? project.name.slice(0,18)+" ..." : project.name}
                     </p>
                     <p className="font-[600] ml-[8px] text-[13px] md:text-[13px] text-white">
                       {project.createdBy.name}

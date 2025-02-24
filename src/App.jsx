@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./Assets/Navbar";
 import { useAuthContext } from "./AuthProvider";
 import SignInLoader from "./Assets/Loaders/SignInLoader";
+import Loader from "./Assets/Loaders/Loader";
 
 // Lazy load components
 const SignIn = React.lazy(() => import("./Components/Authentication/SignIn"))
@@ -33,7 +34,7 @@ const AppContent = () => {
   return (
     <>
       {(!hideNavbar && userLoginStatus) && <Navbar />}
-      <Suspense fallback={<SignInLoader />}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={userLoginStatus === false ? <SignIn /> : <Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />

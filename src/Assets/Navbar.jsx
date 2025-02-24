@@ -191,7 +191,7 @@ const Navbar = () => {
                                                     {project.name.charAt(0)}
                                                 </div>
                                                 <p className='ml-[8px] font-[600]' >
-                                                    {project.name}
+                                                    {project.name.length > 16 ? project.name.slice(0,17)+" ..." : project.name}
                                                 </p>
                                             </div>
                                         ))}
@@ -335,7 +335,7 @@ const Navbar = () => {
                                                         {project.name.charAt(0)}
                                                     </div>
                                                     <button className='ml-[8px] text-[17px] font-[600]' onClick={() => handleProjectClick(project._id)}>
-                                                        {project.name}
+                                                    {project.name.length > 27 ? project.name.slice(0,27)+" ..." : project.name}
                                                     </button>
                                                 </div>
                                             ))}

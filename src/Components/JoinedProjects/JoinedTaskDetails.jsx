@@ -96,7 +96,9 @@ const JoinedTaskDetails = () => {
     try {
       const token = localStorage.getItem('token');
       //const userId = decodeJWT(token);
-      const userId = decodeJWT(user._id);
+      //const userId = decodeJWT(user._id);
+      const userId = user._id;
+      
 
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`,

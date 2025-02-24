@@ -6,6 +6,7 @@ import ProjectTasks from './JoinedProjectTasks'
 import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
 import { FaBorderAll } from 'react-icons/fa'
 import { useAuthContext } from '../../AuthProvider'
+import Loader from '../../Assets/Loaders/Loader'
 
 const JoinedProjectDetails = () => {
   const { user } = useAuthContext();
@@ -76,23 +77,25 @@ const JoinedProjectDetails = () => {
   }, [projectId, loggedUser]);
 
   return (
-    <main className="xsx:ml-[265px] min-h-screen bg-white p-5">
+    <main >
       {project ? (
-        <section>
+        <section className="xsx:ml-[265px] min-h-screen bg-white p-5">
           {error.project && <p className="text-red-500">{error.project}</p>}
-          <div className="relative mb-[18px] xl:mb-[25px] w-full h-[120px] lg:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
+          <div className="relative mb-[18px] xl:mb-[25px] w-full h-[180px] lg:h-[180px] xl:h-[220px] rounded-xl overflow-hidden bg-yellow-300">
             <div className="absolute inset-0 w-full flex pt-3 items-center space-x-2 pb-[8px]">
-              <img src={`/Themes/${project.theme}.jpg`} alt="" className=" h-[120px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
+              <img src={`/Themes/${project.theme}.jpg`} alt="" className=" h-[180px] lg:h-[180px] xl:h-[220px] w-full object-cover" />
             </div>
 
-            <div className="absolute h-[120px] lg:h-[180px] xl:h-[220px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-30 z-10">
+            <div className="absolute h-[180px] lg:h-[180px] xl:h-[220px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-40 z-10">
               <Link to={`/joinedprojects/${projectId}`}>
                 <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
                   {project.name}
                 </p>
 
-                <p className="font-[600] mt-[15px] ml-[8px] text-[15px] md:text-[14px] text-white">
+                <p className="font-[600] mt-[15px] ml-[8px] text-[12px] md:text-[14px] text-white">
                   {project.description}
+                  {project.description.length > 150 ? project.description.slice(0,27)+" ..." : project.description}
+
                 </p>
               </Link>
             </div>
@@ -143,7 +146,7 @@ const JoinedProjectDetails = () => {
           </section>
         </section>
       ) : (
-        <p>Project not found.</p>
+        <Loader/>
       )}
     </main>
   );
