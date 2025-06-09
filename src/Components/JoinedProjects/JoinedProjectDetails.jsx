@@ -88,11 +88,11 @@ const JoinedProjectDetails = () => {
 
             <div className="absolute h-[180px] lg:h-[180px] xl:h-[220px] inset-0 w-full px-[18px] space-x-2 bg-black bg-opacity-40 z-10">
               <Link to={`/joinedprojects/${projectId}`}>
-                <p className="ml-[8px] underline mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-blue-100">
+                <p className="ml-[8px] mt-[25px] underline-offset-[12px] font-[700] text-[15px] md:text-[24px] xl:text-[30px] text-white">
                   {project.name}
                 </p>
 
-                <p className="font-[600] mt-[15px] ml-[8px] text-[12px] md:text-[14px] text-white">
+                <p className="font-[600] lg:w-[650px] bg-white/10 p-3 rounded-[12px] mt-[15px] ml-[8px] text-[12px] md:text-[14px] text-gray-100">
                   {project.description}
                   {project.description.length > 150 ? project.description.slice(0,27)+" ..." : project.description}
 

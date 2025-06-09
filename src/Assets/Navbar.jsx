@@ -225,11 +225,11 @@ const Navbar = () => {
                     <div className='flex items-center'>
                         
                         <div onClick={handleNotificationModal} className='flex items-center'>
-                            <FaBell className=" text-[#363636] cursor-pointer text-[24px]" />
+                            <FaBell className=" text-[#757575] cursor-pointer text-[24px]" />
                             {notificationsCount > 0 && <p className='text-white bg-red-700 px-[5px] text-[12px] border-white border-[2px] mt-[-22px] ml-[-12px] rounded-full text-center '>{notificationsCount}</p>}
                         </div>
                         <div
-                            className="cursor-pointer text-gray-500"
+                            className="cursor-pointer ml-[8px] text-gray-500"
                             onClick={handleMenuToggle}
                         >
                             {isMenuOpen ? (
@@ -287,32 +287,32 @@ const Navbar = () => {
                                 </button>
 
                                 <NavLink to="/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <RxDashboard className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Dashboard</p>
+                                    <RxDashboard className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Dashboard</p>
                                 </NavLink>
                                 <NavLink to="/overview" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <MdOutlineFolderShared className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Overview</p>
+                                    <MdOutlineFolderShared className="w-5 h-6 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Overview</p>
                                 </NavLink>
                                 <NavLink to="/workflow" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <BsGraphUp className="text-[25px] mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[18px]">Workflow</p>
+                                    <BsGraphUp className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Workflow</p>
                                 </NavLink>
 
                                 <NavLink to="/joined-projects/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Joined Projects</p>
+                                    <FaCubes className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">Joined Projects</p>
                                 </NavLink>
                                 <NavLink to="/manager-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">Shared Workspaces</p>
+                                    <GoPeople className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">Shared Workspaces</p>
                                 </NavLink>
 
                                 <NavLink to="/associated-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[18px]">My Projects</p>
+                                    <LuCopyMinus className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">My Projects</p>
                                 </NavLink>
 
 
                                 <div className="pl-[8px]  my-[5px]">
                                     <div className="text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
                                         <div className="flex items-center">
-                                            <GoProjectRoadmap className="text-[25px] mt-[4px] mr-[12px]" />
-                                            <p className="font-[500] text-[19px]">Projects</p>
+                                            <GoProjectRoadmap className="w-5 h-5 mt-[4px] mr-[12px]" />
+                                            <p className="font-[500] text-[17px]">Projects</p>
                                         </div>
                                         {isArrowOpen ? (
                                             <MdKeyboardArrowDown className="ml-4 text-[25px] font-bold" />
@@ -331,10 +331,10 @@ const Navbar = () => {
                                         <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
                                             {projects.map((project) => (
                                                 <div key={project._id} onClick={handleMenuToggle} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-full border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
-                                                    <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
+                                                    <div className={`w-[25px] h-[25px] text-[12px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
                                                         {project.name.charAt(0)}
                                                     </div>
-                                                    <button className='ml-[8px] text-[17px] font-[600]' onClick={() => handleProjectClick(project._id)}>
+                                                    <button className='ml-[8px] text-[16px] font-[600]' onClick={() => handleProjectClick(project._id)}>
                                                     {project.name.length > 27 ? project.name.slice(0,27)+" ..." : project.name}
                                                     </button>
                                                 </div>
