@@ -1,8 +1,10 @@
+import React from 'react';
 import "./Loader.css"
+
 const Loader = () => {
     return (
-        <div className="h-screen flex flex-col justify-center items-center spin xsx:pl-[280px] w-screen">
-            <div className="scale-[0.35] md:scale-[0.45] ">
+        <div className="min-h-[60vh] flex flex-col justify-center items-center w-full transition-colors duration-300">
+            <div className="scale-[0.35] md:scale-[0.45]">
                 <div className="animate-custom-spin">
                     <div className="container">
                         <div className="ring"></div>
@@ -12,8 +14,16 @@ const Loader = () => {
                     </div>
                 </div>
             </div>
-            <p className="mt-[58px] font-[600] text-red-700 text-[18px]">Lo<span className="text-cyan-600">ad</span><span className="text-blue-500">ing</span></p>
-
+            <div className="mt-12 flex flex-col items-center gap-2">
+                <p className="font-black text-gray-800 dark:text-white text-xl uppercase tracking-[0.3em]">
+                    Sync<span className="text-orange-600">hr</span>onizing
+                </p>
+                <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '0s' }} />
+                    <span className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    <span className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                </div>
+            </div>
         </div>
     )
 }

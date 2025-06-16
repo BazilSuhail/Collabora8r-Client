@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { IoMenu, IoClose } from "react-icons/io5";
@@ -14,7 +14,7 @@ import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
 import { GoPeople, GoProjectRoadmap } from "react-icons/go";
 import { RiLogoutBoxRLine } from 'react-icons/ri';
-import NotificationsModal from '../Components/Profile/Notifications';
+import NotificationsModal from '../components/Profile/Notifications';
 import { LuCopyMinus } from 'react-icons/lu';
 import SearchProject from './ProfileModals/SearchProject';
 import { useAuthContext } from '../AuthProvider';
@@ -25,7 +25,7 @@ const colors = [
 
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 
-const Navbar = () => {
+const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
     const navigate = useNavigate();
     const { user, logout, notificationsCount } = useAuthContext();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,12 +36,12 @@ const Navbar = () => {
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
     const handleNotificationModal = () => {
-        setIsNotificationsModalOpen(!isMenuOpen);
+        setIsNotificationsModalOpen(!isNotificationsModalOpen);
     };
 
     const handleSearchModal = () => {
         setIsSearchModalOpen(!isSearchModalOpen);
-        setIsMenuOpen(true);
+        setIsMenuOpen(false);
     };
 
     const handleMenuToggle = () => {
@@ -56,8 +56,11 @@ const Navbar = () => {
         navigate('/login');
     };
 
-    useEffect(() => {
+    const toggleSidebar = () => {
+        setIsExpanded(!isExpanded);
+    };
 
+    useEffect(() => {
         const fetchJoinedProjects = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -86,267 +89,260 @@ const Navbar = () => {
         navigate(`/joinedprojects/${projectId}`);
     };
 
+    const sidebarVariants = {
+        expanded: { width: 280 },
+        collapsed: { width: 80 }
+    };
+
     return (
         <nav>
             {isNotificationsModalOpen && <NotificationsModal isNotificationsModalOpen={isNotificationsModalOpen} setIsNotificationsModalOpen={setIsNotificationsModalOpen} />}
             {isSearchModalOpen && <SearchProject isSearchModalOpen={isSearchModalOpen} setIsSearchModalOpen={setIsSearchModalOpen} />}
-            <div className="hidden bg-[#ffffff] overflow-y-auto no-scrollbar fixed xsx:flex pl-[25px] xsx:flex-col xsx:justify-between shadow-xl rounded-lg xsx:items-center ml-[-20px] w-[280px] h-screen  p-[10px]">
-                <div className="flex text-red-50 flex-col w-[95%]">
-                    <div className="flex items-center mt-[10px] justify-between">
+            
+            {/* Desktop Sidebar */}
+            <motion.div 
+                initial={isExpanded ? "expanded" : "collapsed"}
+                animate={isExpanded ? "expanded" : "collapsed"}
+                variants={sidebarVariants}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="hidden bg-white dark:bg-[#0a0a0a] overflow-y-auto no-scrollbar fixed left-0 top-0 xsx:flex flex-col shadow-xl border-r border-gray-200 dark:border-[#1a1a1a] h-screen p-4 transition-colors duration-300"
+            >
+                <div className="flex flex-col h-full">
+                    {/* Header/Toggle Section */}
+                    <div className="flex items-center justify-between mb-8 overflow-hidden">
                         <div className="flex items-center">
                             <motion.div
-                                initial={{ opacity: 1 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.2 }}
+                                animate={{ rotate: isExpanded ? 0 : 360 }}
+                                transition={{ duration: 0.5 }}
                             >
-                                <img src="/logo.svg" alt="Conneciton Errir ... :/" className="md:w-[28px] md:h-[28px]" />
+                                <img src="/logo.svg" alt="Logo" className="w-8 h-8 min-w-[32px]" />
                             </motion.div>
-                            <div className="text-[28px] font-bold" >
-                                <div className="text-[#575757] ml-[8px] md:text-[19px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
-                            </div>
-                        </div>
-                        <div onClick={handleNotificationModal} className='flex items-center'>
-                            <FaBell className=" text-[#363636] cursor-pointer text-[20px]" />
-                            {notificationsCount > 0 && <p className='text-white bg-red-700 px-[5px] text-[10px] border-white border-[2px] mt-[-22px] ml-[-12px] rounded-full text-center '>{notificationsCount}</p>}
-                        </div>
-                    </div>
-
-                    <div onClick={handleSearchModal} className="flex cursor-pointer items-center px-[8px] py-[5px] mt-[15px] border-[2px] bg-gray-50 border-[#dedddd] rounded-lg">
-                        <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
-                        <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
-                    </div>
-
-                    <div className='mt-[15px] flex items-center justify-between'>
-                        <p className="text-[#6a6a6a] font-bold ml-[5px]">Account</p>
-                        <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
-                    </div>
-
-                    {/*<NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                    {!user?.avatar ? (
-                            <p className='w-[34px] h-[34px] bg-gray-600 rounded-full'></p>
-                        ) : (
-                            <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
-                        )} 
-                            <div>
-                                <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
-                                <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
-                            </div>
-                    
-                    </NavLink>*/}
-                    <NavLink to="/profile" className="flex items-center pl-[20px] py-[8px] mt-[8px] border-[2px] rounded-lg">
-                        <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
-                        <div>
-                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
-                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
-                        </div>
-                    </NavLink>
-
-                    <div className="border-t-2 mt-[20px] pl-[4px] pt-[15px] border-gray-300 ">
-                        <NavLink to="/" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <RxDashboard className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Dashboard</p>
-                        </NavLink>
-                        <NavLink to="/overview" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <MdOutlineFolderShared className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Overview</p>
-                        </NavLink>
-                        <NavLink to="/workflow" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <BsGraphUp className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Workflow</p>
-                        </NavLink>
-                        <NavLink to="/joined-projects/" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <FaCubes className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Joined Projects</p>
-                        </NavLink>
-                        <NavLink to="/manager-projects" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <GoPeople className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">Shared Workspaces</p>
-                        </NavLink>
-
-                        <NavLink to="/associated-projects" className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                            <LuCopyMinus className="text-[23px] mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[15px]">My Projects</p>
-                        </NavLink>
-
-
-                        {projects.length > 0 &&
-                            <div className="pl-[8px]  my-[5px]">
-                                <div className="text-lg text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
-                                    <div className="flex items-center">
-                                        <GoProjectRoadmap className="text-[22px] mt-[4px] mr-[12px]" />
-                                        <p className="font-[500] text-[16px]">Projects</p>
-                                    </div>
-                                    {isArrowOpen ? (
-                                        <MdKeyboardArrowDown className="ml-2" />
-                                    ) : (
-                                        <MdKeyboardArrowUp className="ml-2 text-xl font-bold" />
-                                    )}
-                                </div>
-
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="overflow-hidden"
-                                >
-                                    <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
-                                        {projects.map((project) => (
-                                            <div onClick={() => handleProjectClick(project._id)} key={project._id} className='flex mb-[4px] py-[8px] hover:rounded-xl hover:cursor-pointer px-[4px] w-[calc(100%-28px)] border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
-                                                <div className={`w-[28px] h-[28px] text-[15px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
-                                                    {project.name.charAt(0)}
-                                                </div>
-                                                <p className='ml-[8px] font-[600]' >
-                                                    {project.name.length > 16 ? project.name.slice(0,17)+" ..." : project.name}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div className="relative text-white xsx:hidden">
-                <div className="flex items-center h-[70px]  justify-between bg-white border-b-2 border-[#dedddd] px-4 py-3 z-[900] relative">
-                    <div className="flex items-center">
-                        <motion.div
-                            initial={{ opacity: 1 }}
-                            animate={{ opacity: isMenuOpen ? 0 : 1 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <img src="/logo.svg" alt="TL" className="md:w-[45px] w-[33px] h-[33px] md:h-[45px]" />
-                        </motion.div>
-                        <motion.div
-                            className="text-[28px] font-bold"
-                            initial={{ x: 40 }}
-                            animate={{ x: isMenuOpen ? -40 : 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <div className="text-[#575757] ml-[4px] md:text-[25px] text-[22px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
-                        </motion.div>
-                    </div>
-                    <div className='flex items-center'>
-                        
-                        <div onClick={handleNotificationModal} className='flex items-center'>
-                            <FaBell className=" text-[#757575] cursor-pointer text-[24px]" />
-                            {notificationsCount > 0 && <p className='text-white bg-red-700 px-[5px] text-[12px] border-white border-[2px] mt-[-22px] ml-[-12px] rounded-full text-center '>{notificationsCount}</p>}
-                        </div>
-                        <div
-                            className="cursor-pointer ml-[8px] text-gray-500"
-                            onClick={handleMenuToggle}
-                        >
-                            {isMenuOpen ? (
-                                <IoClose size={35} />
-                            ) : (
-                                <IoMenu size={35} />
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100vw", transition: { duration: 0.5 } }}
-                            exit={{ width: 0, transition: { duration: 0.3, delay: 0.1 } }}
-                            className="fixed  px-[15px] inset-0 bg-navbar-color bg-white flex w-screen flex-col h-screen py-3 z-[800]"
-                        >
-                            <div className='my-[25px]'></div>
-                            <motion.div
-                                initial={{ x: -100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1, transition: { duration: 0.5, delay: 0.3 } }}
-                                exit={{ x: -100, opacity: 0, transition: { duration: 0.2 } }}
-                                className="flex flex-col mt-[25px]"
-                            >
-                                <button onClick={handleMenuToggle} className='flex items-center justify-between'>
-                                    <p className="text-[#6a6a6a] font-bold ml-[18px]">Account</p>
-                                    <RiLogoutBoxRLine onClick={handleLogout} className='text-[22px] text-[#ff5555]' />
-                                </button>
-
-                                <NavLink onClick={handleMenuToggle} to="/profile" className="flex items-center pl-[20px] py-[12px] mt-[8px] border-[1.5px] border-gray-300 rounded-lg">
-                                    {!user?.avatar ? (
-                                        <p className='text-[#363636]'>Login To Continue</p>
-                                    ) : (
-                                        <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-[34px] h-[34px] rounded-full" />
-                                    )}
-                                    {!user?.name ? (
-                                        <p className='text-white'>L</p>
-                                    ) : (
-                                        <div>
-                                            <div className="text-[17px] ml-[8px] font-medium text-[#434343]">{user.name.slice(0, 20)}</div>
-                                            <div className="text-[11px] ml-[8px] mt-[-4px] font-medium text-[#a4a1a1]">{user.email}</div>
-                                        </div>
-                                    )}
-                                </NavLink>
-
-                                <button onClick={() => {
-                                    handleMenuToggle
-                                    setIsSearchModalOpen(!isSearchModalOpen)
-                                }} 
-                                className="flex items-center px-[8px] py-[5px] my-[15px] border-[2px] bg-gray-50 border-[#d7d6d6] rounded-[8px]">
-                                    <IoMdSearch className=" text-[#8c8c8c] text-[24px]" />
-                                    <div className="text-[15px] font-medium text-[#7f7f7f]">Search</div>
-                                </button>
-
-                                <NavLink to="/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <RxDashboard className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Dashboard</p>
-                                </NavLink>
-                                <NavLink to="/overview" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <MdOutlineFolderShared className="w-5 h-6 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Overview</p>
-                                </NavLink>
-                                <NavLink to="/workflow" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <BsGraphUp className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[4px] text-[17px]">Workflow</p>
-                                </NavLink>
-
-                                <NavLink to="/joined-projects/" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <FaCubes className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">Joined Projects</p>
-                                </NavLink>
-                                <NavLink to="/manager-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <GoPeople className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">Shared Workspaces</p>
-                                </NavLink>
-
-                                <NavLink to="/associated-projects" onClick={handleMenuToggle} className={({ isActive }) => `pl-[8px] flex font-[500] items-center py-[10px] rounded-md ${isActive ? 'bg-blue-100 text-blue-800' : 'hover:bg-blue-50 hover:font-[600] hover:text-blue-700 text-[#474747]'}`} >
-                                    <LuCopyMinus className="w-5 h-5 mb-[3px] mr-[12px]" /><p className="mb-[2px] text-[17px]">My Projects</p>
-                                </NavLink>
-
-
-                                <div className="pl-[8px]  my-[5px]">
-                                    <div className="text-[#363636] flex items-center justify-between cursor-pointer" onClick={toggleOpen}>
-                                        <div className="flex items-center">
-                                            <GoProjectRoadmap className="w-5 h-5 mt-[4px] mr-[12px]" />
-                                            <p className="font-[500] text-[17px]">Projects</p>
-                                        </div>
-                                        {isArrowOpen ? (
-                                            <MdKeyboardArrowDown className="ml-4 text-[25px] font-bold" />
-                                        ) : (
-                                            <MdKeyboardArrowUp className="ml-4 text-[25px] font-bold" />
-                                        )}
-                                    </div>
-
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: isArrowOpen ? 1 : 0, height: isArrowOpen ? 'auto' : 0 }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="overflow-hidden"
+                            <AnimatePresence>
+                                {isExpanded && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        className="text-[19px] font-bold text-[#575757] dark:text-white ml-3 whitespace-nowrap"
                                     >
-                                        <div className='flex flex-col pt-[15px] items-start text-[#363636]'>
-                                            {projects.map((project) => (
-                                                <div key={project._id} onClick={handleMenuToggle} className='flex mb-[4px] py-[8px] hover:rounded-xl px-[4px] w-full border-b-[2px] border-[#cccccc] hover:border-white hover:bg-blue-100 ml-[28px]'>
-                                                    <div className={`w-[25px] h-[25px] text-[12px] text-center pt-[3px] text-white font-[700] rounded-full ${projectColors[project._id]}`}>
-                                                        {project.name.charAt(0)}
-                                                    </div>
-                                                    <button className='ml-[8px] text-[16px] font-[600]' onClick={() => handleProjectClick(project._id)}>
-                                                    {project.name.length > 27 ? project.name.slice(0,27)+" ..." : project.name}
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        Collabora<span className='text-orange-600'>8</span>r
                                     </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                        <button 
+                            onClick={toggleSidebar}
+                            className="p-1 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] rounded-lg transition-colors text-gray-500"
+                        >
+                            <IoMenu size={20} />
+                        </button>
+                    </div>
+
+                    {/* Search Section */}
+                    <div onClick={handleSearchModal} className={`flex cursor-pointer items-center p-2 mb-6 border border-gray-100 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#000000] rounded-xl hover:border-orange-500/50 transition-all ${!isExpanded && "justify-center"}`}>
+                        <IoMdSearch className="text-[#8c8c8c] text-[24px] min-w-[24px]" />
+                        {isExpanded && <div className="text-[15px] font-medium text-[#7f7f7f] ml-3">Search</div>}
+                    </div>
+
+                    {/* Navigation Items */}
+                    <div className="space-y-1 overflow-hidden">
+                        <NavLink to="/dashboard" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <RxDashboard className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">Dashboard</p>}
+                        </NavLink>
+                        <NavLink to="/overview" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <MdOutlineFolderShared className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">Overview</p>}
+                        </NavLink>
+                        <NavLink to="/workflow" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <BsGraphUp className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">Workflow</p>}
+                        </NavLink>
+                        <NavLink to="/joined-projects/" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <FaCubes className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">Joined Projects</p>}
+                        </NavLink>
+                        <NavLink to="/manager-projects" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <GoPeople className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">Shared Workspaces</p>}
+                        </NavLink>
+                        <NavLink to="/associated-projects" className={({ isActive }) => `flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-orange-600 shadow-lg shadow-orange-600/20 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-orange-50 dark:hover:bg-[#1a1a1a] hover:text-orange-600'} ${!isExpanded && "justify-center"}`} >
+                            <LuCopyMinus className="text-[22px] min-w-[22px]" />
+                            {isExpanded && <p className="ml-3 font-semibold text-[15px]">My Projects</p>}
+                        </NavLink>
+                    </div>
+
+                    {/* Projects Section */}
+                    {projects.length > 0 && isExpanded && (
+                        <div className="mt-8">
+                            <div 
+                                className="flex items-center justify-between px-3 cursor-pointer text-gray-400 hover:text-orange-600 transition-colors"
+                                onClick={toggleOpen}
+                            >
+                                <div className="flex items-center">
+                                    <GoProjectRoadmap size={20} />
+                                    <span className="ml-3 font-bold text-xs uppercase tracking-wider">Projects</span>
                                 </div>
+                                {isArrowOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+                            </div>
+                            
+                            <motion.div
+                                initial={false}
+                                animate={{ height: isArrowOpen ? 'auto' : 0, opacity: isArrowOpen ? 1 : 0 }}
+                                className="overflow-hidden mt-4 space-y-1"
+                            >
+                                {projects.map((project) => (
+                                    <div 
+                                        key={project._id} 
+                                        onClick={() => handleProjectClick(project._id)}
+                                        className="flex items-center p-2 mx-2 rounded-lg hover:bg-gray-50 dark:hover:bg-[#1a1a1a] cursor-pointer group transition-all"
+                                    >
+                                        <div className={`w-8 h-8 text-[12px] flex items-center justify-center text-white font-bold rounded-lg ${projectColors[project._id]} shadow-sm`}>
+                                            {project.name.charAt(0)}
+                                        </div>
+                                        <p className="ml-3 text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-orange-600 truncate">
+                                            {project.name}
+                                        </p>
+                                    </div>
+                                ))}
                             </motion.div>
-                        </motion.div>
+                        </div>
                     )}
-                </AnimatePresence>
+
+                    {/* Footer Section */}
+                    <div className="mt-auto pt-8 border-t border-gray-200 dark:border-[#1a1a1a]">
+                        <div className={`flex items-center p-3 rounded-xl bg-gray-50 dark:bg-[#000000] border border-gray-100 dark:border-[#1a1a1a] ${!isExpanded && "justify-center"}`}>
+                            <div className="flex items-center w-full overflow-hidden">
+                                <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-8 h-8 min-w-[32px] rounded-lg object-cover" />
+                                {isExpanded && (
+                                    <div className="ml-3 overflow-hidden">
+                                        <p className="text-sm font-bold text-gray-800 dark:text-white truncate">{user.name}</p>
+                                        <p className="text-[10px] text-gray-400 truncate">{user.email}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <button 
+                            onClick={toggleDarkMode}
+                            className={`flex items-center w-full p-3 mt-4 transition-all rounded-xl ${
+                                isDarkMode 
+                                    ? 'text-orange-500 hover:bg-orange-950/20' 
+                                    : 'text-gray-600 hover:bg-gray-100'
+                            } ${!isExpanded && "justify-center"}`}
+                            title={isDarkMode ? "Active Theme: Jet-Black" : "Active Theme: Light"}
+                        >
+                            <AnimatePresence mode="wait">
+                                {isDarkMode ? (
+                                    <motion.div
+                                        key="sun"
+                                        initial={{ rotate: -90, opacity: 0 }}
+                                        animate={{ rotate: 0, opacity: 1 }}
+                                        exit={{ rotate: 90, opacity: 0 }}
+                                        className="min-w-[22px]"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                                        </svg>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="moon"
+                                        initial={{ rotate: -90, opacity: 0 }}
+                                        animate={{ rotate: 0, opacity: 1 }}
+                                        exit={{ rotate: 90, opacity: 0 }}
+                                        className="min-w-[22px]"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                        </svg>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                            {isExpanded && (
+                                <span className="ml-3 font-semibold text-[15px]">
+                                    {isDarkMode ? "Light Protocol" : "Deep Space Mode"}
+                                </span>
+                            )}
+                        </button>
+                        <button 
+                            onClick={handleLogout}
+                            className={`flex items-center w-full p-3 mt-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all ${!isExpanded && "justify-center"}`}
+                        >
+                            <RiLogoutBoxRLine size={22} className="min-w-[22px]" />
+                            {isExpanded && <span className="ml-3 font-semibold text-[15px]">Sign Out</span>}
+                        </button>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Mobile Header (Same colors as requested) */}
+            <div className="xsx:hidden fixed top-0 left-0 right-0 z-[1000] bg-white dark:bg-[#000000] border-b border-gray-200 dark:border-[#1a1a1a] px-4 h-16 flex items-center justify-between transition-colors">
+                <div className="flex items-center">
+                    <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
+                    <span className="ml-2 text-xl font-bold text-gray-800 dark:text-white">Collabora<span className="text-orange-600">8</span>r</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                    <button 
+                        onClick={toggleDarkMode}
+                        className="p-2 text-gray-400 hover:text-orange-600 transition-colors"
+                    >
+                        {isDarkMode ? <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>}
+                    </button>
+                    <div onClick={handleNotificationModal} className="relative cursor-pointer text-gray-500 p-2">
+                        <FaBell size={22} />
+                        {notificationsCount > 0 && (
+                            <span className="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white dark:border-[#000000]">
+                                {notificationsCount}
+                            </span>
+                        )}
+                    </div>
+                    <button onClick={handleMenuToggle} className="text-gray-500 p-2">
+                        {isMenuOpen ? <IoClose size={28} /> : <IoMenu size={28} />}
+                    </button>
+                </div>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed inset-0 z-[999] bg-white dark:bg-[#000000] p-6 xsx:hidden flex flex-col"
+                    >
+                        <div className="mt-16 space-y-4">
+                            <NavLink onClick={handleMenuToggle} to="/dashboard" className="flex items-center p-4 rounded-2xl bg-gray-50 dark:bg-[#0a0a0a] text-gray-800 dark:text-white font-bold">
+                                <RxDashboard size={24} className="mr-4" /> Dashboard
+                            </NavLink>
+                            <NavLink onClick={handleMenuToggle} to="/overview" className="flex items-center p-4 rounded-2xl bg-gray-50 dark:bg-[#0a0a0a] text-gray-800 dark:text-white font-bold">
+                                <MdOutlineFolderShared size={24} className="mr-4" /> Overview
+                            </NavLink>
+                            <NavLink onClick={handleMenuToggle} to="/workflow" className="flex items-center p-4 rounded-2xl bg-gray-50 dark:bg-[#0a0a0a] text-gray-800 dark:text-white font-bold">
+                                <BsGraphUp size={24} className="mr-4" /> Workflow
+                            </NavLink>
+                            {/* ... more mobility links if needed */}
+                        </div>
+                        
+                        <div className="mt-auto border-t border-gray-100 dark:border-[#1a1a1a] pt-6">
+                            <div className="flex items-center mb-6">
+                                <img src={`/Avatars/${user.avatar}.jpg`} alt="Profile" className="w-12 h-12 rounded-2xl object-cover" />
+                                <div className="ml-4">
+                                    <p className="font-bold text-gray-800 dark:text-white">{user.name}</p>
+                                    <p className="text-sm text-gray-400">{user.email}</p>
+                                </div>
+                            </div>
+                            <button 
+                                onClick={handleLogout}
+                                className="w-full p-4 rounded-2xl bg-red-50 text-red-600 font-bold flex items-center justify-center animate-pulse-slow"
+                            >
+                                <RiLogoutBoxRLine size={24} className="mr-3" /> Log Out
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };

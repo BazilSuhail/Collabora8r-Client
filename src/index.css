@@ -2,49 +2,50 @@
 @tailwind components;
 @tailwind utilities;
  
-::-webkit-scrollbar {
-  width: 8px;
-  height: 12px;
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  @apply bg-white text-gray-900 transition-colors duration-300;
+  scrollbar-width: thin;
+  scrollbar-color: #717171 #ffffff;
+}
+
+.dark body {
+  @apply bg-[#000000] text-white;
+  scrollbar-color: #333333 #000000;
 }
 
 #root {
   overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
 ::-webkit-scrollbar-track {
-  background: #ffffff;
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #686868; 
-  border-radius: 10px;
+  @apply bg-gray-300 dark:bg-[#1a1a1a] rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #939393;
-}
- 
-body {
-  scrollbar-width: thin;
-  scrollbar-color: #717171 #ffffff;
+  @apply bg-gray-400 dark:bg-[#252525];
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
- 
-.hide-scrollbar {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+/* Glassmorphism utility */
+.glass {
+  @apply bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md border border-gray-200/50 dark:border-[#1a1a1a]/50;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .spin-slow {
