@@ -116,7 +116,7 @@ const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
                     {/* Top Section: Logo + Icons */}
                     <div className="flex items-center justify-between mb-6 px-1">
                         <div className="flex items-center gap-2">
-                            <img src="/logo.svg" alt="Logo" className="w-8 h-8 min-w-[32px]" />
+                            <img src="/collabor8r.svg" alt="Logo" className="w-8 h-8 min-w-[32px]" />
                             <AnimatePresence>
                                 {isExpanded && (
                                     <motion.div 

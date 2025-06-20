@@ -16,6 +16,8 @@
 .DS_Store
 .env.local
 .env.development.local
+.env
+package-lock.json
 .env.test.local
 .env.production.local
 
