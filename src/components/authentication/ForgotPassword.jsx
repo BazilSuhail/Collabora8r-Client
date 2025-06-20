@@ -129,192 +129,164 @@ const ForgotPassword = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 w-screen h-screen z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
 
-            <div className='lg:w-[450px] w-[320px] sm:w-[300px] '>
+            <div className='w-full max-w-[450px]'>
 
                 <motion.div
-                    initial={{ scale: 0.7, opacity: 1, y: -500 }}
+                    initial={{ scale: 0.9, opacity: 0, y: 20 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     transition={{
-                        duration: 0.5,
+                        duration: 0.4,
                         ease: [0.2, 0.8, 0.2, 1],
                     }}
-                    className="bg-white rounded-lg shadow-lg flex flex-col py-4 px-6"
+                    className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl flex flex-col py-8 px-6 lg:px-8 border border-gray-100 dark:border-[#1a1a1a]"
                 >
-                    <button onClick={onClose}
-                        className="ml-auto text-gray-700 text-[16px] scale-x-[1.4] font-[600] hover:text-gray-700"
-                    >
-                        X
-                    </button>
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-8 bg-orange-600 rounded-full" />
+                            <h2 className="text-xl font-black text-gray-800 dark:text-white tracking-tighter uppercase">Reset Uplink</h2>
+                        </div>
+                        <button onClick={onClose}
+                            className="p-2 text-gray-400 hover:text-orange-600 dark:hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-xl transition-all"
+                        >
+                            <RxCross2 className="text-2xl" />
+                        </button>
+                    </div>
 
                     {step === 1 && (
-                        <>
-                            <h2 className="text-[17px] flex items-center text-gray-800 mb-6"><FaThinkPeaks className='text-black text-[19px] mr-[5px] font-[700]' /> Forgot Password</h2>
-                            <div className="relative mb-4 flex items-center">
-                                <div className="bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]">
-                                    <AiOutlineMail className="text-gray-50 text-[22px]" />
-                                </div>
-                                <div className="flex-1">
-                                    <label
-                                        htmlFor="email"
-                                        className={`absolute left-12 text-gray-900 font-[600] text-[16px] transition-all duration-300 ${focusField === 'email' || email ? '-top-5 text-sm' : 'top-2'
-                                            }`}
-                                    >
-                                        Email
-                                    </label>
+                        <div className="space-y-6">
+                            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Identify your credentials to initialize recovery protocol.</p>
+                            
+                            <div className="relative group">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Personnel Identifier (Email)</label>
+                                <div className="flex items-center bg-gray-50 dark:bg-[#151515] rounded-2xl p-4 border-2 border-transparent group-focus-within:border-orange-500/20 transition-all">
+                                    <AiOutlineMail className="text-gray-400 text-xl mr-3" />
                                     <input
                                         type="email"
+                                        placeholder="Enter your email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        onFocus={() => handleFocus('email')}
-                                        onBlur={handleBlur}
-                                        className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+                                        className="bg-transparent w-full text-gray-800 dark:text-white outline-none font-bold text-sm"
                                     />
                                 </div>
                             </div>
+
                             {error && (
-                                <p className="text-[15px] px-[10px] mb-[12px] py-[8px] text-red-700 font-[500] rounded-xl">
+                                <p className="text-xs font-bold text-red-600 uppercase bg-red-50 dark:bg-red-950/20 p-4 rounded-2xl">
                                     {error}
                                 </p>
                             )}
+
                             <button
                                 onClick={handleSendOtp}
-                                className="w-full bg-blue-700 hover:bg-blue-600 text-white rounded-lg font-[500] px-[15px] py-[10px] transition duration-300 flex items-center justify-center"
+                                className="w-full bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black text-xs uppercase tracking-[3px] py-4 transition-all shadow-lg shadow-orange-600/20 active:scale-95 flex items-center justify-center gap-2"
                             >
-                                Send OTP <IoSendSharp className="ml-2 text-[20px]" />
+                                Send Security Token <IoSendSharp className="text-lg" />
                             </button>
-                        </>
+                        </div>
                     )}
 
                     {step === 2 && (
-                        <>
-                            <h2 className="text-2xl text-center text-gray-800 mb-6">Verify OTP</h2>
-                            <div className="relative mb-4 flex items-center">
-                                <div className="bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]">
-                                    <AiOutlineCheck className="text-gray-50 text-[22px]" />
-                                </div>
-                                <div className="flex-1">
-                                    <label
-                                        htmlFor="otp"
-                                        className={`absolute left-12 text-gray-900 font-[600] text-[16px] transition-all duration-300 ${focusField === 'otp' || otp ? '-top-5 text-sm' : 'top-2'
-                                            }`}
-                                    >
-                                        Enter OTP
-                                    </label>
+                        <div className="space-y-6">
+                            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Verify authorization token sent to your terminal.</p>
+                            
+                            <div className="relative group">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Security Token (OTP)</label>
+                                <div className="flex items-center bg-gray-50 dark:bg-[#151515] rounded-2xl p-4 border-2 border-transparent group-focus-within:border-orange-500/20 transition-all">
+                                    <AiOutlineCheck className="text-gray-400 text-xl mr-3" />
                                     <input
                                         type="text"
+                                        placeholder="Enter 6-digit code"
                                         value={otp}
                                         onChange={(e) => setOtp(e.target.value)}
-                                        onFocus={() => handleFocus('otp')}
-                                        onBlur={handleBlur}
-                                        className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
+                                        className="bg-transparent w-full text-gray-800 dark:text-white outline-none font-bold text-sm tracking-[5px]"
                                     />
                                 </div>
                             </div>
-                            <div className="text-center text-gray-600 mb-4 flex justify-center items-center">
-                                <AiOutlineClockCircle className="text-gray-600 mr-2" />
+
+                            <div className="flex items-center justify-center gap-2 text-gray-500 bg-gray-50 dark:bg-[#151515] py-3 rounded-2xl">
+                                <AiOutlineClockCircle className="text-lg" />
                                 {timer > 0 ? (
-                                    <p>
-                                        Resend OTP in{' '}
-                                        <span className="text-[17px] font-[600] underline text-blue-600">
-                                            {timer} seconds
-                                        </span>
+                                    <p className="text-[10px] font-black uppercase tracking-widest">
+                                        Re-authorization available in <span className="text-orange-600">{timer}S</span>
                                     </p>
                                 ) : (
-                                    <p>You can resend the OTP now!</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-green-500">Token reload available</p>
                                 )}
                             </div>
+
                             {error && (
-                                <div className="bg-red-100 mb-4 py-2 px-3 rounded-lg">
-                                    <p className="text-red-700 font-[500] text-[15px]">{error}</p>
-                                </div>
+                                <p className="text-xs font-bold text-red-600 uppercase bg-red-50 dark:bg-red-950/20 p-4 rounded-2xl">
+                                    {error}
+                                </p>
                             )}
-                            <div className="w-full flex justify-between gap-2">
+
+                            <div className="grid grid-cols-2 gap-4">
                                 <button
                                     onClick={handleVerifyOtp}
-                                    className="w-full bg-gray-700 hover:bg-gray-600 text-white h-[45px] rounded-md transition-colors duration-300 flex items-center justify-center"
+                                    className="w-full bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black text-xs uppercase tracking-widest py-4 transition-all active:scale-95"
                                 >
-                                    Verify OTP
+                                    Verify
                                 </button>
                                 <button
                                     onClick={handleResendOtp}
-                                    className={`w-full ${isResendDisabled
-                                        ? 'bg-gray-400 cursor-not-allowed'
-                                        : 'bg-blue-700 hover:bg-blue-600'
-                                        } text-white h-[45px] rounded-md transition-colors duration-300`}
                                     disabled={isResendDisabled}
+                                    className={`w-full ${isResendDisabled ? 'opacity-50 grayscale cursor-not-allowed' : 'bg-gray-100 dark:bg-[#1a1a1a] hover:bg-gray-200 dark:hover:bg-[#252525] text-gray-800 dark:text-white'} rounded-2xl font-black text-xs uppercase tracking-widest py-4 transition-all active:scale-95`}
                                 >
-                                    Resend OTP
+                                    Resend
                                 </button>
                             </div>
-                        </>
+                        </div>
                     )}
 
                     {step === 3 && (
-                        <>
-                            <h2 className="text-2xl text-center text-gray-800 mb-6">Reset Password</h2>
-                            <div className="relative mb-4 flex items-center">
-                                <div className="bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]">
-                                    <AiOutlineUser className="text-gray-50 text-[22px]" />
+                        <div className="space-y-6">
+                            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Protocol success. Establish new security credentials.</p>
+                            
+                            <div className="space-y-4">
+                                <div className="relative group">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">New Access Key</label>
+                                    <div className="flex items-center bg-gray-50 dark:bg-[#151515] rounded-2xl p-4 border-2 border-transparent group-focus-within:border-orange-500/20 transition-all">
+                                        <AiOutlineUser className="text-gray-400 text-xl mr-3" />
+                                        <input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            className="bg-transparent w-full text-gray-800 dark:text-white outline-none font-bold text-sm"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="flex-1">
-                                    <label
-                                        htmlFor="newPassword"
-                                        className={`absolute left-12 text-gray-900 font-[600] text-[16px] transition-all duration-300 ${focusField === 'newPassword' || newPassword ? '-top-5 text-sm' : 'top-2'
-                                            }`}
-                                    >
-                                        New Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        onFocus={() => handleFocus('newPassword')}
-                                        onBlur={handleBlur}
-                                        className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="relative mb-4 flex items-center">
-                                <div className="bg-gray-400 mr-2 rounded-full flex items-center justify-center w-[40px] h-[40px]">
-                                    <AiOutlineUser className="text-gray-50 text-[22px]" />
-                                </div>
-                                <div className="flex-1">
-                                    <label
-                                        htmlFor="confirmPassword"
-                                        className={`absolute left-12 text-gray-900 font-[600] text-[16px] transition-all duration-300 ${focusField === 'confirmPassword' || confirmPassword
-                                            ? '-top-5 text-sm'
-                                            : 'top-2'
-                                            }`}
-                                    >
-                                        Confirm Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        onFocus={() => handleFocus('confirmPassword')}
-                                        onBlur={handleBlur}
-                                        className="w-full py-3 bg-transparent text-gray-700 border-b-[2px] border-gray-600 focus:outline-none"
-                                    />
+                                <div className="relative group">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Confirm Access Key</label>
+                                    <div className="flex items-center bg-gray-50 dark:bg-[#151515] rounded-2xl p-4 border-2 border-transparent group-focus-within:border-orange-500/20 transition-all">
+                                        <AiOutlineUser className="text-gray-400 text-xl mr-3" />
+                                        <input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            className="bg-transparent w-full text-gray-800 dark:text-white outline-none font-bold text-sm"
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
                             {error && (
-                                <div className="bg-red-100 mb-4 py-2 px-3 rounded-lg">
-                                    <p className="text-red-700 font-[500] text-[15px]">{error}</p>
-                                </div>
+                                <p className="text-xs font-bold text-red-600 uppercase bg-red-50 dark:bg-red-950/20 p-4 rounded-2xl">
+                                    {error}
+                                </p>
                             )}
 
                             <button
                                 onClick={handleResetPassword}
-                                className="w-full bg-green-700 hover:bg-green-600 text-white rounded-lg font-[500] px-[15px] py-[10px] transition duration-300 flex items-center justify-center"
+                                className="w-full bg-green-600 hover:bg-green-700 text-white rounded-2xl font-black text-xs uppercase tracking-[3px] py-4 transition-all shadow-lg shadow-green-600/20 active:scale-95"
                             >
-                                Reset Password
+                                Secure New Credentials
                             </button>
-                        </>
+                        </div>
                     )}
                 </motion.div>
             </div>

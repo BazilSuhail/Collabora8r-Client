@@ -1,20 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
- 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xsx: 1200px;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   color-scheme: light dark;
 }
 
 body {
-  @apply bg-white text-gray-900 transition-colors duration-300;
+  background-color: white;
+  color: #111827;
+  transition-property: background-color, color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  font-family: 'Poppins', sans-serif;
   scrollbar-width: thin;
   scrollbar-color: #717171 #ffffff;
 }
 
-.dark body {
-  @apply bg-[#000000] text-white;
-  scrollbar-color: #333333 #000000;
+html.dark body {
+  background-color: #030712;
+  color: #f9fafb;
+  scrollbar-color: #404040 #030712;
 }
 
 #root {
@@ -27,20 +38,36 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-[#1a1a1a] rounded-full;
+  background-color: #d1d5db;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-[#252525];
+  background-color: #9ca3af;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280;
 }
 
 /* Glassmorphism utility */
 .glass {
-  @apply bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md border border-gray-200/50 dark:border-[#1a1a1a]/50;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(1rem);
+  border: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+html.dark .glass {
+  background-color: rgba(17, 24, 39, 0.7);
+  border-color: rgba(55, 65, 81, 0.5);
 }
 
 @keyframes spin {
