@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 //import NoTasks from "../Assets/NoTasks.webp"; 
 
-import NoTasks from "/Resources/1.png";
+import NoTasks from "/resources/1.png";
 import Loader from '../components/loaders/Loader';
 
 import { useAuthContext } from '../AuthProvider';
