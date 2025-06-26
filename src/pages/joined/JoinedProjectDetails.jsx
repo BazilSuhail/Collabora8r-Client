@@ -7,7 +7,7 @@ import { FaLandMineOn, FaPeopleGroup } from 'react-icons/fa6'
 import { FaBorderAll, FaEye } from 'react-icons/fa'
 import { useAuthContext } from '../../AuthProvider'
 import Loader from '../../components/loaders/Loader'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const JoinedProjectDetails = () => {
   const { user } = useAuthContext();

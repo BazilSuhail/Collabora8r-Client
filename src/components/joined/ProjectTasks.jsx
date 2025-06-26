@@ -56,7 +56,7 @@ const MyTask = ({ task, user, creator }) => {
             <div className="flex items-center gap-2">
               <span className="text-sm font-bold text-gray-700 dark:text-gray-300">{user.name}</span>
               <img
-                src={`/Avatars/${user.avatar || 1}.jpg`}
+                src={`/avatars/${user.avatar || 1}.jpg`}
                 alt={user.name}
                 className="w-8 h-8 rounded-lg border-2 border-white dark:border-[#0a0a0a]"
               />

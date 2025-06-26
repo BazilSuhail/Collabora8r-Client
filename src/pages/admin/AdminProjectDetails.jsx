@@ -101,7 +101,7 @@ const AdminProjectDetails = () => {
   }
 
   return (
-    <main className="min-h-screen bg-[#fcfaf8] dark:bg-[#000000] p-6 transition-colors duration-300">
+    <main className="min-h-screen bg-[#fcfaf8] dark:bg-[#000000] p-4 md:p-5 transition-colors duration-300">
       <div className="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-8 pt-4">
         
         {showModal && <EditProject project={project} setShowModal={setShowModal} />}
@@ -114,7 +114,7 @@ const AdminProjectDetails = () => {
                 <FaClipboardList />
               </div>
               <div>
-                <h1 className="text-xl md:text-3xl lg:text-4xl font-black text-gray-800 dark:text-white tracking-tight uppercase">
+                <h1 className="text-xl md:text-2xl font-semibold text-gray-800 dark:text-white tracking-tight uppercase">
                   {project.name}
                 </h1>
                 <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-semibold mt-1">Project Details</p>
@@ -196,9 +196,9 @@ const AdminProjectDetails = () => {
                 <div className="flex items-center gap-3 md:gap-4">
                   <div className="relative">
                     <img
-                      src={`/Avatars/${user.avatar}.jpg`}
+                      src={`/avatars/${user.avatar}.jpg`}
                       alt={user.name}
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-lg md:rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-md grayscale group-hover/user:grayscale-0 transition-all"
+                      className="w-14 h-14 md:w-16 md:h-16 rounded-full md:rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-md grayscale group-hover/user:grayscale-0 transition-all"
                     />
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#151515] rounded-full animate-pulse" />
                   </div>
@@ -218,7 +218,7 @@ const AdminProjectDetails = () => {
             ) : (
               !isLoading && (
                 <div className='flex-1 flex flex-col items-center justify-center opacity-50'>
-                  <img src="/Resources/7.png" alt='Search' className='w-40 md:w-56 mb-4 md:mb-6' />
+                  <img src="/resources/7.png" alt='Search' className='w-40 md:w-56 mb-4 md:mb-6' />
                   <p className="text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Enter an email to search</p>
                 </div>
               )
@@ -246,7 +246,7 @@ const AdminProjectDetails = () => {
             ) : (
               <div className="flex items-center gap-3 md:gap-4 group/mgr">
                 <img
-                  src={`/Avatars/2.jpg`}
+                  src={`/avatars/2.jpg`}
                   alt={project.projectManager.name}
                   className="w-12 h-12 md:w-14 md:h-14 rounded-lg md:rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-sm grayscale group-hover/mgr:grayscale-0 transition-all duration-500"
                 />
@@ -273,9 +273,9 @@ const AdminProjectDetails = () => {
                 {project.team.map((member, index) => (
                   <div key={index} className="flex items-center gap-3 md:gap-4 hover:bg-gray-50 dark:hover:bg-[#151515] transition-colors p-2 md:p-3 rounded-lg group/member">
                     <img
-                      src={`/Avatars/${member.avatar}.jpg`}
+                      src={`/avatars/${member.avatar}.jpg`}
                       alt={member.name}
-                      className="w-9 h-9 md:w-10 md:h-10 rounded-lg border border-gray-200 dark:border-[#1a1a1a] shadow-sm grayscale group-hover/member:grayscale-0 transition-all flex-shrink-0"
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 dark:border-[#1a1a1a] shadow-sm grayscale group-hover/member:grayscale-0 transition-all flex-shrink-0"
                     />
                     <div className="min-w-0">
                       <p className="text-xs md:text-sm font-bold text-gray-800 dark:text-white uppercase tracking-tight truncate">{member.name}</p>
@@ -302,7 +302,7 @@ const AdminProjectDetails = () => {
               <div className="flex flex-col gap-3">
                 {project.tasks.map((task, index) => (
                   <div key={index} className="p-3 md:p-4 bg-gray-50 dark:bg-[#151515] hover:bg-white dark:hover:bg-[#0a0a0a] rounded-lg md:rounded-xl border border-gray-100 dark:border-[#1a1a1a] transition-colors group/task shadow-sm">
-                    <p className="text-xs md:text-sm font-bold text-gray-800 dark:text-white mb-2 line-clamp-2 group-hover/task:text-orange-600 transition-colors">{task.title}</p>
+                    <p className="text-xs md:text-md font-semibold text-gray-800 dark:text-white mb-2 line-clamp-2 group-hover/task:text-orange-600 transition-colors">{task.title}</p>
                     <div className='flex justify-between items-center gap-2'>
                       <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg ${
                         task.priority === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 
