@@ -43,10 +43,10 @@ const ManagerProjectList = () => {
                     </div>
                 </div>
 
-                <div className='h-[1px] bg-gray-200 dark:bg-[#1a1a1a] w-full mb-10'></div>
+                <div className='h-0.75 bg-gray-200 dark:bg-[#2a2828] w-full mb-10'></div>
 
                 {projects.length === 0 ? (
-                    <div className='flex flex-col items-center justify-center py-20 bg-white dark:bg-[#0a0a0a] rounded-[2.5rem] border border-dashed border-gray-200 dark:border-[#1a1a1a] shadow-sm'>
+                    <div className='flex flex-col items-center justify-center py-20 bg-white dark:bg-[#0a0a0a] rounded-xl border border-dashed border-gray-200 dark:border-[#1a1a1a] shadow-sm'>
                         <div className="relative mb-8">
                            <div className="absolute inset-0 bg-orange-500/10 blur-3xl rounded-full" />
                            <img src="/Resources/6.png" alt='No projects' className='w-64 grayscale opacity-40 dark:invert brightness-0' />
@@ -60,15 +60,15 @@ const ManagerProjectList = () => {
                             <motion.div 
                                 key={project._id}
                                 whileHover={{ y: -8 }}
-                                className="group bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-[280px]"
+                                className="group bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-70"
                             >
-                                <div className="relative h-24 overflow-hidden">
+                                <div className="relative h-32 overflow-hidden">
                                     <img 
-                                        src={`/Themes/${project.theme || 1}.jpg`} 
+                                        src={`/themes/${project.theme || 1}.jpg`} 
                                         alt="" 
                                         className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[1.5s] grayscale-[0.5] group-hover:grayscale-0" 
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent flex items-center justify-end px-8">
+                                    <div className="absolute inset-0 bg-linear-to-l from-black/80 via-black/40 to-transparent flex items-center justify-end pl-10 pr-2">
                                         <Link to={`/manager-tasks/${project._id}`} className="font-black text-white text-lg tracking-tight hover:text-orange-500 transition-colors uppercase">
                                             {project.name.length > 20 ? project.name.slice(0, 20) + "..." : project.name}
                                         </Link>
@@ -76,11 +76,11 @@ const ManagerProjectList = () => {
                                 </div>
 
                                 <div className="px-8 py-8 flex-1 flex relative">
-                                    <div className="absolute -top-12 left-8 z-10 transition-transform duration-500 group-hover:-translate-y-2">
+                                    <div className="absolute -top-12 left-4 z-10 transition-transform duration-500 group-hover:-translate-y-2">
                                         <img 
-                                            src={`/Avatars/${project.createdBy.avatar || 1}.jpg`} 
+                                            src={`/avatars/${project.createdBy.avatar || 1}.jpg`} 
                                             alt="" 
-                                            className="w-20 h-20 rounded-3xl border-4 border-white dark:border-[#0a0a0a] shadow-2xl" 
+                                            className="w-20 h-20 rounded-full border-4 border-white dark:border-[#0a0a0a] shadow-2xl" 
                                         />
                                     </div>
 
@@ -108,7 +108,7 @@ const ManagerProjectList = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Link to={`/tasks/${project._id}`} className="w-full py-4 text-center bg-gray-50 dark:bg-[#151515] hover:bg-orange-600 hover:text-white text-[10px] font-black uppercase tracking-[3px] transition-all border-t border-gray-100 dark:border-[#1a1a1a]">
+                                <Link to={`/manager-tasks/${project._id}`} className="w-full py-4 text-center bg-gray-50 dark:bg-[#151515] hover:bg-orange-600 hover:text-white text-[10px] font-black uppercase tracking-[3px] transition-all border-t border-gray-100 dark:border-[#1a1a1a]">
                                     Assume Command &rarr;
                                 </Link>
                             </motion.div>

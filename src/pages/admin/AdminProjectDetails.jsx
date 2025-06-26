@@ -108,123 +108,118 @@ const AdminProjectDetails = () => {
         
         <section className='lg:col-span-8 space-y-8'>
           {/* Project Header Card */}
-          <div className='bg-white/60 dark:bg-black/60 backdrop-blur-sm p-8 flex flex-col md:flex-row md:items-center justify-between gap-8 border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl relative overflow-hidden group'>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:bg-orange-600/10 transition-colors" />
-            <div className="flex items-center gap-6 relative">
-              <div className='w-16 h-16 bg-orange-600 rounded-[2rem] flex items-center justify-center text-3xl text-white shadow-lg shadow-orange-600/20'>
+          <div className='bg-white dark:bg-[#0a0a0a] p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm'>
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className='w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-lg md:rounded-xl flex items-center justify-center text-lg md:text-xl text-white shadow-md'>
                 <FaClipboardList />
               </div>
               <div>
-                <h1 className="text-3xl md:text-5xl font-black text-gray-800 dark:text-white tracking-tighter uppercase leading-tight group-hover:text-orange-600 transition-colors">
+                <h1 className="text-xl md:text-3xl lg:text-4xl font-black text-gray-800 dark:text-white tracking-tight uppercase">
                   {project.name}
                 </h1>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="w-1.5 h-1.5 bg-orange-600 rounded-full animate-pulse" />
-                  <p className="text-[10px] md:text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[4px]">Sector ID: {projectId.slice(-8).toUpperCase()}</p>
-                </div>
+                <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-semibold mt-1">Project Details</p>
               </div>
             </div>
             <button 
               onClick={() => setShowModal(true)} 
-              className='flex items-center gap-3 px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl text-[10px] font-black uppercase tracking-[3px] transition-all shadow-xl shadow-orange-600/20 active:scale-95 group'
+              className='px-5 md:px-8 py-3 md:py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg md:rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all shadow-sm active:scale-95 whitespace-nowrap'
             >
-              <FaEdit className="text-xl group-hover:rotate-12 transition-transform" />
-              <span>Configure Sector</span>
+              Edit
             </button>
           </div>
 
           {/* Description Card */}
-          <div className='bg-white/60 dark:bg-black/60 backdrop-blur-sm p-8 border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl'>
-            <div className='flex items-center gap-3 text-orange-600 mb-6'>
-              <CgUiKit className='text-2xl' />
-              <h3 className='text-sm font-black uppercase tracking-[3px]'>Sector Objectives & Guidelines</h3>
+          <div className='bg-white dark:bg-[#0a0a0a] p-4 md:p-6 border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm'>
+            <div className='flex items-center gap-3 text-orange-600 mb-4 md:mb-6'>
+              <CgUiKit className='text-lg md:text-xl' />
+              <h3 className='text-sm md:text-base font-bold uppercase tracking-wide'>About</h3>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed pl-8 border-l-2 border-orange-500/10 italic font-medium">
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
               {project.description}
             </p>
           </div>
 
           {/* User Recruitment Card */}
-          <div className='bg-white/60 dark:bg-black/60 backdrop-blur-sm p-10 border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl min-h-[500px] flex flex-col'>
-            <div className="flex items-center gap-4 text-orange-600 mb-10">
-              <div className="p-3 bg-orange-600/10 rounded-2xl">
-                <MdMarkEmailUnread className="text-3xl" />
+          <div className='bg-white dark:bg-[#0a0a0a] p-4 md:p-6 border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm min-h-[400px] flex flex-col'>
+            <div className="flex items-center gap-3 md:gap-4 text-orange-600 mb-6 md:mb-8">
+              <div className="w-10 h-10 md:w-11 md:h-11 bg-orange-100 dark:bg-orange-500/10 rounded-lg md:rounded-xl flex items-center justify-center">
+                <MdMarkEmailUnread className="text-lg md:text-xl" />
               </div>
               <div>
-                <h2 className="text-xl font-black uppercase tracking-[2px] leading-none">Recruit Contributors</h2>
-                <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">Expanding the collective knowledge base</p>
+                <h2 className="text-base md:text-lg font-bold uppercase tracking-wide">Add Members</h2>
+                <p className="text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400 mt-0.5">Search and invite team members</p>
               </div>
             </div>
 
-            <div className="relative group mb-10">
-              <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                <FaSearch className="text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+            <div className="relative group mb-6 md:mb-8">
+              <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none">
+                <FaSearch className="text-xs md:text-sm text-gray-400 group-focus-within:text-orange-500 transition-colors" />
               </div>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Identify unit by email signature..."
-                className="w-full pl-16 pr-44 py-6 bg-gray-50 dark:bg-[#151515] text-gray-800 dark:text-white border-2 border-transparent focus:border-orange-500/20 rounded-3xl outline-none transition-all font-bold text-lg"
+                placeholder="Enter email address"
+                className="w-full pl-10 md:pl-12 pr-32 md:pr-40 py-3 md:py-4 bg-gray-50 dark:bg-[#151515] text-gray-800 dark:text-white text-sm md:text-base border border-gray-200 dark:border-[#1a1a1a] focus:border-orange-500/40 focus:ring-1 focus:ring-orange-500/20 rounded-lg md:rounded-xl outline-none transition-all font-medium"
               />
               <button
                 onClick={handleSearch}
-                className="absolute right-3 top-3 bottom-3 px-10 bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[4px] hover:bg-orange-700 transition-all shadow-lg active:scale-95"
+                className="absolute right-2 md:right-3 top-2 md:top-3 bottom-2 md:bottom-3 px-4 md:px-6 bg-orange-600 hover:bg-orange-700 text-white rounded-md md:rounded-lg text-xs md:text-sm font-bold uppercase tracking-wider transition-all shadow-sm active:scale-95"
               >
-                Scan
+                Search
               </button>
             </div>
 
             {isLoading && (
               <div className="flex-1 flex flex-col items-center justify-center gap-4">
-                <div className="w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin" />
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[4px]">Awaiting Signal Verification...</p>
+                <div className="w-10 h-10 border-4 border-orange-600 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Searching...</p>
               </div>
             )}
             
             {error && (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-red-600/5 border border-red-600/10 text-red-600 rounded-3xl flex items-center gap-4 mb-8">
-                <MdErrorOutline className='text-3xl' />
-                <span className="text-sm font-black uppercase tracking-widest">{error}</span>
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-4 md:p-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 rounded-lg md:rounded-xl flex items-start gap-3 mb-6 md:mb-8">
+                <MdErrorOutline className='text-lg md:text-xl flex-shrink-0 mt-0.5' />
+                <span className="text-xs md:text-sm font-semibold">{error}</span>
               </motion.div>
             )}
             
             {success && (
-              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="p-6 bg-green-600/5 border border-green-600/10 text-green-600 rounded-3xl flex items-center gap-4 mb-8">
-                <IoCheckmarkDoneCircleSharp className='text-3xl' />
-                <span className="text-sm font-black uppercase tracking-widest">{success}</span>
+              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="p-4 md:p-5 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 text-green-600 dark:text-green-400 rounded-lg md:rounded-xl flex items-start gap-3 mb-6 md:mb-8">
+                <IoCheckmarkDoneCircleSharp className='text-lg md:text-xl flex-shrink-0 mt-0.5' />
+                <span className="text-xs md:text-sm font-semibold">{success}</span>
               </motion.div>
             )}
 
             {user ? (
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col sm:flex-row justify-between items-center bg-gray-50/50 dark:bg-[#151515] p-8 rounded-[2.5rem] border border-orange-500/10 gap-8 group/user">
-                <div className="flex items-center gap-6">
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col md:flex-row md:justify-between md:items-center bg-gray-50 dark:bg-[#151515] p-4 md:p-6 rounded-lg md:rounded-xl border border-gray-100 dark:border-[#1a1a1a] gap-4 md:gap-6 group/user">
+                <div className="flex items-center gap-3 md:gap-4">
                   <div className="relative">
                     <img
                       src={`/Avatars/${user.avatar}.jpg`}
                       alt={user.name}
-                      className="w-20 h-20 rounded-[2rem] border-4 border-white dark:border-[#0a0a0a] shadow-xl grayscale group-hover/user:grayscale-0 transition-all"
+                      className="w-14 h-14 md:w-16 md:h-16 rounded-lg md:rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-md grayscale group-hover/user:grayscale-0 transition-all"
                     />
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-4 border-white dark:border-[#151515] rounded-full animate-pulse" />
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#151515] rounded-full animate-pulse" />
                   </div>
-                  <div>
-                    <h4 className="text-xl font-black text-gray-800 dark:text-white uppercase tracking-tight">{user.name}</h4>
-                    <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">{user.email}</p>
+                  <div className="min-w-0">
+                    <h4 className="text-sm md:text-base font-bold text-gray-800 dark:text-white uppercase tracking-tight truncate">{user.name}</h4>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleAddUser}
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-white dark:bg-[#0a0a0a] text-orange-600 border-2 border-orange-600 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[4px] hover:bg-orange-600 hover:text-white transition-all shadow-md active:scale-95"
+                  className="w-full md:w-auto flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg md:rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all shadow-sm active:scale-95 whitespace-nowrap"
                 >
-                  <FaUserPlus className="text-lg" />
-                  <span>Transmit Invitation</span>
+                  <FaUserPlus />
+                  <span>Add</span>
                 </button>
               </motion.div>
             ) : (
               !isLoading && (
-                <div className='flex-1 flex flex-col items-center justify-center opacity-40 grayscale'>
-                  <img src="/Resources/7.png" alt='Search' className='w-56 mb-6' />
-                  <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[6px]">Awaiting Signal Input</p>
+                <div className='flex-1 flex flex-col items-center justify-center opacity-50'>
+                  <img src="/Resources/7.png" alt='Search' className='w-40 md:w-56 mb-4 md:mb-6' />
+                  <p className="text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Enter an email to search</p>
                 </div>
               )
             )}
@@ -234,90 +229,89 @@ const AdminProjectDetails = () => {
         {/* Sidebar Sections */}
         <section className='lg:col-span-4 space-y-8'>
           {/* Manager Section */}
-          <div className="p-8 bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl relative overflow-hidden">
-            <div className="flex items-center gap-3 text-orange-600 mb-8 border-b border-gray-50 dark:border-[#1a1a1a] pb-6">
-              <MdOutlineAdminPanelSettings className="text-3xl" />
-              <h3 className="text-sm font-black uppercase tracking-[3px]">Sector Authority</h3>
+          <div className="p-4 md:p-6 bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm">
+            <div className="flex items-center gap-3 text-orange-600 mb-4 md:mb-6 border-b border-gray-100 dark:border-[#1a1a1a] pb-4 md:pb-6">
+              <MdOutlineAdminPanelSettings className="text-lg md:text-xl" />
+              <h3 className="text-sm md:text-base font-bold uppercase tracking-wide">Manager</h3>
             </div>
             
             {project.projectManager.status === 'Pending' ? (
-              <div className='flex flex-col gap-4'>
-                <div className='flex items-center gap-3 px-4 py-3 bg-amber-600/5 text-amber-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic border border-amber-600/10'>
-                  <div className="w-2 h-2 bg-amber-500 rounded-full animate-ping" />
-                  Signal Synchronization Pending...
+              <div className='flex flex-col gap-3'>
+                <div className='flex items-center gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-lg text-xs font-medium border border-amber-200 dark:border-amber-500/20'>
+                  <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping" />
+                  Invitation Pending
                 </div>
-                <p className="text-[10px] text-gray-400 dark:text-gray-500 px-2 font-bold uppercase tracking-tight truncate">Target: {project.projectManager.email}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate">{project.projectManager.email}</p>
               </div>
             ) : (
-              <div className="flex items-center gap-5 group/mgr p-2">
+              <div className="flex items-center gap-3 md:gap-4 group/mgr">
                 <img
                   src={`/Avatars/2.jpg`}
                   alt={project.projectManager.name}
-                  className="w-14 h-14 rounded-2xl border-2 border-white dark:border-[#1a1a1a] shadow-lg grayscale group-hover/mgr:grayscale-0 transition-all duration-500"
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-lg md:rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-sm grayscale group-hover/mgr:grayscale-0 transition-all duration-500"
                 />
                 <div className="min-w-0">
-                  <p className="text-lg font-black text-gray-800 dark:text-white uppercase tracking-tight truncate leading-none mb-1">{project.projectManager.name}</p>
-                  <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest truncate">{project.projectManager.email}</p>
+                  <p className="text-sm md:text-base font-bold text-gray-800 dark:text-white uppercase tracking-tight truncate">{project.projectManager.name}</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 truncate">{project.projectManager.email}</p>
                 </div>
               </div>
             )}
           </div>
 
           {/* Members List Section */}
-          <div className="p-8 bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl">
-            <div className="flex items-center gap-3 text-orange-600 mb-8 border-b border-gray-50 dark:border-[#1a1a1a] pb-6">
-              <FaUsers className="text-3xl" />
-              <h3 className="text-sm font-black uppercase tracking-[3px]">Active Collective</h3>
-              <span className="ml-auto bg-gray-100 dark:bg-[#151515] text-gray-500 px-3 py-1 rounded-xl text-[10px] font-black">
+          <div className="p-4 md:p-6 bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm">
+            <div className="flex items-center gap-3 text-orange-600 mb-4 md:mb-6 border-b border-gray-100 dark:border-[#1a1a1a] pb-4 md:pb-6">
+              <FaUsers className="text-lg md:text-xl" />
+              <h3 className="text-sm md:text-base font-bold uppercase tracking-wide">Team</h3>
+              <span className="ml-auto bg-gray-100 dark:bg-[#151515] text-gray-600 dark:text-gray-400 px-2.5 md:px-3 py-1 rounded-lg text-xs font-bold">
                 {project.team.length}
               </span>
             </div>
             
             {project.team.length > 0 ? (
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3">
                 {project.team.map((member, index) => (
-                  <div key={index} className="flex items-center gap-4 hover:translate-x-2 transition-all p-1 group/member">
+                  <div key={index} className="flex items-center gap-3 md:gap-4 hover:bg-gray-50 dark:hover:bg-[#151515] transition-colors p-2 md:p-3 rounded-lg group/member">
                     <img
                       src={`/Avatars/${member.avatar}.jpg`}
                       alt={member.name}
-                      className="w-10 h-10 rounded-xl border-2 border-white dark:border-[#1a1a1a] shadow-md grayscale group-hover/member:grayscale-0 transition-all"
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-lg border border-gray-200 dark:border-[#1a1a1a] shadow-sm grayscale group-hover/member:grayscale-0 transition-all flex-shrink-0"
                     />
                     <div className="min-w-0">
-                      <p className="text-sm font-black text-gray-800 dark:text-white uppercase tracking-tight truncate mb-0.5">{member.name}</p>
-                      <p className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest truncate">{member.email}</p>
+                      <p className="text-xs md:text-sm font-bold text-gray-800 dark:text-white uppercase tracking-tight truncate">{member.name}</p>
+                      <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 truncate">{member.email}</p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="py-12 text-center opacity-40">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[4px]">Collective Empty</p>
+              <div className="py-8 md:py-12 text-center opacity-50">
+                <p className="text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">No team members yet</p>
               </div>
             )}
           </div>
 
           {/* Activity/Tasks Section */}
-          <div className="p-8 bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] rounded-[2.5rem] shadow-xl">
-            <div className="flex items-center gap-3 text-orange-600 mb-8 border-b border-gray-50 dark:border-[#1a1a1a] pb-6">
-              <IoMdDoneAll className="text-3xl" />
-              <h3 className="text-sm font-black uppercase tracking-[3px]">Sector Directives</h3>
+          <div className="p-4 md:p-6 bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl md:rounded-3xl shadow-sm">
+            <div className="flex items-center gap-3 text-orange-600 mb-4 md:mb-6 border-b border-gray-100 dark:border-[#1a1a1a] pb-4 md:pb-6">
+              <IoMdDoneAll className="text-lg md:text-xl" />
+              <h3 className="text-sm md:text-base font-bold uppercase tracking-wide">Tasks</h3>
             </div>
             
             {project.tasks.length > 0 ? (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
                 {project.tasks.map((task, index) => (
-                  <div key={index} className="p-5 bg-gray-50/50 dark:bg-[#151515] hover:bg-white dark:hover:bg-[#0a0a0a] rounded-[2rem] border border-gray-100 dark:border-[#1a1a1a] transition-all group/task shadow-sm">
-                    <p className="text-xs font-black text-gray-800 dark:text-white uppercase tracking-tight mb-3 line-clamp-2 leading-tight group-hover/task:text-orange-600 transition-colors">{task.title}</p>
+                  <div key={index} className="p-3 md:p-4 bg-gray-50 dark:bg-[#151515] hover:bg-white dark:hover:bg-[#0a0a0a] rounded-lg md:rounded-xl border border-gray-100 dark:border-[#1a1a1a] transition-colors group/task shadow-sm">
+                    <p className="text-xs md:text-sm font-bold text-gray-800 dark:text-white mb-2 line-clamp-2 group-hover/task:text-orange-600 transition-colors">{task.title}</p>
                     <div className='flex justify-between items-center gap-2'>
-                      <span className={`text-[8px] font-black uppercase tracking-[2px] px-3 py-1 rounded-full ${
-                        task.priority === 'High' ? 'bg-red-600 text-white' : 
-                        task.priority === 'Medium' ? 'bg-amber-600 text-white' : 
-                        'bg-blue-600 text-white'
+                      <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg ${
+                        task.priority === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 
+                        task.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600' : 
+                        'bg-blue-100 dark:bg-blue-900/30 text-blue-600'
                       }`}>
                         {task.priority}
                       </span>
-                      <p className="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-tighter">
-                        <span className="text-red-600 mr-1">EPOCH:</span>
+                      <p className="text-[9px] md:text-xs font-medium text-gray-500 dark:text-gray-400">
                         {new Date(task.dueDate).toLocaleDateString()}
                       </p>
                     </div>
@@ -325,8 +319,8 @@ const AdminProjectDetails = () => {
                 ))}
               </div>
             ) : (
-              <div className="py-12 text-center opacity-40 grayscale">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[4px]">Directives Offline</p>
+              <div className="py-8 md:py-12 text-center opacity-50">
+                <p className="text-xs md:text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">No tasks yet</p>
               </div>
             )}
           </div>

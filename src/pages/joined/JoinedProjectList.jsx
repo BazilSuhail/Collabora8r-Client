@@ -68,17 +68,17 @@ const JoinedProjectList = () => {
               <motion.div 
                 key={project._id}
                 whileHover={{ y: -5 }}
-                className="group bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-[320px]"
+                className="group bg-white dark:bg-[#121212] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col h-[320px]"
               >
                 <div className="relative h-32 overflow-hidden">
                   <img 
-                    src={`/Themes/${project.theme || 1}.jpg`} 
+                    src={`/themes/${project.theme || 1}.jpg`} 
                     alt="" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   
-                  <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
+                  <div className="absolute bottom-10 left-6 right-6 flex items-end justify-between">
                     <Link to={`/joinedprojects/${project._id}`} className="min-w-0">
                       <h3 className="font-bold text-white text-lg leading-tight truncate">
                         {project.name}
@@ -100,29 +100,29 @@ const JoinedProjectList = () => {
                 <div className="px-6 py-6 flex-1 flex flex-col relative">
                   <div className="absolute -top-10 right-6 z-10">
                     <img 
-                      src={`/Avatars/${project.createdBy.avatar || 1}.jpg`} 
+                      src={`/avatars/${project.createdBy.avatar || 1}.jpg`} 
                       alt="" 
-                      className="w-16 h-16 rounded-2xl border-4 border-white dark:border-[#0a0a0a] shadow-lg" 
+                      className="w-16 h-16 rounded-full border-4 border-white dark:border-[#0a0a0a] shadow-lg" 
                     />
                   </div>
 
                   <div className="space-y-3 mt-2">
                     <div className='flex items-center gap-3'>
                       <RiTeamLine className='text-orange-500' />
-                      <span className='text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest'>Collaborators</span>
+                      <span className='text-xs font-bold text-gray-400 dark:text-gray-500  tracking-widest'>Collaborators</span>
                       <span className='ml-auto font-bold text-gray-800 dark:text-gray-200'>{project.teamCount}</span>
                     </div>
 
                     <div className='flex items-center gap-3'>
                       <GrTask className='text-orange-500' />
-                      <span className='text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest'>Directives</span>
+                      <span className='text-xs font-bold text-gray-400 dark:text-gray-500  tracking-widest'>Directives</span>
                       <span className='ml-auto font-bold text-gray-800 dark:text-gray-200'>{project.taskCount}</span>
                     </div>
 
                     <div className='pt-3 border-t border-gray-50 dark:border-[#1a1a1a]'>
                       <div className='flex items-center gap-2'>
                         <MdOutlineManageAccounts className='text-orange-500' />
-                        <span className='text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest'>Project Lead:</span>
+                        <span className='text-xs font-bold text-gray-400 dark:text-gray-500  tracking-widest'>Project Lead:</span>
                       </div>
                       <p className='mt-1 text-[11px] font-bold text-gray-700 dark:text-gray-300 truncate'>
                         {project.projectManager.status === 'Pending' ? (

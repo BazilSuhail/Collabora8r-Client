@@ -102,7 +102,7 @@ const AdminProjectList = () => {
           </div>
 
           {projects.map((project) => (
-            <div key={project._id} className="group h-[320px] bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
+            <div key={project._id} className="group h-88 bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
               
               <div className='p-4 bg-gray-50 dark:bg-[#151515] border-b border-gray-100 dark:border-[#1a1a1a] flex items-center justify-between'>
                 <div className="flex items-center gap-3">

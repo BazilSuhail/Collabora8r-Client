@@ -166,146 +166,213 @@ const ManageProjectTasks = () => {
   };
 
   return (
-    <div className='min-h-screen bg-[#fcfaf8] dark:bg-[#000000] p-6 transition-colors duration-300'>
+    <div className='min-h-screen bg-[#fcfaf8] w-full overflow-hidden dark:bg-[#000000] p-4 md:p-6 transition-colors duration-300'>
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-4">
-            <div className='w-12 h-12 bg-orange-100 dark:bg-orange-500/10 rounded-xl flex items-center justify-center text-xl text-orange-600'>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 mb-6 md:mb-8">
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className='w-11 h-11 md:w-12 md:h-12 bg-orange-100 dark:bg-orange-500/10 rounded-lg md:rounded-xl flex items-center justify-center text-lg md:text-xl text-orange-600'>
               <FiFolder />
             </div>
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white tracking-tight">
-                {projectName || 'Project'} Directives
+              <h2 className="text-xl md:text-3xl font-black text-gray-800 dark:text-white tracking-tighter">
+                {projectName || 'Project'} Tasks
               </h2>
-              <p className='text-sm text-gray-500 dark:text-gray-400 font-medium'>Orchestrating workflow and unit assignments</p>
+              <p className='text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium'>Manage and assign tasks to team members</p>
             </div>
           </div>
           
           {projectTeam > 0 && (
             <button 
               onClick={handleOpenModal} 
-              className='flex items-center justify-center gap-2 px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-orange-600/20'
+              className='flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg md:rounded-xl font-bold text-xs md:text-sm transition-all shadow-md shadow-orange-600/20'
             >
-              <GrChapterAdd className="text-lg text-white" />
-              <span>New Directive</span>
+              <GrChapterAdd className="text-base md:text-lg text-white" />
+              <span>New Task</span>
             </button>
           )}
         </div>
 
-        <div className='h-[1px] bg-gray-200 dark:bg-[#1a1a1a] w-full mb-8'></div>
+        <div className='h-px bg-gray-200 dark:bg-[#1a1a1a] w-full mb-6 md:mb-8'></div>
 
         {projectTeam === 0 ? (
-          <div className='flex flex-col items-center justify-center py-20 bg-white dark:bg-[#0a0a0a] rounded-3xl border border-dashed border-gray-200 dark:border-[#1a1a1a]'>
-            <div className="relative mb-6">
+          <div className='flex flex-col items-center justify-center py-16 md:py-20 bg-white dark:bg-[#0a0a0a] rounded-2xl md:rounded-3xl border border-dashed border-gray-200 dark:border-[#1a1a1a]'>
+            <div className="relative mb-4 md:mb-6">
               <div className="absolute inset-0 bg-red-500/10 blur-3xl rounded-full" />
-              <img src="/Resources/7.png" alt="Empty Team" className="w-48 grayscale opacity-40 dark:invert brightness-0" />
+              <img src="/resources/7.png" alt="Empty Team" className="w-40 md:w-48 grayscale opacity-40 dark:invert brightness-0" />
             </div>
-            <p className="text-lg font-bold text-gray-800 dark:text-white text-center mb-2">Isolation Protocol Active</p>
-            <p className="text-gray-500 dark:text-gray-400 text-center mb-6 max-w-xs">You must recruit contributors to the project ecosystem before issuing directives.</p>
+            <p className="text-base md:text-lg font-bold text-gray-800 dark:text-white text-center mb-2">No Team Members</p>
+            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 text-center mb-6 px-4 max-w-xs">Add team members to your project before creating tasks</p>
             <Link 
               to={`/projects/${projectId}`} 
-              className="px-8 py-3 bg-white dark:bg-[#151515] text-orange-600 border border-orange-600 rounded-xl font-bold hover:bg-orange-600 hover:text-white transition-all shadow-sm"
+              className="px-6 md:px-8 py-2.5 md:py-3 bg-white dark:bg-[#151515] text-orange-600 border border-orange-600 rounded-lg md:rounded-xl font-bold text-xs md:text-sm hover:bg-orange-600 hover:text-white transition-all shadow-sm"
             >
-              Recruit Member
+              Add Team Member
             </Link>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <div className="flex items-center gap-3 text-orange-600 mb-2">
-              <LuDoorOpen className='text-2xl' />
-              <h3 className="text-xl font-bold">Active Directives</h3>
-              <span className="ml-auto bg-gray-100 dark:bg-[#151515] text-gray-500 px-3 py-1 rounded-lg text-xs font-bold">
+              <LuDoorOpen className='text-xl md:text-2xl' />
+              <h3 className="text-base md:text-xl font-bold">Tasks</h3>
+              <span className="ml-auto bg-gray-100 dark:bg-[#151515] text-gray-500 px-2.5 md:px-3 py-1 rounded-lg text-[9px] md:text-xs font-bold">
                 {tasks.length} Total
               </span>
             </div>
 
-            <div className='bg-white dark:bg-[#0a0a0a] rounded-2xl border border-gray-100 dark:border-[#1a1a1a] shadow-sm overflow-hidden'>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-gray-50/50 dark:bg-[#151515]/50 border-b border-gray-100 dark:border-[#1a1a1a]">
-                      <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Directive Title</th>
-                      <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Priority</th>
-                      <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Assignee</th>
-                      <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Status</th>
-                      <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50 dark:divide-[#1a1a1a]">
-                    <AnimatePresence>
-                      {tasks.map((task) => (
-                        <motion.tr 
-                          key={task._id}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          className="hover:bg-orange-50/30 dark:hover:bg-orange-500/5 transition-colors group"
-                        >
-                          <td className="py-4 px-6">
-                            <p className="font-bold text-gray-800 dark:text-gray-200">
-                              {task.title.length > 30 ? `${task.title.slice(0, 30)}...` : task.title}
-                            </p>
-                          </td>
-                          <td className="py-4 px-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
-                              task.priority === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 
-                              task.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600' : 
-                              'bg-green-100 dark:bg-green-900/30 text-green-600'
-                            }`}>
-                              {task.priority}
-                            </span>
-                          </td>
-                          <td className="py-4 px-6">
-                            <div className='flex items-center gap-3'>
-                              <img
-                                src={`/Avatars/${task.assignedTo?.avatar || '1'}.jpg`}
-                                alt={task.assignedTo?.name || 'Unassigned'}
-                                className="w-8 h-8 rounded-lg border-2 border-white dark:border-[#0a0a0a] shadow-sm"
-                              />
-                              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {task.assignedTo?.name || 'Unassigned'}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-4 px-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
-                              task.status === 'Completed' ? 'bg-green-600 text-white' : 
-                              task.status === 'In Progress' ? 'bg-orange-600 text-white' : 
-                              'bg-gray-100 dark:bg-[#1a1a1a] text-gray-500'
-                            }`}>
-                              {task.status}
-                            </span>
-                          </td>
-                          <td className="py-4 px-6 text-right">
-                            <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button
-                                onClick={() => handleEditTask(task)}
-                                className="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-all"
-                                title="Edit Directive"
-                              >
-                                <FiEdit3 className="text-lg" />
-                              </button>
-                              <button
-                                onClick={() => handleDeleteTask(task._id)}
-                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all"
-                                title="Delete Directive"
-                              >
-                                <FiTrash2 className="text-lg" />
-                              </button>
-                            </div>
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </AnimatePresence>
-                  </tbody>
-                </table>
-                {tasks.length === 0 && (
-                  <div className="py-12 text-center">
-                    <p className="text-gray-400 font-medium">No directives currently active in the sector.</p>
-                  </div>
-                )}
+            {tasks.length === 0 ? (
+              <div className="py-12 text-center bg-white dark:bg-[#0a0a0a] rounded-2xl border border-gray-100 dark:border-[#1a1a1a]">
+                <p className="text-sm md:text-base text-gray-400 font-medium">No tasks yet. Create one to get started.</p>
               </div>
-            </div>
+            ) : (
+              <>
+                {/* Mobile Card View */}
+                <div className="md:hidden space-y-3">
+                  <AnimatePresence>
+                    {tasks.map((task) => (
+                      <motion.div
+                        key={task._id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        className="bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-xl p-4 space-y-3"
+                      >
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="flex-1">
+                            <p className="font-bold text-sm text-gray-800 dark:text-gray-200 line-clamp-2">
+                              {task.title}
+                            </p>
+                          </div>
+                          <span className={`px-2 py-1 rounded-lg text-[8px] font-bold uppercase whitespace-nowrap ${
+                            task.priority === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 
+                            task.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600' : 
+                            'bg-green-100 dark:bg-green-900/30 text-green-600'
+                          }`}>
+                            {task.priority}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 py-2 border-t border-gray-100 dark:border-[#1a1a1a]">
+                          <img
+                            src={`/avatars/${task.assignedTo?.avatar || '1'}.jpg`}
+                            alt={task.assignedTo?.name || 'Unassigned'}
+                            className="w-6 h-6 rounded-lg border border-gray-200 dark:border-[#1a1a1a]"
+                          />
+                          <span className="text-[10px] font-medium text-gray-600 dark:text-gray-400 flex-1 truncate">
+                            {task.assignedTo?.name || 'Unassigned'}
+                          </span>
+                          <span className={`px-2 py-1 rounded-lg text-[8px] font-bold uppercase ${
+                            task.status === 'Completed' ? 'bg-green-600 text-white' : 
+                            task.status === 'In Progress' ? 'bg-orange-600 text-white' : 
+                            'bg-gray-100 dark:bg-[#1a1a1a] text-gray-500'
+                          }`}>
+                            {task.status}
+                          </span>
+                        </div>
+
+                        <div className="flex gap-1 pt-2 border-t border-gray-100 dark:border-[#1a1a1a]">
+                          <button
+                            onClick={() => handleEditTask(task)}
+                            className="flex-1 p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-all text-xs font-semibold"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteTask(task._id)}
+                            className="flex-1 p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all text-xs font-semibold"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+
+                {/* Desktop Table View */}
+                <div className='hidden md:block bg-white dark:bg-[#161515] rounded-2xl border border-gray-100 dark:border-[#1a1a1a] shadow-sm overflow-hidden'>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-gray-50/50 dark:bg-[#151515]/50 border-b border-gray-100 dark:border-[#1a1a1a]">
+                          <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Task Title</th>
+                          <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Priority</th>
+                          <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Assignee</th>
+                          <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400">Status</th>
+                          <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gray-400 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50 dark:divide-[#1a1a1a]">
+                        <AnimatePresence>
+                          {tasks.map((task) => (
+                            <motion.tr 
+                              key={task._id}
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0, x: -20 }}
+                              className="hover:bg-orange-50/30 dark:hover:bg-orange-500/5 transition-colors group"
+                            >
+                              <td className="py-4 px-6">
+                                <p className="font-bold text-sm text-gray-800 dark:text-gray-200">
+                                  {task.title.length > 30 ? `${task.title.slice(0, 30)}...` : task.title}
+                                </p>
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
+                                  task.priority === 'High' ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 
+                                  task.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600' : 
+                                  'bg-green-100 dark:bg-green-900/30 text-green-600'
+                                }`}>
+                                  {task.priority}
+                                </span>
+                              </td>
+                              <td className="py-4 px-6">
+                                <div className='flex items-center gap-3'>
+                                  <img
+                                    src={`/avatars/${task.assignedTo?.avatar || '1'}.jpg`}
+                                    alt={task.assignedTo?.name || 'Unassigned'}
+                                    className="w-8 h-8 rounded-lg border-2 border-white dark:border-[#0a0a0a] shadow-sm"
+                                  />
+                                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                    {task.assignedTo?.name || 'Unassigned'}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight ${
+                                  task.status === 'Completed' ? 'bg-green-600 text-white' : 
+                                  task.status === 'In Progress' ? 'bg-orange-600 text-white' : 
+                                  'bg-gray-100 dark:bg-[#1a1a1a] text-gray-500'
+                                }`}>
+                                  {task.status}
+                                </span>
+                              </td>
+                              <td className="py-4 px-6 text-right">
+                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button
+                                    onClick={() => handleEditTask(task)}
+                                    className="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-lg transition-all"
+                                    title="Edit Task"
+                                  >
+                                    <FiEdit3 className="text-lg" />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteTask(task._id)}
+                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all"
+                                    title="Delete Task"
+                                  >
+                                    <FiTrash2 className="text-lg" />
+                                  </button>
+                                </div>
+                              </td>
+                            </motion.tr>
+                          ))}
+                        </AnimatePresence>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
 

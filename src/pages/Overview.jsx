@@ -105,58 +105,60 @@ const Overview = () => {
 
   if (error)
     return (
-      <div className='min-h-screen p-5 flex flex-col bg-white dark:bg-[#000000] overflow-hidden transition-colors duration-300'>
-        <div className="flex sm:flex-row flex-col sm:justify-between sm:items-center">
-          <div className="flex items-center space-x-2">
-            <GiProgression className="text-2xl text-gray-600 dark:text-gray-400" />
-            <h2 className="text-[24px] text-gray-600 dark:text-gray-300 font-bold">Progress Overview</h2>
+      <div className='min-h-screen p-4 md:p-6 flex flex-col bg-[#fcfaf8] dark:bg-[#000000] overflow-hidden transition-colors duration-300'>
+        <div className="flex flex-col gap-2 mb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center text-white">
+              <GiProgression className="text-2xl" />
+            </div>
+            <h2 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-black">Progress Analytics</h2>
           </div>
         </div>
-        <p className='mt-[2px] text-[12px] sm:text-[13px] lg:ml-[35px] mb-[15px] font-[500] text-gray-500 dark:text-gray-400'>
-          View statistics and visual overview of all your progress at one place.
+        <p className='text-sm md:text-base text-gray-600 dark:text-gray-400 font-semibold'>
+          Start by joining projects to view your progress analytics and statistics.
         </p>
 
-        <div className='h-[1px] mb-[15px] w-full bg-gray-200 dark:bg-[#1a1a1a]'></div>
+        <div className='h-px mb-8 w-full bg-gray-200 dark:bg-[#1a1a1a]'></div>
 
-        <div className='flex flex-col mx-auto'>
-          <img src="/Resources/2.png" alt='Connection Error' className='scale-[0.8] md:scale-[0.9] mt-[155px]' />
-          <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">This is where you will track your progress,</p>
-          <p className="text-center text-gray-700 font-[600] text-[11px] md:text-[14px]">projects and tasks statistical analyzsis.</p>
+        <div className='flex flex-col items-center justify-center flex-1'>
+          <img src="/resources/2.png" alt='Connection Error' className='w-64 md:w-80 mb-6 opacity-60' />
+          <p className="text-center text-gray-700 dark:text-gray-400 font-semibold text-sm">No projects yet.</p>
+          <p className="text-center text-gray-600 dark:text-gray-500 text-xs mt-2">Join or create a project to start tracking progress</p>
         </div>
       </div>
     );
 
   return (
-    <div className='min-h-screen bg-[#fcfaf8] dark:bg-[#000000] p-6 transition-colors duration-300'>
-      <div className="max-w-[1400px] mx-auto space-y-8 pt-4">
+    <div className='min-h-screen bg-[#fcfaf8] dark:bg-[#000000] p-4 md:p-6 transition-colors duration-300'>
+      <div className="max-w-[1400px] mx-auto space-y-6 md:space-y-8 pt-2">
         
         {/* Page Header */}
-        <header className="relative p-8 rounded-[2.5rem] bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] shadow-xl overflow-hidden group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-orange-600/10 transition-colors" />
-          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-orange-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg shadow-orange-600/20">
-                <GiProgression className="text-3xl" />
+        <header className="relative p-5 md:p-8 rounded-2xl md:rounded-3xl bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] shadow-sm overflow-hidden group">
+          <div className="absolute top-0 right-0 w-56 h-56 bg-orange-600/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-orange-600/8 transition-colors" />
+          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl md:rounded-[2rem] flex items-center justify-center text-white shadow-md shadow-orange-600/20">
+                <GiProgression className="text-2xl md:text-3xl" />
               </div>
               <div>
-                <h1 className="text-3xl lg:text-4xl font-black text-gray-800 dark:text-white tracking-tighter uppercase">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-800 dark:text-white tracking-tighter">
                   Progress <span className="text-orange-600">Analytics</span>
                 </h1>
-                <p className="text-[10px] md:text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[4px] mt-1">
-                  Sector synchronization metrics & statistical analysis
+                <p className="text-[8px] md:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[2px] md:tracking-[3px] mt-1">
+                  Metrics & statistical analysis
                 </p>
               </div>
             </div>
             
-            <div className="flex items-center gap-3 px-6 py-3 bg-gray-50 dark:bg-[#151515] rounded-2xl border border-transparent">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest">Feed Status: Authorized</span>
+            <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 bg-green-600/10 dark:bg-green-600/10 rounded-xl md:rounded-2xl border border-green-600/20">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-[8px] md:text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">Live</span>
             </div>
           </div>
         </header>
 
         {/* Intelligence Grid */}
-        <section className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           <StatCard 
             icon={<SiMyspace />} 
             label="Sector Projects" 
@@ -202,21 +204,21 @@ const Overview = () => {
         </section>
 
         {/* Visual Analytics */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-8 bg-white/60 dark:bg-black/60 backdrop-blur-sm p-8 rounded-[2.5rem] border border-gray-100 dark:border-[#1a1a1a] shadow-xl">
-            <header className="flex items-center gap-3 mb-8">
-              <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
-              <h3 className="text-sm font-black text-gray-800 dark:text-white uppercase tracking-widest">Operational Efficiency</h3>
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+          <div className="lg:col-span-8 bg-white dark:bg-[#0a0a0a] p-5 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 dark:border-[#1a1a1a] shadow-sm">
+            <header className="flex items-center gap-3 mb-6 md:mb-8">
+              <div className="w-1 h-5 md:h-6 bg-blue-600 rounded-full" />
+              <h3 className="text-xs md:text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider md:tracking-widest">Operational Efficiency</h3>
             </header>
             <div className="h-[350px]">
               <Bar data={barData} options={barOptions} />
             </div>
           </div>
 
-          <div className="lg:col-span-4 bg-white/60 dark:bg-black/60 backdrop-blur-sm p-8 rounded-[2.5rem] border border-gray-100 dark:border-[#1a1a1a] shadow-xl flex flex-col">
-            <header className="flex items-center gap-3 mb-8">
-              <div className="w-1.5 h-6 bg-orange-600 rounded-full" />
-              <h3 className="text-sm font-black text-gray-800 dark:text-white uppercase tracking-widest">Status Distribution</h3>
+          <div className="lg:col-span-4 bg-white dark:bg-[#0a0a0a] p-5 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 dark:border-[#1a1a1a] shadow-sm flex flex-col">
+            <header className="flex items-center gap-3 mb-6 md:mb-8">
+              <div className="w-1 h-5 md:h-6 bg-orange-600 rounded-full" />
+              <h3 className="text-xs md:text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider md:tracking-widest">Status Distribution</h3>
             </header>
             <div className="flex-1 flex items-center justify-center p-4">
               <div className="w-full max-w-[280px] aspect-square">
@@ -252,14 +254,14 @@ const StatCard = ({ icon, label, count, color, delay }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
-    className="bg-white/60 dark:bg-black/60 backdrop-blur-sm p-6 rounded-[2.5rem] border border-gray-100 dark:border-[#1a1a1a] shadow-xl flex items-center gap-6 group hover:bg-white dark:hover:bg-[#0a0a0a] transition-all cursor-default"
+    className="bg-white dark:bg-[#0a0a0a] p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-100 dark:border-[#1a1a1a] shadow-sm flex flex-col md:flex-row md:items-center gap-3 md:gap-5 group hover:border-orange-500/30 hover:bg-white dark:hover:bg-[#151515] transition-all cursor-default"
   >
-    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-6 ${color}`}>
+    <div className={`w-12 h-12 md:w-14 md:h-14 flex-shrink-0 rounded-lg md:rounded-2xl flex items-center justify-center text-white text-xl md:text-2xl shadow-md transition-transform group-hover:scale-110 group-hover:rotate-3 ${color}`}>
       {icon}
     </div>
-    <div className="min-w-0">
-      <p className="text-[9px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[2px] mb-1">{label}</p>
-      <p className="text-2xl font-black text-gray-800 dark:text-white tracking-tighter">{count}</p>
+    <div className="min-w-0 flex-1">
+      <p className="text-[8px] md:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[1px] md:tracking-[2px] mb-1">{label}</p>
+      <p className="text-xl md:text-2xl font-black text-gray-800 dark:text-white tracking-tighter">{count}</p>
     </div>
   </motion.div>
 );

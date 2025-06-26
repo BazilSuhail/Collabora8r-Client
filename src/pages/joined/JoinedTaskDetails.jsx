@@ -174,6 +174,11 @@ const JoinedTaskDetails = () => {
     setEditCommentContent(comment.content);
   };
 
+  const handleCancelEditing = () => {
+    setEditCommentId(null);
+    setEditCommentContent('');
+  };
+
   if (!task && !error) return <Loader />;
 
   return (
@@ -189,13 +194,10 @@ const JoinedTaskDetails = () => {
                   <FaClipboardList />
                 </div>
                 <div>
-                  <h1 className="text-xl lg:text-3xl font-black text-gray-800 dark:text-white tracking-tighter">
+                  <h1 className="text-xl lg:text-[30px] font-semibold text-gray-800 dark:text-white tracking-tighter">
                     {task.title}
                   </h1>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className="text-[10px] lg:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Target Sector Lead:</span>
-                    <span className="text-[10px] lg:text-xs font-black text-orange-600 dark:text-orange-500 uppercase underline decoration-orange-500/20 underline-offset-4">{creatorName}</span>
-                  </div>
+                 
                 </div>
               </div>
               <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-2">
@@ -204,13 +206,21 @@ const JoinedTaskDetails = () => {
                   task.priority === 'Medium' ? 'bg-amber-600 text-white' : 
                   'bg-blue-600 text-white'
                 }`}>
-                  {task.priority || 'Medium'} PRIORITY
+                  {task.priority || 'Medium'} 
                 </span>
-                <p className="text-[10px] lg:text-xs font-bold text-gray-400 dark:text-gray-500">
-                  ESTABLISHED: {new Date(task.createdAt.$date || task.createdAt).toLocaleDateString()}
-                </p>
+                
               </div>
             </div>
+
+<div className='flex items-center justify-between'>
+   <div className='flex items-center gap-2 mt-1'>
+                    <span className="text-[10px] lg:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Target Sector Lead:</span>
+                    <span className="text-[10px] lg:text-xs font-black text-orange-600 dark:text-orange-500 uppercase underline decoration-orange-500/20 underline-offset-4">{creatorName}</span>
+                  </div>
+                  <p className="text-[10px] lg:text-xs font-bold text-gray-400 dark:text-gray-500">
+                  ESTABLISHED: {new Date(task.createdAt.$date || task.createdAt).toLocaleDateString()}
+                </p>
+</div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-gray-50 dark:border-[#1a1a1a]">
               <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-[#151515] rounded-2xl border border-transparent">
@@ -267,7 +277,7 @@ const JoinedTaskDetails = () => {
                       className="group relative pl-10 lg:pl-12 pb-8 border-l-2 border-gray-50 dark:border-[#1a1a1a] last:border-transparent"
                     >
                       <img
-                        src={`/Avatars/${comment.user?.avatar || 1}.jpg`}
+                        src={`/avatars/${comment.user?.avatar || 1}.jpg`}
                         alt=""
                         className="absolute left-[-17px] top-0 w-8 h-8 rounded-xl border-2 border-white dark:border-[#0a0a0a] shadow-md grayscale group-hover:grayscale-0 transition-all"
                       />
@@ -281,7 +291,7 @@ const JoinedTaskDetails = () => {
                           <span className="text-[10px] font-bold text-gray-400 tracking-tighter uppercase block sm:inline">{comment.user?.email || 'OFFLINE'}</span>
                         </div>
                         {comment.userId === currentUserId && (
-                          <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex gap-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                             <button onClick={() => handleStartEditing(comment)} className='text-orange-500 hover:text-orange-700 transition-colors'>
                               <FaRegEdit className='text-base' />
                             </button>
@@ -311,7 +321,7 @@ const JoinedTaskDetails = () => {
                               onClick={() => handleEditComment(comment._id)}
                               className="px-6 py-2 bg-orange-600 text-white text-xs font-black uppercase rounded-lg hover:bg-orange-700 transition-all"
                             >
-                              Patch Intel
+                              Patch 
                             </button>
                           </div>
                         </div>
