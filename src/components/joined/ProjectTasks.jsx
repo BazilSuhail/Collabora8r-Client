@@ -14,9 +14,69 @@ const MyTask = ({ task, user, creator }) => {
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       onClick={handleTaskClick}
-      className="p-6 bg-white dark:bg-[#131313] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl shadow-sm hover:shadow-xl hover:border-orange-500/20 dark:hover:border-orange-500/10 cursor-pointer transition-all duration-300 group mb-6"
+      className="bg-white dark:bg-[#131313] border border-gray-100 dark:border-[#1a1a1a] rounded-2xl shadow-sm hover:shadow-xl hover:border-orange-500/20 dark:hover:border-orange-500/10 cursor-pointer transition-all duration-300 group mb-6 p-4 md:p-6"
     >
-      <div className='flex flex-col md:flex-row md:items-center justify-between gap-6'>
+      {/* Mobile Layout */}
+      <div className='md:hidden'>
+        <div className='flex items-start gap-3 mb-4'>
+          <div className='w-10 h-10 bg-gray-50 dark:bg-[#151515] p-2 rounded-xl flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500 flex-shrink-0 mt-0.5'>
+            <FaClipboardList className='text-xl' />
+          </div>
+          <div className='flex-1 min-w-0'>
+            <h3 className='font-bold text-sm text-gray-800 dark:text-gray-100 break-words'>
+              {task.title}
+            </h3>
+          </div>
+        </div>
+
+        <div className='pl-13 space-y-3'>
+          <div className='flex flex-wrap gap-2'>
+            <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold tracking-widest ${
+              task.status === 'Not Started'
+                ? 'text-amber-600 bg-amber-100 dark:bg-amber-900/30'
+                : task.status === 'Completed'
+                  ? 'text-green-600 bg-green-100 dark:bg-green-900/30'
+                  : 'text-orange-600 bg-orange-100 dark:bg-orange-500/20'
+            }`}>
+              {task.status}
+            </span>
+            <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold tracking-widest ${
+              task.priority === 'High' ? 'text-red-600 bg-red-100 dark:bg-red-900/30' : 
+              task.priority === 'Medium' ? 'text-amber-600 bg-amber-100 dark:bg-amber-900/30' : 
+              'text-blue-600 bg-blue-100 dark:bg-blue-900/30'
+            }`}>
+              {task.priority}
+            </span>
+          </div>
+
+          <div className='flex items-center gap-2 text-red-600 dark:text-red-400'>
+            <span className="text-[10px] font-black tracking-tighter">Due:</span>
+            <span className='text-xs font-semibold'>{new Date(task.dueDate.$date || task.dueDate).toLocaleDateString()}</span>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">By:</span>
+            <img
+              src={`/avatars/${user.avatar || 1}.jpg`}
+              alt={user.name}
+              className="w-6 h-6 rounded-lg border-2 border-white dark:border-[#0a0a0a]"
+            />
+            <span className="text-xs font-bold text-gray-700 dark:text-gray-300 truncate">{user.name}</span>
+          </div>
+
+          <div className='pt-2 border-t border-gray-50 dark:border-[#1a1a1a] flex items-center'>
+            <div className="flex items-center gap-2 text-gray-400 dark:text-gray-500 text-xs">
+              <FaComments className="text-sm" />
+              <span className="font-bold text-[9px] tracking-widest">
+                {task.comments.length} {task.comments.length === 1 ? 'Log' : 'Logs'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className='hidden md:flex md:flex-row md:items-center justify-between gap-6'>
         <div className="flex items-center gap-5">
           <div className='w-14 h-14 bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500'>
             <FaClipboardList className='text-3xl' />
@@ -65,7 +125,7 @@ const MyTask = ({ task, user, creator }) => {
         </div>
       </div>
 
-      <div className='mt-6 pt-6 border-t border-gray-50 dark:border-[#1a1a1a] flex items-center justify-between'>
+      <div className='hidden md:flex md:mt-6 md:pt-6 md:border-t md:border-gray-50 dark:md:border-[#1a1a1a] items-center justify-between'>
         <div className="flex items-center gap-4 text-gray-400 dark:text-gray-500 hover:text-orange-600 transition-colors">
           <FaComments className="text-lg" />
           <span className="text-xs font-bold  tracking-widest">

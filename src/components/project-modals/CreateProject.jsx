@@ -78,7 +78,7 @@ const CreateProject = ({ setShowModal }) => {
 
         <form onSubmit={handleCreateProject} className="space-y-6">
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <label className="flex items-center gap-2 text-xs font-bold  tracking-wider text-gray-400 dark:text-gray-500">
               <MdOutlineSubtitles className="text-orange-500" />
               Project Designation
             </label>
@@ -94,7 +94,7 @@ const CreateProject = ({ setShowModal }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <label className="flex items-center gap-2 text-xs font-bold  tracking-wider text-gray-400 dark:text-gray-500">
                 <MdLowPriority className="text-orange-500" />
                 Visual Interface
               </label>
@@ -108,7 +108,7 @@ const CreateProject = ({ setShowModal }) => {
             </div>
             
             <div className="space-y-2">
-              <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <label className="flex items-center gap-2 text-xs font-bold  tracking-wider text-gray-400 dark:text-gray-500">
                 <IoMailUnreadOutline className="text-orange-500" />
                 Assigned Lead Email
               </label>
@@ -124,7 +124,7 @@ const CreateProject = ({ setShowModal }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            <label className="flex items-center gap-2 text-xs font-bold  tracking-wider text-gray-400 dark:text-gray-500">
               <MdOutlineDescription className="text-orange-500" />
               Mission Parameters
             </label>
@@ -143,17 +143,17 @@ const CreateProject = ({ setShowModal }) => {
             className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-600/50 py-4 rounded-xl text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-orange-600/20 active:scale-[0.98]"
           >
             <IoCheckmarkDoneCircleOutline className="text-xl" />
-            {isSubmitting ? 'Establishing Frontier...' : 'Establish Sector'}
+            {isSubmitting ? 'Registering Frontier...' : 'Register Project'}
           </button>
         </form>
       </motion.div>
 
       {showThemeModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-6">
+        <div className="fixed inset-0 bg-black/30 z-[1000] flex items-end justify-center px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className='bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] w-full max-w-4xl p-8 rounded-3xl flex flex-col relative max-h-[90vh]'
+            className='bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] w-full  p-8 rounded-t-xl flex flex-col relative lg:max-w-[80vw] max-h-[90vh]'
           >
             <button
               onClick={() => setShowThemeModal(false)}
@@ -175,12 +175,12 @@ const CreateProject = ({ setShowModal }) => {
                   }}
                 >
                   <img
-                    src={`/Themes/${index + 1}.jpg`}
-                    alt={`Theme ${index + 1}`}
+                    src={`/themes/${index + 1}.jpg`}
+                    alt={`theme ${index + 1}`}
                     className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="bg-white text-black px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-widest">Select Mode {index + 1}</span>
+                    <span className="bg-white text-black px-4 py-2 rounded-lg font-bold text-xs  tracking-widest">Select Mode {index + 1}</span>
                   </div>
                 </div>
               ))}

@@ -10,12 +10,12 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden relative p-8"
+            className="bg-white max-h-[95vh] overflow-y-auto no-scrollbar dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] rounded-xl shadow-2xl w-full max-w-lg relative p-8"
           >
             <button
               onClick={onClose}
@@ -24,20 +24,20 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
               <RxCross2 className="text-2xl" />
             </button>
 
-            <header className="mb-8">
+            <header className="mb-4">
               <h3 className="text-2xl font-bold dark:text-white tracking-tight">
-                {editingTaskId ? 'Modify Directive' : 'New Directive'}
+                {editingTaskId ? 'Modify Task' : 'New Task'}
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Assign operational goals to project units.</p>
             </header>
 
-            <div className="h-[1px] bg-gray-100 dark:bg-[#1a1a1a] w-full mb-8" />
+            <div className="h-0.75 bg-gray-300 dark:bg-[#151515] w-full mb-4" />
 
             <form onSubmit={onSubmit} className="space-y-6">
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   <MdOutlineSubtitles className="text-orange-500" />
-                  Directive Title
+                  Task Title
                 </label>
                 <input
                   type="text"
@@ -127,7 +127,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   <MdOutlineDescription className="text-orange-500" />
-                  Directive Guidelines
+                  Task Guidelines
                 </label>
                 <textarea
                   name="description"
@@ -144,7 +144,7 @@ const TaskModal = ({ isOpen, onClose, onSubmit, newTask, users, handleChange, ed
                 className="w-full bg-orange-600 hover:bg-orange-700 py-4 rounded-xl text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-orange-600/20 active:scale-[0.98]"
               >
                 <IoCheckmarkDoneCircleOutline className="text-xl" />
-                {editingTaskId ? 'Authorize Synchronization' : 'Authorize Directive'}
+                {editingTaskId ? 'Authorize Synchronization' : 'Authorize Task'}
               </button>
             </form>
           </motion.div>
