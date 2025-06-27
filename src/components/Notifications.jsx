@@ -105,7 +105,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ delay: index * 0.05 }}
                                                     onClick={() => isManager ? handleManagerNotificationClick(data.projectId) : handleUserNotificationClick(data.projectId, data.from)}
-                                                    className="group relative p-6 bg-gray-50 dark:bg-[#151515] border border-transparent hover:border-orange-500/20 rounded-[2rem] cursor-pointer transition-all duration-300"
+                                                    className="group relative p-6 bg-gray-50 dark:bg-[#151515] border border-transparent hover:border-orange-500/20 rounded-xl cursor-pointer transition-all duration-300"
                                                 >
                                                     <div className='flex items-start gap-4'>
                                                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${

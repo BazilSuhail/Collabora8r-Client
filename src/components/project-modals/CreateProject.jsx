@@ -40,25 +40,25 @@ const CreateProject = ({ setShowModal }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] flex flex-col p-8 rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative"
+        className="bg-white dark:bg-[#0a0a0a] border border-gray-100 dark:border-[#1a1a1a] flex flex-col p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-sm w-full max-w-2xl overflow-hidden relative"
       >
         <button 
           onClick={() => setShowModal(false)} 
-          className="absolute top-6 right-6 p-2 text-gray-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors rounded-xl hover:bg-orange-50 dark:hover:bg-orange-500/10"
+          className="absolute top-4 md:top-6 right-4 md:right-6 p-2 text-gray-400 hover:text-orange-600 dark:hover:text-orange-500 transition-colors rounded-lg md:rounded-xl hover:bg-orange-50 dark:hover:bg-orange-500/10"
         >
-          <RxCross2 className="text-2xl" />
+          <RxCross2 className="text-xl md:text-2xl" />
         </button>
 
-        <header className="mb-8">
-          <h3 className="text-2xl font-bold dark:text-white tracking-tight">
-            Establish New Project
+        <header className="mb-6 md:mb-8">
+          <h3 className="text-lg md:text-2xl font-bold dark:text-white tracking-tight">
+            Create Project
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Configure the parameters for your new operational sector.</p>
+          <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Set up a new project with your team.</p>
         </header>
 
         <div className="h-[1px] bg-gray-100 dark:bg-[#1a1a1a] w-full mb-8" />

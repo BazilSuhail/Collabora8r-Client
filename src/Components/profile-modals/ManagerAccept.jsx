@@ -44,7 +44,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId, setShowManagerM
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      className="bg-white dark:bg-[#0a0a0a] w-[90vw] md:w-[520px] rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-[#1a1a1a] p-10 relative overflow-hidden"
+      className="bg-white dark:bg-[#0a0a0a] w-[90vw] md:w-[520px] rounded-xl shadow-2xl border border-gray-100 dark:border-[#1a1a1a] p-10 relative overflow-hidden"
     >
       <button
         onClick={() => setShowManagerModal(false)}
@@ -58,7 +58,7 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId, setShowManagerM
           <MdOutlineSubtitles className="text-2xl" />
           <h3 className="text-xs font-black uppercase tracking-[4px]">Authority Transfer Signal</h3>
         </div>
-        <h2 className="text-2xl md:text-3xl font-black text-gray-800 dark:text-white tracking-tighter uppercase leading-tight">
+        <h2 className="text-2xl md:text-xl font-semibold text-gray-800 dark:text-white tracking-tighter uppercase leading-tight">
           Assume Command: {project.name}
         </h2>
       </header>
@@ -112,14 +112,14 @@ const ManagerInvite = ({ project, createdBy, onClose, projectId, setShowManagerM
                   disabled={isSubmitting}
                   className="flex-1 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-600/50 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-[3px] transition-all shadow-lg shadow-orange-600/20 active:scale-95"
                 >
-                  {isSubmitting ? 'Synchronizing...' : 'Accept Command'}
+                  {isSubmitting ? 'Synchronizing...' : 'Accept'}
                 </button>
                 <button 
                   onClick={() => handleAcceptDecline('Decline')}
                   disabled={isSubmitting}
                   className="px-8 bg-gray-100 dark:bg-[#151515] text-gray-500 dark:text-gray-400 py-4 rounded-2xl font-black text-xs uppercase tracking-[3px] hover:bg-red-600 hover:text-white transition-all active:scale-95"
                 >
-                  Relinquish
+                  Decline
                 </button>
               </div>
             </div>

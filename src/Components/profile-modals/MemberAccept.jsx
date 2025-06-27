@@ -146,7 +146,7 @@ const TeamMemberInvitation = ({ projectId, from, setShowMemberModal }) => {
   }, [projectId]);
 
   const onClose = () => {
-    navigate(-1);
+    navigate(-1)
   }
 
   return (
