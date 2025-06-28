@@ -20,6 +20,7 @@ const JoinedTaskDetails = () => {
   const [task, setTask] = useState(null);
   const [taskProgress, setTaskProgress] = useState(0);
   const [status, setStatus] = useState("Not Started");
+  const [priority, setPriority] = useState("Low");
   const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState('');
   const [error, setError] = useState(null);
@@ -42,6 +43,7 @@ const JoinedTaskDetails = () => {
         setTask(response.data);
         setTaskProgress(response.data.progress || 0);
         setStatus(response.data.status || "Not Started");
+        setPriority(response.data.priority || "Low");
 
         const commentsResponse = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/comments/tasks/${taskId}/comments`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -74,7 +76,7 @@ const JoinedTaskDetails = () => {
       const token = localStorage.getItem("token");
       await axios.put(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/projecttasks/update-task-progress/${taskId}`,
-        { progress: taskProgress, status },
+        { progress: taskProgress, status, priority },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -83,6 +85,7 @@ const JoinedTaskDetails = () => {
         ...prev,
         progress: taskProgress,
         status,
+        priority,
       }));
       toggleModal();
     } catch (err) {
@@ -455,21 +458,39 @@ const JoinedTaskDetails = () => {
                   />
                 </div>
 
-                <div className="space-y-4">
-                  <label className="flex items-center gap-2 text-[10px] lg:text-xs font-black  tracking-widest text-gray-400">
-                    <GrStatusInfo className="text-orange-500" />
-                    Authorization Status
-                  </label>
-                  <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    className="w-full px-5 py-3 bg-gray-50 dark:bg-[#151515] dark:text-white border border-transparent focus:border-orange-500/20 rounded-2xl outline-none appearance-none font-bold"
-                  >
-                    <option value="Not Started">NOT STARTED</option>
-                    <option value="In Progress">IN PROGRESS</option>
-                    <option value="Paused">PAUSED</option>
-                    <option value="Completed">COMPLETED</option>
-                  </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <label className="flex items-center gap-2 text-[10px] lg:text-xs font-black  tracking-widest text-gray-400">
+                      <GrStatusInfo className="text-orange-500" />
+                      Status
+                    </label>
+                    <select
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                      className="w-full px-4 py-2 bg-gray-50 dark:bg-[#151515] dark:text-white border border-transparent focus:border-orange-500/20 rounded-xl outline-none appearance-none font-bold text-sm"
+                    >
+                      <option value="Not Started">NOT STARTED</option>
+                      <option value="In Progress">IN PROGRESS</option>
+                      <option value="Paused">PAUSED</option>
+                      <option value="Completed">COMPLETED</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-4">
+                    <label className="flex items-center gap-2 text-[10px] lg:text-xs font-black  tracking-widest text-gray-400">
+                      <MdOutlineSubtitles className="text-orange-500" />
+                      Priority
+                    </label>
+                    <select
+                      value={priority}
+                      onChange={(e) => setPriority(e.target.value)}
+                      className="w-full px-4 py-2 bg-gray-50 dark:bg-[#151515] dark:text-white border border-transparent focus:border-orange-500/20 rounded-xl outline-none appearance-none font-bold text-sm"
+                    >
+                      <option value="Low">LOW</option>
+                      <option value="Medium">MEDIUM</option>
+                      <option value="High">HIGH</option>
+                    </select>
+                  </div>
                 </div>
 
                 <button

@@ -2,46 +2,54 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import EmailVerification from '../components/authentication/registration/EmailVerification';
-import PasswordInput from '../components/authentication/registration/PasswordInput';
-import UserDetails from '../components/authentication/registration/UserDetails';
+import EmailVerification from '../../components/authentication/EmailVerification';
+import PasswordInput from '../../components/authentication/PasswordInput';
+import UserDetails from '../../components/authentication/UserDetails';
 
 import { BiCheckCircle, BiCircle } from 'react-icons/bi';
   
 
 const StepProgress = ({ step }) => {
   return (
-    <div className="flex items-center mx-auto mt-[15px]">
-      <div className={`flex flex-col items-center`}>
-        <div className={`rounded-xl h-10 w-10 flex items-center justify-center transition-all
-          ${step >= 1 ? 'bg-green-500 shadow-lg shadow-green-500/20' : 'bg-gray-400 dark:bg-[#1a1a1a]'}`}>
-          {step >= 1 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+    <div className="flex items-center justify-between gap-2 md:gap-0">
+      {/* Step 1 */}
+      <div className="flex flex-col items-center flex-1">
+        <div className={`h-8 w-8 rounded-full flex items-center justify-center transition-all ${
+          step >= 1 ? 'bg-green-600 shadow-lg shadow-green-600/30' : 'bg-gray-300 dark:bg-gray-700'
+        }`}>
+          {step >= 1 ? <BiCheckCircle className="text-white text-lg" /> : <BiCircle className="text-white text-lg" />}
         </div>
-        <span className="text-[11px] text-center font-bold mt-2 text-gray-500 dark:text-gray-400">Email Authentication</span>
+        <span className="text-xs font-medium mt-2 text-gray-600 dark:text-gray-400 text-center">Email</span>
       </div>
 
-      {/* Line between steps */}
-      <div className={`h-1 w-[88px] md:w-[105px] mx-2 rounded-full transition-all ${step > 1 ? 'bg-green-500' : 'bg-gray-400 dark:bg-[#1a1a1a]'}`} />
+      {/* Line */}
+      <div className={`h-0.5 flex-1 mx-1 rounded-full transition-all ${
+        step > 1 ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-700'
+      }`} />
 
-      {/* Second Step */}
-      <div className={`flex flex-col items-center`}>
-        <div className={`rounded-xl h-10 w-10 flex items-center justify-center transition-all
-          ${step >= 2 ? 'bg-green-500 shadow-lg shadow-green-500/20' : 'bg-gray-400 dark:bg-[#1a1a1a]'}`}>
-          {step >= 2 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+      {/* Step 2 */}
+      <div className="flex flex-col items-center flex-1">
+        <div className={`h-8 w-8 rounded-full flex items-center justify-center transition-all ${
+          step >= 2 ? 'bg-green-600 shadow-lg shadow-green-600/30' : 'bg-gray-300 dark:bg-gray-700'
+        }`}>
+          {step >= 2 ? <BiCheckCircle className="text-white text-lg" /> : <BiCircle className="text-white text-lg" />}
         </div>
-        <span className="text-[11px] mt-2 font-bold text-center text-gray-500 dark:text-gray-400">Password Setup</span>
+        <span className="text-xs font-medium mt-2 text-gray-600 dark:text-gray-400 text-center">Password</span>
       </div>
 
-      {/* Line between steps */}
-      <div className={`h-1 w-[88px] md:w-[105px] mx-2 rounded-full transition-all ${step > 2 ? 'bg-green-500' : 'bg-gray-400 dark:bg-[#1a1a1a]'}`} />
+      {/* Line */}
+      <div className={`h-0.5 flex-1 mx-1 rounded-full transition-all ${
+        step > 2 ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-700'
+      }`} />
 
-      {/* Third Step */}
-      <div className={`flex flex-col items-center`}>
-        <div className={`rounded-xl h-10 w-10 flex items-center justify-center transition-all
-          ${step >= 3 ? 'bg-green-500 shadow-lg shadow-green-500/20' : 'bg-gray-400 dark:bg-[#1a1a1a]'}`}>
-          {step >= 3 ? <BiCheckCircle className="text-white text-2xl" /> : <BiCircle className="text-white text-2xl" />}
+      {/* Step 3 */}
+      <div className="flex flex-col items-center flex-1">
+        <div className={`h-8 w-8 rounded-full flex items-center justify-center transition-all ${
+          step >= 3 ? 'bg-green-600 shadow-lg shadow-green-600/30' : 'bg-gray-300 dark:bg-gray-700'
+        }`}>
+          {step >= 3 ? <BiCheckCircle className="text-white text-lg" /> : <BiCircle className="text-white text-lg" />}
         </div>
-        <span className="text-[11px] text-center font-bold mt-2 text-gray-500 dark:text-gray-400">Account Creation</span>
+        <span className="text-xs font-medium mt-2 text-gray-600 dark:text-gray-400 text-center">Details</span>
       </div>
     </div>
   );
@@ -55,20 +63,25 @@ const SignUp = () => {
   const [name, setName] = useState('');  
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  
+  console.log('%c🔐 SignUp Component Mounted', 'color: #ff6600; font-size: 12px; font-weight: bold;');
 
   const handleEmailSuccess = ({ name, email }) => { 
+    console.log('✅ Email verified:', {name, email});
     setEmail(email);
     setName(name);
     setStep(2);
   };
 
   const handlePasswordNext = (password) => {
+    console.log('✅ Password set');
     setPassword(password);
     setStep(3);
   };
 
   const handleUserDetailsSubmit = async (data) => {
     try {
+      console.log('📝 Submitting account creation:', {name, email});
       const res = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`, {
         ...data,
         email,
@@ -76,39 +89,52 @@ const SignUp = () => {
         password
       });
       localStorage.setItem('token', res.data.token);
+      console.log('✅ Account created successfully');
       navigate("/login");
     } catch (error) {
-      console.error(error.response?.data?.error || 'Error during sign up');
+      console.error('❌ Error during sign up:', error.response?.data?.error || error.message);
     }
   };
   return (
-    <main className='h-screen w-screen flex justify-center items-center bg-gray-100 dark:bg-[#000000] transition-colors duration-300'>
-      <div className='flex flex-col sm:w-[530px] xsmall:w-[355px] w-[330px]'>
-        <div className="scale-[1.2] flex mx-auto">
-          <img src="/logo.svg" alt="Connection Failed" className="w-[34px] h-[34px]" />
-          <div className="text-[#575757] dark:text-white ml-[4px] md:text-[25px] text-[25px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
-        </div>
-        <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 dark:text-gray-400 font-[400]'>Simplify Teamwork, Streamline Success</p>
+    <main className='min-h-screen overflow-hidden w-screen flex justify-center items-center bg-white dark:bg-[#000000] transition-colors duration-300 p-4'>
+      <div className='w-full max-w-md'>
 
-        <div className='py-6 px-[25px] flex flex-col bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] rounded-2xl shadow-xl transition-colors duration-300'>
-         
-          <div className='ml-[-8px] md:ml-0 md:scale-[1] scale-[0.6] xsmall:scale-[0.8] '>
+        <div className="text-center mb-8">
+          <h1 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>Create account</h1>
+          <p className='text-sm text-gray-600 dark:text-gray-400'>Join Collabora8r and streamline teamwork</p>
+        </div>
+
+        {/* Card */}
+        <div className='bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#1a1a1a] rounded-2xl shadow-sm p-8'>
+          {/* Progress indicator */}
+          <div className='mb-8'>
             <StepProgress step={step} />
           </div>
-          <div className="mt-6">
+
+          {/* Step content */}
+          <div className="">
             {step === 1 && <EmailVerification onSuccess={handleEmailSuccess} />}
             {step === 2 && <PasswordInput onNext={handlePasswordNext} />}
             {step === 3 && <UserDetails userEmail={email} onSubmit={handleUserDetailsSubmit} />}
           </div>
 
-          <div className='w-full flex px-[12px] md:px-[19px] mt-8 items-center space-x-2'>
-            <div className='w-[47%] h-[1px] bg-[#c5c5c5] dark:bg-[#1a1a1a]'></div>
-            <p className='text-gray-500 dark:text-gray-400 w-[6%] text-[14px] text-center'>OR</p>
-            <div className='w-[47%] h-[1px] bg-[#c5c5c5] dark:bg-[#1a1a1a]'></div>
+          {/* Divider */}
+          <div className='flex items-center gap-3 my-6'>
+            <div className='flex-1 h-px bg-gray-200 dark:bg-[#2a2a2a]'></div>
+            <p className='text-xs text-gray-500 dark:text-gray-500'>or</p>
+            <div className='flex-1 h-px bg-gray-200 dark:bg-[#2a2a2a]'></div>
           </div>
 
-          <p className='mx-auto mt-[18px] text-gray-500 dark:text-gray-400 font-medium'>Already Have An Account?<span onClick={() => navigate("/login")} className='text-orange-600 hover:cursor-pointer ml-[2px] font-bold'> Sign In </span></p>
-
+          {/* Sign in link */}
+          <p className='text-center text-sm text-gray-600 dark:text-gray-400'>
+            Already have an account? 
+            <button 
+              onClick={() => navigate("/login")} 
+              className='ml-1 text-orange-600 hover:text-orange-700 font-semibold transition-colors'
+            >
+              Sign in
+            </button>
+          </p>
         </div>
       </div>
     </main>

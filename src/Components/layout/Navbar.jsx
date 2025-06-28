@@ -275,7 +275,7 @@ const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
                                 >
                                     <motion.button 
                                         onClick={toggleDarkMode}
-                                        className="w-full flex items-center p-2.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg transition-all"
+                                        className="w-full flex items-center p-2.5 hover:opacity-80 rounded-lg transition-all"
                                         whileHover={{ x: 4 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
@@ -284,7 +284,11 @@ const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
                                         ) : (
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                                         )}
-                                        <span className="ml-3 font-medium text-sm">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                                        {isDarkMode ? (
+                                            <span className="ml-3 font-medium text-sm px-3 py-1 rounded-lg bg-amber-400/20 text-amber-700 dark:bg-amber-600/30 dark:text-amber-300">Light Mode</span>
+                                        ) : (
+                                            <span className="ml-3 font-medium text-sm px-3 py-1 rounded-lg bg-slate-800/80 text-slate-100">Dark Mode</span>
+                                        )}
                                     </motion.button>
 
                                     <motion.button 
@@ -351,7 +355,7 @@ const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
                             {/* Dark Mode Toggle */}
                             <button 
                                 onClick={toggleDarkMode} 
-                                className="p-1.5 flex items-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                className="p-1.5 flex items-center hover:opacity-80 transition-all"
                                 title="Toggle Dark Mode"
                             >
                                 <AnimatePresence mode="wait">
@@ -365,7 +369,11 @@ const Navbar = ({ isExpanded, setIsExpanded, isDarkMode, toggleDarkMode }) => {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                                <span className='ml-2 text-[15px]'>Dark Mode</span>
+                                {isDarkMode ? (
+                                    <span className='ml-2 text-[13px] px-3 py-1 rounded-md bg-amber-400/20 text-amber-700 dark:bg-amber-600/30 dark:text-amber-300 font-medium'>Light Mode</span>
+                                ) : (
+                                    <span className='ml-2 text-[13px] px-3 py-1 rounded-md bg-slate-200/90 text-slate-500 font-medium'>Dark Mode</span>
+                                )}
                             </button>
 
                             <div>

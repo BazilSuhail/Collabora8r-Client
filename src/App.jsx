@@ -1,9 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-import Navbar from "./components/layout/Navbar";
-import { useAuthContext } from "./AuthProvider";
-import SignInLoader from "./components/loaders/SignInLoader";
 import Loader from "./components/loaders/Loader";
 
 // Lazy load components
@@ -44,12 +41,7 @@ const AppContent = () => {
           <Route path="/projects/tasks-timeline/:projectId" element={<TasksTimeline />} />
           <Route path="/admin-projects" element={<AdminProjectList />} />
          
-         {/*
-          <Route path="/createproject" element={<CreateProject />} />
-         
-
-         */}
-         
+        
           <Route path="/search-project" element={<SearchProject />} />
           <Route path="/task/:creatorId/:taskId" element={<JoinedTaskDetails />} />
           <Route path="/projects" element={<AdminProjectList />} />

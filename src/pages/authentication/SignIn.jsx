@@ -83,20 +83,20 @@ const SignIn = () => {
         }
 
         <div className="scale-[1.2] flex mx-auto">
-          <img src="/logo.svg" alt="Connection Failed" className="w-[34px] h-[34px]" />
+          <img src="/collabor8r.svg" alt="Connection Failed" className="w-[34px] h-[34px]" />
           <div className="text-[#575757] dark:text-white ml-[4px] md:text-[25px] text-[25px] font-[700]">Collabora<span className='font-[800] text-red-600'>8</span>r</div>
         </div>
         <p className='text-[15px] mb-[15px] text-center mt-[8px] text-gray-500 dark:text-gray-400 font-[400]'>Simplify Teamwork, Streamline Success</p>
 
-        <div className='py-[35px] w-full px-[25px] flex flex-col bg-white/60 dark:bg-black/60 backdrop-blur-sm border border-gray-100 dark:border-[#1a1a1a] rounded-2xl shadow-xl transition-colors duration-300'>
+        <div className='py-[35px] w-full px-[25px] flex flex-col bg-white/90 dark:bg-[#0a0a0a] backdrop-blur-sm border border-gray-200 dark:border-[#1a1a1a] rounded-2xl shadow-xl transition-colors duration-300'>
           <form onSubmit={handleSubmit} className='lg:px-[15px]'>
 
             <div className="relative mt-4 mb-6 flex items-center">
-              <div className="bg-gray-400 dark:bg-[#1a1a1a] mr-2 rounded-xl flex items-center justify-center w-[40px] h-[40px] transition-colors">
-                <AiOutlineMail className="text-gray-50 text-[22px]" />
+              <div className="bg-gray-300 dark:bg-[#151515] mr-2 rounded-xl flex items-center justify-center w-[40px] h-[40px] transition-colors">
+                <AiOutlineMail className="text-gray-600 dark:text-orange-500 text-[22px]" />
               </div>
               <div className="flex-1">
-                <label htmlFor="email" className={`absolute left-12 text-gray-900 dark:text-gray-300 font-[600] text-[16px] transition-all duration-300 ${focusField === 'email' || email ? '-top-6 text-sm' : 'top-2'}`}>
+                <label htmlFor="email" className={`absolute left-12 text-gray-800 dark:text-gray-300 font-[600] text-[16px] transition-all duration-300 ${focusField === 'email' || email ? '-top-6 text-sm' : 'top-2'}`}>
                   Email
                 </label>
                 <input
@@ -106,18 +106,18 @@ const SignIn = () => {
                   onChange={handleChange}
                   onFocus={() => handleFocus('email')}
                   onBlur={handleBlur}
-                  className="w-full py-3 bg-transparent text-gray-700 dark:text-white border-b-[2px] border-gray-600 dark:border-[#1a1a1a] focus:border-orange-500 transition-colors focus:outline-none"
+                  className="w-full py-3 bg-transparent text-gray-700 dark:text-white border-b-[2px] border-gray-300 dark:border-[#2a2a2a] focus:border-orange-500 dark:focus:border-orange-500 transition-colors focus:outline-none"
                   required
                 />
               </div>
             </div>
 
             <div className="relative mt-4 mb-6 flex items-center">
-              <div className="bg-gray-400 dark:bg-[#1a1a1a] mr-2 rounded-xl flex items-center justify-center w-[40px] h-[40px] transition-colors">
-                <AiOutlineLock className="text-gray-50 text-[22px]" />
+              <div className="bg-gray-300 dark:bg-[#151515] mr-2 rounded-xl flex items-center justify-center w-[40px] h-[40px] transition-colors">
+                <AiOutlineLock className="text-gray-600 dark:text-orange-500 text-[22px]" />
               </div>
               <div className="flex-1">
-                <label htmlFor="password" className={`absolute left-12 text-gray-900 dark:text-gray-300 font-[600] text-[16px] transition-all duration-300 ${focusField === 'password' || password ? '-top-6 text-sm' : 'top-2'}`}>
+                <label htmlFor="password" className={`absolute left-12 text-gray-800 dark:text-gray-300 font-[600] text-[16px] transition-all duration-300 ${focusField === 'password' || password ? '-top-6 text-sm' : 'top-2'}`}>
                   Password
                 </label>
                 <input
@@ -127,7 +127,7 @@ const SignIn = () => {
                   onChange={handleChange}
                   onFocus={() => handleFocus('password')}
                   onBlur={handleBlur}
-                  className="w-full py-3 bg-transparent text-gray-700 dark:text-white border-b-[2px] border-gray-600 dark:border-[#1a1a1a] focus:border-orange-500 transition-colors focus:outline-none"
+                  className="w-full py-3 bg-transparent text-gray-700 dark:text-white border-b-[2px] border-gray-300 dark:border-[#2a2a2a] focus:border-orange-500 dark:focus:border-orange-500 transition-colors focus:outline-none"
                   required
                 />
               </div>
@@ -135,20 +135,25 @@ const SignIn = () => {
 
             {error && <div className='mt-[8px] py-[6px]  rounded-lg'><p className="text-red-600 font-[500] text-[14px]"><span className='font-[700]'>*{" "}</span>{error}, Enter a Registered Email ...</p></div>}
 
-            <button type="submit" className="hover:bg-orange-700 w-full my-[15px] bg-orange-600 rounded-xl text-white font-bold py-[12px] transition-all duration-300 shadow-lg shadow-orange-600/20 dark:shadow-none">
+            <button type="submit" className="hover:bg-orange-700 w-full my-[15px] bg-orange-600 rounded-xl text-white font-bold py-[12px] transition-all duration-300 shadow-lg shadow-orange-600/20 dark:shadow-orange-600/10">
               Sign In
             </button>
-            <p onClick={() => setIsModalOpen(true)} className='text-orange-600 hover:cursor-pointer underline mb-[8px] text-[15px] font-[600]'>Forgot Password</p>
+            <p onClick={() => setIsModalOpen(true)} className='text-orange-600 hover:text-orange-700 dark:hover:text-orange-500 hover:cursor-pointer underline mb-[8px] text-[15px] font-[600] transition-colors'>Forgot Password</p>
           </form>
 
 
           <div className='w-full flex px-[12px] md:px-[19px]  items-center space-x-2'>
-            <div className='w-[47%] h-[1px] bg-[#c5c5c5] dark:bg-[#1a1a1a]'></div>
-            <p className='text-gray-500 dark:text-gray-400 w-[6%] text-[14px] text-center'>OR</p>
-            <div className='w-[47%] h-[1px] bg-[#c5c5c5] dark:bg-[#1a1a1a]'></div>
+            <div className='w-[47%] h-[1px] bg-gray-300 dark:bg-[#2a2a2a]'></div>
+            <p className='text-gray-500 dark:text-gray-500 w-[6%] text-[14px] text-center'>OR</p>
+            <div className='w-[47%] h-[1px] bg-gray-300 dark:bg-[#2a2a2a]'></div>
           </div>
 
-          <p className='mx-auto mt-[18px] text-gray-500 dark:text-gray-400 font-medium'>Dont Have An Account?<span onClick={() => navigate("/register")} className='text-orange-600 hover:cursor-pointer ml-[2px] font-bold'> Sign Up </span></p>
+          <p className='mx-auto mt-[18px] text-gray-600 dark:text-gray-400 font-medium'>Dont Have An Account?
+            <span onClick={() => navigate("/register")} 
+            className='text-orange-600 hover:text-orange-700 dark:hover:text-orange-500 hover:cursor-pointer ml-2 font-medium underline transition-colors'>
+              Sign Up
+              </span>
+              </p>
         </div>
       </div>
     </main>

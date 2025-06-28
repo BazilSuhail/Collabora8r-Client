@@ -52,7 +52,7 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
         const parts = text.split(new RegExp(`(${term})`, 'gi'));
         return parts.map((part, index) =>
             part.toLowerCase() === term.toLowerCase() ? (
-                <span key={index} className="text-orange-600 bg-orange-600/10 px-0.5 rounded-sm font-black">
+                <span key={index} className="text-orange-600 bg-orange-600/10 px-0.5 rounded-sm font-semibold">
                     {part}
                 </span>
             ) : (
@@ -67,12 +67,12 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-start pt-[15vh] z-[1000] p-4">
+        <div className="fixed inset-0 bg-semibold/40 backdrop-blur-sm flex justify-center items-start pt-[15vh] z-[1000] p-4">
             <motion.div
                 initial={{ scale: 0.95, opacity: 0, y: 20 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                className="bg-white dark:bg-[#0a0a0a] w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-[#1a1a1a] overflow-hidden"
+                className="bg-white dark:bg-[#0a0a0a] w-full max-w-2xl rounded-xl shadow-2xl border border-gray-100 dark:border-[#1a1a1a] overflow-hidden"
             >
                 <div className="p-8 pb-4">
                     <div className="flex justify-between items-center mb-8">
@@ -81,10 +81,10 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
                                 <MdScreenSearchDesktop className='text-2xl' />
                             </div>
                             <div>
-                                <h3 className="text-xl font-black text-gray-800 dark:text-white tracking-tighter uppercase">
+                                <h3 className="text-xl font-semibold text-gray-800 dark:text-white tracking-tighter ">
                                     Reconnaissance
                                 </h3>
-                                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">Scanning active sectors</p>
+                                <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500  tracking-widest">Scanning active sectors</p>
                             </div>
                         </div>
                         <button
@@ -123,17 +123,17 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
                                 onClick={() => handleProjectClick(project._id)}
                             >
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-gray-100 dark:bg-[#1a1a1a] group-hover:bg-orange-600 text-gray-400 group-hover:text-white rounded-xl flex items-center justify-center font-black transition-colors">
+                                    <div className="w-10 h-10 bg-gray-100 dark:bg-[#1a1a1a] group-hover:bg-orange-600 text-gray-400 group-hover:text-white rounded-xl flex items-center justify-center font-semibold transition-colors">
                                         {project.name[0]}
                                     </div>
                                     <div>
-                                        <p className="font-black text-gray-800 dark:text-gray-200 uppercase tracking-tight">
+                                        <p className="font-semibold text-gray-800 dark:text-gray-200  tracking-tight">
                                             {highlightText(project.name, searchTerm)}
                                         </p>
-                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest opacity-60">Sector ID: {project._id.slice(-6)}</p>
+                                        <p className="text-[10px] font-bold text-gray-400  tracking-widest opacity-60">Sector ID: {project._id.slice(-6)}</p>
                                     </div>
                                 </div>
-                                <div className="p-2 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-orange-600 font-black text-xs uppercase tracking-widest">
+                                <div className="p-2 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-orange-600 font-semibold text-xs  tracking-widest">
                                     Access &rarr;
                                 </div>
                             </motion.div>
@@ -143,14 +143,14 @@ const SearchProject = ({ setIsSearchModalOpen }) => {
                     {filteredProjects.length === 0 && (
                         <div className="py-20 flex flex-col items-center justify-center grayscale">
                             <img src="/Resources/2.png" alt='Not Found' className="w-48 opacity-20 dark:invert brightness-0 mb-6" />
-                            <p className="text-xs font-black text-gray-400 uppercase tracking-[5px]">Zero signals detected</p>
+                            <p className="text-xs font-semibold text-gray-400  tracking-[2px]">No Project Found</p>
                         </div>
                     )}
                 </div>
 
                 <div className="p-6 bg-gray-50 dark:bg-[#151515] border-t border-gray-100 dark:border-[#1a1a1a] flex items-center justify-between">
-                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Deep Scan Protocol Active</span>
-                    <span className="text-[9px] font-black text-orange-600 uppercase tracking-widest">{filteredProjects.length} Sectors Found</span>
+                    <span className="text-[9px] font-semibold text-gray-400  tracking-widest">Deep Scan Protocol Active</span>
+                    <span className="text-[9px] font-semibold text-orange-600  tracking-widest">{filteredProjects.length} Sectors Found</span>
                 </div>
             </motion.div>
         </div>

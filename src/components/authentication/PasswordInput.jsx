@@ -45,7 +45,7 @@ const PasswordInput = ({ onNext }) => {
               onChange={(e) => setPassword(e.target.value)}
               onFocus={() => handleFocus('password')}
               onBlur={handleBlur}
-              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold"
+              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#2a2a2a] focus:border-orange-600 dark:focus:border-orange-600 transition-colors focus:outline-none font-bold"
               required
             />
           </div>
@@ -70,7 +70,7 @@ const PasswordInput = ({ onNext }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               onFocus={() => handleFocus('confirmPassword')}
               onBlur={handleBlur}
-              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold"
+              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#2a2a2a] focus:border-orange-600 dark:focus:border-orange-600 transition-colors focus:outline-none font-bold"
               required
             />
           </div>

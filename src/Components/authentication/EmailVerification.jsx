@@ -16,72 +16,68 @@ const EmailVerification = ({ onSuccess }) => {
   const [isResendDisabled, setIsResendDisabled] = useState(false);
 
   const generateOtp = () => {
-    return Math.random().toString(36).substr(2, 6).toUpperCase();
+    return Math.floor(100000 + Math.random() * 900000).toString();
   };
 
   const handleSendOtp = async () => {
     try {
-      if (email === '') {
-        setError('Enter Valid Name and Email Address')
+      if (!name.trim()) {
+        setError('Please enter your name');
         return;
       }
-      if (name === '') {
-        setError('Enter Valid Name and Email Address')
+      if (!email.trim()) {
+        setError('Please enter your email address');
         return;
       }
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+
       // Check if email exists
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/check-email`, { email });
       if (response.data.exists) { 
-        setError('Email already exists. Please use another email.');
+        setError('This email is already registered. Try signing in instead.');
         return;
       }
 
-      // If email doesn't exist, generate OTP and send
+      // Generate OTP and log it to console
       const otpCode = generateOtp();
       setGeneratedOtp(otpCode);
-      console.log(otpCode);
+      
+      // Console log the OTP for testing
+      console.log('✅ Verification code generated:', otpCode);
+      console.log('Test email:', email);
+      console.log('Test name:', name);
+      
       setTimer(120);
       setIsResendDisabled(true);
-
-      const templateParams = {
-        user_name: name,
-        to_name: email,
-        otp_code: otpCode,
-      };
-
-      /*await emailjs.send(
-        import.meta.env.VITE_REACT_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_REACT_APP_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        import.meta.env.VITE_REACT_APP_EMAILJS_USER_ID
-      );*/
-
       setOtpSent(true);
       setError('');
     }
     catch (error) {
-      setError('Email already exists. Please use another email.');
-
-      //console.error('Error sending OTP or checking email:', error);
+      setError(error.response?.data?.message || 'Error checking email. Please try again.');
     }
   };
 
 
   const handleResendOtp = async () => {
+    setOtp(new Array(6).fill(''));
     handleSendOtp();
   };
 
   const handleVerifyOtp = () => {
     const otpString = otp.join(''); 
-    //console.log(otpString);
-    //console.log(generatedOtp);
 
-    if (otpString == generatedOtp) {
+    if (otpString === generatedOtp) {
       setError('');
+      console.log('✅ Verification successful!');
       onSuccess({ name, email });
     } else {
-      console.log(otpString);
-      setError('Invalid OTP. Please Enter your valid email.');
+      setError('Incorrect code. Please enter the code sent to your email.');
     }
   };
 
@@ -107,10 +103,10 @@ const EmailVerification = ({ onSuccess }) => {
 
 
   const handleOtpChange = (element, index) => {
-    const value = element.value.toUpperCase();
-    const isValidCharacter = /^[A-Z0-9]$/.test(value);
+    const value = element.value;
+    const isValidCharacter = /^[0-9]$/.test(value);
 
-    if (!isValidCharacter) return;
+    if (value && !isValidCharacter) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -122,10 +118,9 @@ const EmailVerification = ({ onSuccess }) => {
   };
 
   const handleOtpBackspace = (e, index) => {
-    const newOtp = [...otp];
-
     if (e.key === 'Backspace') {
-      if (newOtp[index]) {
+      const newOtp = [...otp];
+      if (e.target.value) {
         newOtp[index] = '';
         setOtp(newOtp);
       } else if (e.target.previousSibling) {
@@ -138,20 +133,20 @@ const EmailVerification = ({ onSuccess }) => {
 
 
   return (
-    <div className='w-full mt-6'>
+    <div className='w-full'>
       {!otpSent ? (
-        <div className='md:px-4 space-y-8'>
+        <div className='space-y-6'>
           <div className="relative group">
-            <div className="flex items-center gap-4">
-              <div className='w-12 h-12 bg-gray-100 dark:bg-[#151515] rounded-xl flex items-center justify-center transition-colors group-focus-within:bg-orange-500/10'>
-                <AiOutlineUser className="text-gray-500 dark:text-gray-400 text-xl group-focus-within:text-orange-600" />
+            <div className="flex items-center gap-3">
+              <div className='w-10 h-10 bg-gray-100 dark:bg-[#151515] rounded-lg flex items-center justify-center transition-colors group-focus-within:bg-orange-100 dark:group-focus-within:bg-orange-900/20'>
+                <AiOutlineUser className="text-gray-400 dark:text-orange-500 text-base group-focus-within:text-orange-600" />
               </div>
               <div className="flex-1 relative">
                 <label
                   htmlFor="name"
-                  className={`absolute left-0 font-bold transition-all duration-300 pointer-events-none ${focusField === 'name' || name ? '-top-6 text-[10px] text-orange-600 uppercase tracking-widest' : 'top-3 text-gray-400'}`}
+                  className={`absolute left-0 font-medium text-sm transition-all duration-300 pointer-events-none ${focusField === 'name' || name ? '-top-5 text-xs text-orange-600' : 'top-2.5 text-gray-400'}`}
                 >
-                  Legal Name
+                  Full name
                 </label>
                 <input
                   type="text"
@@ -160,23 +155,23 @@ const EmailVerification = ({ onSuccess }) => {
                   onChange={(e) => setName(e.target.value)}
                   onFocus={() => handleFocus('name')}
                   onBlur={handleBlur}
-                  className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold"
+                  className="w-full py-2.5 bg-transparent text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 focus:border-orange-500 transition-colors focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           <div className="relative group">
-            <div className="flex items-center gap-4">
-              <div className='w-12 h-12 bg-gray-100 dark:bg-[#151515] rounded-xl flex items-center justify-center transition-colors group-focus-within:bg-orange-500/10'>
-                <AiOutlineMail className="text-gray-500 dark:text-gray-400 text-xl group-focus-within:text-orange-600" />
+            <div className="flex items-center gap-3">
+              <div className='w-10 h-10 bg-gray-100 dark:bg-[#151515] rounded-lg flex items-center justify-center transition-colors group-focus-within:bg-orange-100 dark:group-focus-within:bg-orange-900/20'>
+                <AiOutlineMail className="text-gray-400 dark:text-orange-500 text-base group-focus-within:text-orange-600" />
               </div>
               <div className="flex-1 relative">
                 <label
                   htmlFor="email"
-                  className={`absolute left-0 font-bold transition-all duration-300 pointer-events-none ${focusField === 'email' || email ? '-top-6 text-[10px] text-orange-600 uppercase tracking-widest' : 'top-3 text-gray-400'}`}
+                  className={`absolute left-0 font-medium text-sm transition-all duration-300 pointer-events-none ${focusField === 'email' || email ? '-top-5 text-xs text-orange-600' : 'top-2.5 text-gray-400'}`}
                 >
-                  Email Address
+                  Email address
                 </label>
                 <input
                   type="email"
@@ -185,90 +180,79 @@ const EmailVerification = ({ onSuccess }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   onFocus={() => handleFocus('email')}
                   onBlur={handleBlur}
-                  className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold"
+                  className="w-full py-2.5 bg-transparent text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 focus:border-orange-500 transition-colors focus:outline-none"
                 />
               </div>
             </div>
           </div>
         
           {error && (
-            <div className='bg-red-50 dark:bg-red-950/20 p-3 rounded-xl border border-red-100 dark:border-red-500/20'>
-              <p className="text-red-600 dark:text-red-400 font-bold text-xs flex items-center gap-2">
-                <span className='w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse' />
-                {error}
-              </p>
+            <div className='bg-red-50 dark:bg-red-950/10 p-3 rounded-xl border border-red-200 dark:border-red-900/30'>
+              <p className="text-red-700 dark:text-red-400 text-sm">✕ {error}</p>
             </div>
           )}
 
           <button
             onClick={handleSendOtp}
-            className="w-full py-4 bg-orange-600 hover:bg-orange-700 rounded-2xl text-white font-black uppercase tracking-widest text-xs transition-all shadow-lg shadow-orange-600/20 hover:-translate-y-0.5"
+            className="w-full py-3 bg-orange-600 hover:bg-orange-700 rounded-lg text-white font-medium text-sm transition-all shadow-lg shadow-orange-600/20 active:scale-95"
           >
-            Transmission Signal
+            Send verification code
           </button>
         </div>
       ) : (
-        <div className='space-y-8'>
+        <div className='space-y-6'>
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 dark:bg-orange-500/10 text-orange-600 rounded-full mb-4">
-              <IoMdMailUnread size={18} />
-              <span className="text-[10px] font-black uppercase tracking-widest">Awaiting Verification</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-full text-xs font-medium mb-3">
+              <IoMdMailUnread size={14} />
+              Verification code sent
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Intel sent to {email}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Enter the 6-digit code sent to {email}</p>
           </div>
 
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-2">
             {otp.map((data, index) => (
               <input
                 key={index}
                 type="text"
                 name="otp"
                 maxLength="1"
+                inputMode="numeric"
                 value={data}
                 onChange={(e) => handleOtpChange(e.target, index)}
                 onKeyDown={(e) => handleOtpBackspace(e, index)}
                 onFocus={handleOtpFocus}
-                className="w-12 h-16 text-center text-xl font-black bg-gray-50 dark:bg-[#151515] text-gray-800 dark:text-white border border-gray-200 dark:border-[#1a1a1a] rounded-2xl focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all uppercase"
+                className="w-11 h-12 text-center text-lg font-semibold bg-gray-100 dark:bg-[#151515] text-gray-800 dark:text-white border border-gray-300 dark:border-[#2a2a2a] rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all"
               />
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400">
-            <AiOutlineClockCircle className={timer > 0 ? "animate-spin-slow" : ""} />
+          <div className="flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 text-sm">
             {timer > 0 ? (
-              <p className="text-[10px] font-bold uppercase tracking-widest">
-                Resignal in <span className='text-orange-600'>{timer}s</span>
+              <p>
+                Resend code in <span className='text-orange-600 font-semibold'>{timer}s</span>
               </p>
             ) : (
-              <p className='text-[10px] font-black text-green-600 uppercase tracking-widest'>Signal Path Clear</p>
+              <button
+                onClick={handleResendOtp}
+                className='text-orange-600 hover:text-orange-700 font-medium'
+              >
+                Resend code
+              </button>
             )}
           </div>
 
           {error && (
-            <div className='bg-red-50 dark:bg-red-950/20 p-3 rounded-xl border border-red-100 dark:border-red-500/20'>
-              <p className="text-red-600 dark:text-red-400 font-bold text-xs text-center">{error}</p>
+            <div className='bg-red-50 dark:bg-red-950/10 p-3 rounded-xl border border-red-200 dark:border-red-900/30'>
+              <p className="text-red-700 dark:text-red-400 text-xs text-center">✕ {error}</p>
             </div>
           )}
 
-          <div className='grid grid-cols-2 gap-4'>
-            <button
-              onClick={handleVerifyOtp}
-              className="py-4 bg-gray-800 dark:bg-[#151515] text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-black transition-all border border-transparent dark:border-[#1a1a1a]"
-            >
-              Confirm Intel
-            </button>
-            <button
-              onClick={handleResendOtp}
-              className={`py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all ${
-                isResendDisabled 
-                  ? 'bg-gray-100 dark:bg-[#121212] text-gray-400 cursor-not-allowed opacity-50' 
-                  : 'bg-orange-600 text-white hover:bg-orange-700 shadow-lg shadow-orange-600/20'
-              }`}
-              disabled={isResendDisabled}
-            >
-              New Signal
-            </button>
-          </div>
+          <button
+            onClick={handleVerifyOtp}
+            className="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium text-sm transition-all shadow-lg shadow-orange-600/20 active:scale-95"
+          >
+            Verify code
+          </button>
         </div>
       )}
     </div>

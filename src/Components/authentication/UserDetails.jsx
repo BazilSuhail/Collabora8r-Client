@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlinePhone, AiOutlineCalendar } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi'; // Icon for gender
-import Loader from '../../Assets/Loaders/Loader';
+
 
 const UserDetails = ({ onSubmit, userEmail }) => {
   const [loading, setLoading] = useState(false);
@@ -62,7 +62,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+1 (555) 000-0000"
-              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold placeholder:text-gray-300 dark:placeholder:text-gray-600"
+              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#2a2a2a] focus:border-orange-600 dark:focus:border-orange-600 transition-colors focus:outline-none font-bold placeholder:text-gray-300 dark:placeholder:text-gray-600"
               required
             />
           </div>
@@ -85,7 +85,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold appearance-none cursor-pointer"
+              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#2a2a2a] focus:border-orange-600 dark:focus:border-orange-600 transition-colors focus:outline-none font-bold appearance-none cursor-pointer"
               required
             >
               <option value="" className="dark:bg-[#0a0a0a]">Select Identity</option>
@@ -114,7 +114,7 @@ const UserDetails = ({ onSubmit, userEmail }) => {
               name="dob"
               value={formData.dob}
               onChange={handleChange}
-              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#1a1a1a] focus:border-orange-600 transition-colors focus:outline-none font-bold"
+              className="w-full py-3 bg-transparent text-gray-800 dark:text-white border-b border-gray-200 dark:border-[#2a2a2a] focus:border-orange-600 dark:focus:border-orange-600 transition-colors focus:outline-none font-bold"
               required
             />
           </div>

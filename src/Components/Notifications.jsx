@@ -37,7 +37,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
             {isNotificationsModalOpen && (
                 <div className="fixed inset-0 z-[1000] flex justify-end">
                     {/* Backdrop */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -46,16 +46,16 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                     />
 
                     {showMemberModal && (
-                        <TeamMemberInvitation 
-                            projectId={memberModal.projectId} 
-                            from={memberModal.from} 
-                            setShowMemberModal={setShowMemberModal} 
+                        <TeamMemberInvitation
+                            projectId={memberModal.projectId}
+                            from={memberModal.from}
+                            setShowMemberModal={setShowMemberModal}
                         />
                     )}
                     {showManagerModal && (
-                        <ProjectManagerInvitation 
-                            projectId={managerModal} 
-                            setShowManagerModal={setShowManagerModal} 
+                        <ProjectManagerInvitation
+                            projectId={managerModal}
+                            setShowManagerModal={setShowManagerModal}
                         />
                     )}
 
@@ -64,7 +64,7 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                         animate={{ x: isExiting ? '100%' : 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="relative bg-white dark:bg-[#0a0a0a] w-[340px] md:w-[480px] h-full shadow-2xl border-l border-gray-100 dark:border-[#1a1a1a] flex flex-col overflow-hidden"
+                        className="relative bg-white dark:bg-[#0a0a0a] w-85 md:w-120 h-full shadow-2xl border-l border-gray-100 dark:border-[#1a1a1a] flex flex-col overflow-hidden"
                     >
                         {/* Header */}
                         <div className="p-8 border-b border-gray-50 dark:border-[#1a1a1a] flex items-center justify-between bg-white dark:bg-[#0a0a0a] sticky top-0 z-10">
@@ -75,8 +75,8 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                     <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Incoming Transmissions</p>
                                 </div>
                             </div>
-                            <button 
-                                onClick={handleClose} 
+                            <button
+                                onClick={handleClose}
                                 className="p-2 text-gray-400 hover:text-orange-600 dark:hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-500/10 rounded-xl transition-all"
                             >
                                 <MdKeyboardDoubleArrowRight className='text-2xl' />
@@ -97,9 +97,9 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                         {[...notifications, ...userNotifications].slice().reverse().map((notification, index) => {
                                             const { type, data } = notification;
                                             const isManager = type === 'projectManager';
-                                            
+
                                             return (
-                                                <motion.div 
+                                                <motion.div
                                                     key={`${index}-${type}`}
                                                     initial={{ opacity: 0, y: 20 }}
                                                     animate={{ opacity: 1, y: 0 }}
@@ -108,12 +108,11 @@ const NotificationsModal = ({ isNotificationsModalOpen, setIsNotificationsModalO
                                                     className="group relative p-6 bg-gray-50 dark:bg-[#151515] border border-transparent hover:border-orange-500/20 rounded-xl cursor-pointer transition-all duration-300"
                                                 >
                                                     <div className='flex items-start gap-4'>
-                                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
-                                                            isManager ? 'bg-orange-100 dark:bg-orange-500/10 text-orange-600' : 'bg-blue-100 dark:bg-blue-500/10 text-blue-600'
-                                                        }`}>
+                                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${isManager ? 'bg-orange-100 dark:bg-orange-500/10 text-orange-600' : 'bg-blue-100 dark:bg-blue-500/10 text-blue-600'
+                                                            }`}>
                                                             {isManager ? <MdManageAccounts className='text-2xl' /> : <VscProject className='text-xl' />}
                                                         </div>
-                                                        
+
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex items-center justify-between mb-1">
                                                                 <h3 className="font-black text-xs text-gray-800 dark:text-gray-100 uppercase tracking-widest truncate">

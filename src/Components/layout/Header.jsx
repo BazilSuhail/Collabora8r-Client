@@ -1,31 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Header = ({ isDarkMode, toggleDarkMode }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-gray-950/70 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <header className="fixed top-0 left-0 right-0 z-50 ">
+     <div className='self-center max-w-6xl mx-auto mt-4 bg-white rounded-3xl dark:bg-[#111111] border-2 border-gray-200 dark:border-[#1a1a1a] shadow-sm dark:shadow-lg dark:shadow-black/30 transition-colors duration-300"' >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <NavLink to="/" className="flex items-center">
-              <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
-              <span className="ml-2 text-xl font-bold text-[#575757] dark:text-white">
+              <img src="/collabor8r.svg" alt="Logo" className="w-8 h-8" />
+              <span className="ml-2 text-lg sm:text-xl font-bold text-[#575757] dark:text-white">
                 Collabora<span className="text-orange-600">8</span>r
               </span>
             </NavLink>
           </div>
-          
-          <nav className="hidden md:flex space-x-8">
-            <NavLink to="/" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 transition-colors">Home</NavLink>
-            <a href="#features" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 transition-colors">Features</a>
-            <a href="#roadmap" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 transition-colors">Roadmap</a>
-          </nav>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center gap-3 sm:gap-6">
             <button 
               onClick={toggleDarkMode}
-              className="p-2.5 rounded-lg transition-all border bg-gray-100 dark:bg-orange-950/30 text-gray-600 dark:text-orange-300 border-gray-200 dark:border-orange-900/50 hover:bg-gray-200 dark:hover:bg-orange-900/50"
+              className="p-2 sm:p-2.5 rounded-lg transition-all border bg-gray-100 dark:bg-[#151515] text-gray-600 dark:text-orange-400 border-gray-300 dark:border-[#2a2a2a] hover:bg-gray-200 dark:hover:bg-[#1a1a1a]"
               aria-label="Toggle Dark Mode"
             >
               {isDarkMode ? (
@@ -46,19 +41,17 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
                 </motion.svg>
               )}
             </button>
-            <NavLink to="/login" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 font-black text-xs uppercase tracking-widest transition-colors">
-              Login
-            </NavLink>
             <NavLink 
               to="/register" 
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-xl font-black text-xs uppercase tracking-[2px] transition-all shadow-lg shadow-orange-600/20"
+              className="bg-orange-600 hover:bg-orange-700 text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-xs uppercase tracking-widest transition-all shadow-md hover:shadow-lg shadow-orange-600/30"
             >
               Get Started
             </NavLink>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+   </header>
   );
 };
 

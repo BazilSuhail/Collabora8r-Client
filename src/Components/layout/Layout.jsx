@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
   // Auth pages have no layout
   if (isAuth) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+      <div className="min-h-screen bg-white dark:bg-[#000000] transition-colors duration-300">
         {children}
       </div>
     );
@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
   // Home page has Header but no Sidebar
   if (isHome) {
     return (
-      <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="flex flex-col min-h-screen bg-white dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300">
         <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
         <main className="flex-1 pt-16">
           {children}
@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
 
   // Application pages have Sidebar + a persistent App Header
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300">
       {userLoginStatus && (
         <Navbar
           isExpanded={isExpanded}
