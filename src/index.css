@@ -2,7 +2,17 @@
 @import "tailwindcss";
 
 @theme {
-  --breakpoint-xsx: 1200px;
+  --breakpoint-xsx: 900px;
+  --breakpoint-xsmall: 345px;
+  --breakpoint-xlxs: 1300px;
+  --font-weight-extra-black: 900;
+  --color-custom-gray: rgb(200, 200, 200);
+  --color-custom-light-red: #fff9f9;
+  --color-custom-red: #1a0303;
+  --font-size-custom-sz: 25px;
+  --font-size-custom-size: 20px;
+  --shadow-profile-navbar: 0px 0px 5px #c2c2c2;
+  --animate-fadeinout: fadeInOut 2s infinite;
 }
 
 @variant dark (&:where(.dark, .dark *));

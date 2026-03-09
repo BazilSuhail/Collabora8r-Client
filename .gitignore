@@ -24,3 +24,13 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.bat
+*.txt
+*.lock
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Ignore ALL markdown files except README.md and those in /docs
+*.md
+!README.md
+!docs/**/*.md
