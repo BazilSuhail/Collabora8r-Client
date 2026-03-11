@@ -6,6 +6,22 @@
   --breakpoint-xsmall: 345px;
   --breakpoint-xlxs: 1300px;
   --font-weight-extra-black: 900;
+
+  --color-primary: #ea580c;
+  --color-primary-hover: #c2410c;
+  --color-primary-light: #fff7ed;
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+
+  --color-bg-dark: #0a0a0a;
+  --color-surface-dark: #171717;
+  --color-surface-hover: #1f1f1f;
+  --color-border-dark: #262626;
+
   --color-custom-gray: rgb(200, 200, 200);
   --color-custom-light-red: #fff9f9;
   --color-custom-red: #1a0303;
@@ -18,15 +34,13 @@
 @variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
@@ -35,20 +49,20 @@
 }
 
 body {
-  background-color: white;
-  color: #000000;
+  background-color: #fafaf9;
+  color: #1c1917;
   transition-property: background-color, color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
   font-family: 'Poppins', sans-serif;
   scrollbar-width: thin;
-  scrollbar-color: #717171 #ffffff;
+  scrollbar-color: #d6d3d1 #fafaf9;
 }
 
 html.dark body {
-  background-color: #000000;
-  color: #f9fafb;
-  scrollbar-color: #404040 #030712;
+  background-color: #0a0a0a;
+  color: #fafaf9;
+  scrollbar-color: #404040 #0a0a0a;
 }
 
 ::-webkit-scrollbar {
@@ -61,23 +75,22 @@ html.dark body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d1d5db;
+  background-color: #d6d3d1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #9ca3af;
+  background-color: #a8a29e;
 }
 
 html.dark ::-webkit-scrollbar-thumb {
-  background-color: #4b5563;
+  background-color: #525252;
 }
 
 html.dark ::-webkit-scrollbar-thumb:hover {
-  background-color: #6b7280;
+  background-color: #737373;
 }
 
-/* Glassmorphism utility */
 .glass {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(1rem);
@@ -85,8 +98,8 @@ html.dark ::-webkit-scrollbar-thumb:hover {
 }
 
 html.dark .glass {
-  background-color: rgba(17, 24, 39, 0.7);
-  border-color: rgba(55, 65, 81, 0.5);
+  background-color: rgba(23, 23, 23, 0.7);
+  border-color: rgba(38, 38, 38, 0.5);
 }
 
 @keyframes spin {
@@ -96,4 +109,9 @@ html.dark .glass {
 
 .spin-slow {
   animation: spin 20s linear infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
