@@ -1,18 +1,19 @@
-import { Outlet, useLocation } from 'react-router-dom'
-import Navbar from './Navbar'
-
-const authRoutes = ['/login', '/register', '/forgot-password', '/reset-password']
+import { useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
+import useAuthStore from '../../stores/authStore'
+import useUiStore from '../../stores/uiStore'
 
 const Layout = () => {
-  const { pathname } = useLocation()
-  const isAuthPage = authRoutes.includes(pathname)
+  const { token, user, loadUser } = useAuthStore()
+  const { theme } = useUiStore()
+
+  useEffect(() => {
+    if (token && !user) loadUser()
+  }, [token])
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-      {!isAuthPage && <Navbar />}
-      <main className={isAuthPage ? '' : 'pt-16'}>
-        <Outlet />
-      </main>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#000000]' : 'bg-[#fcfaf8]'} text-gray-900 dark:text-gray-100 transition-colors duration-300`}>
+      <Outlet />
     </div>
   )
 }

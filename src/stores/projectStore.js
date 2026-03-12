@@ -1,63 +1,59 @@
 import { create } from 'zustand'
-import * as adminProjectsApi from '../api/adminProjects'
-import * as joinedProjectsApi from '../api/joinedProjects'
-import * as projectsApi from '../api/projects'
-import * as manageUsersApi from '../api/adminProjects'
+import api from '../utils/api'
 
 const useProjectStore = create((set) => ({
   adminProjects: [],
   joinedProjects: [],
   managedProjects: [],
   currentProject: null,
-  currentProjectTeam: [],
 
   fetchAdminProjects: async () => {
-    const { data } = await adminProjectsApi.getAdminProjects()
-    set({ adminProjects: data })
+    const { data, error } = await api('GET', '/admin-projects/')
+    if (!error) set({ adminProjects: data })
   },
 
   fetchJoinedProjects: async () => {
-    const { data } = await joinedProjectsApi.getJoinedProjects()
-    set({ joinedProjects: data })
+    const { data, error } = await api('GET', '/joinedprojects/')
+    if (!error) set({ joinedProjects: data })
   },
 
   fetchManagedProjects: async () => {
-    const { data } = await joinedProjectsApi.getManagedProjects()
-    set({ managedProjects: data })
+    const { data, error } = await api('GET', '/joinedprojects/as-manager')
+    if (!error) set({ managedProjects: data })
   },
 
   fetchProjectDetail: async (id) => {
-    try {
-      const { data } = await adminProjectsApi.getAdminProjectDetail(id)
-      set({ currentProject: data })
-    } catch {
-      const { data } = await joinedProjectsApi.getJoinedProjectDetail(id)
-      set({ currentProject: data })
-    }
+    let result = await api('GET', `/admin-projects/${id}`)
+    if (result.error) result = await api('GET', `/joinedprojects/${id}`)
+    const project = result.data?.project || result.data
+    set({ currentProject: project })
   },
 
   createProject: async (projectData) => {
-    const { data } = await projectsApi.createProject(projectData)
-    set((state) => ({ adminProjects: [...state.adminProjects, data] }))
-    return data
+    const { data, error } = await api('POST', '/projects/create', projectData)
+    if (error) throw error
+    const project = data.project || data
+    set((state) => ({ adminProjects: [...state.adminProjects, project] }))
+    return project
   },
 
   updateProject: async (id, projectData) => {
-    const { data } = await projectsApi.updateProject(id, projectData)
-    set({ currentProject: data })
+    const { data, error } = await api('PUT', `/projects/${id}/update`, projectData)
+    if (!error) set({ currentProject: data })
   },
 
   respondManagerInvite: async (id, response) => {
-    await projectsApi.respondManagerInvite(id, response)
+    await api('PUT', `/projects/manager-response/${id}`, { response })
   },
 
   fetchProjectTeam: async (id) => {
-    const { data } = await manageUsersApi.getAdminProjectDetail(id)
-    set({ currentProjectTeam: data.team || [] })
+    const { data, error } = await api('GET', `/admin-projects/${id}`)
+    if (!error) set({ currentProjectTeam: data.team || [] })
   },
 
   addToTeam: async (inviteData) => {
-    await adminProjectsApi.sendInvitation(inviteData)
+    const { error } = await api('POST', '/admin-projects/send-project-invitation', inviteData)
+    if (error) throw error
   },
 }))
 
